@@ -1,0 +1,70 @@
+
+form p.floatLeft{
+    float:left;
+    margin-right:40px;
+
+}
+form p.floatRight{
+    float:right;
+    margin-left:40px;
+}
+form p em, .error{
+    color:red;
+    font-style: normal;
+}
+
+.clear{
+    clear:both;
+    margin-bottom:30px;
+}
+.legenda{
+    font-size:11px;
+}
+table{
+    width:100%;
+    /*width:300px;*/
+
+}
+p#endtable{
+    font-size: 8.5pt;
+    margin-top:0;
+    padding-top:0;
+    margin-bottom:15px;
+}
+
+
+table td{
+    
+    /*border-right:1px solid #0253a2;*/
+    color:#4b4e66;
+}
+
+table td.td_valor{
+	border-left:1px solid #0253a2;
+}
+
+
+table thead tr th.periodo{
+	/*border-right:1px solid #0253a2;*/
+}
+table thead tr th.produtos{
+	border-bottom:1px solid #0253a2;
+}
+
+table .tr_produtos th{
+	border-left:1px solid #0253a2;
+	/*border-right:1px solid #0253a2;*/
+}
+
+h3.nomeCidadeNaTabela{
+	font-weight:bold;
+	/*text-align:center;*/
+	margin: 6px 0;
+	font-size:12pt;
+}
+
+.graficoCidade{
+    margin-bottom:40px;
+	
+	/*height: 600px;*/
+}

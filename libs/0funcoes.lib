@@ -1,0 +1,240 @@
+<?php
+
+function formata_data($data,$tipo)
+{
+
+	if($data == '')
+		return '';
+
+	if($tipo == 1)
+	{
+		list ($ano, $mes, $dia) = preg_split ('/[\/.-]/', $data);
+		$data_convertida = $dia."/".$mes."/".$ano;
+	}
+	else
+	{
+		list ($dia, $mes, $ano) = preg_split ('/[\/.-]/', $data);
+		$data_convertida = $ano."-".$mes."-".$dia;
+		
+	}		
+	return $data_convertida;
+}
+
+function isEmpty($string)
+{
+	if($string == '')
+		return '&nbsp;';
+	else
+		return $string;
+}
+
+function round_valor($valor,$qt)
+{
+	$valor += 0.000001;
+	return round($valor,$qt);
+}
+
+function formata_mes_anterior($mes,$ano)
+{
+	$vetor = array();
+	
+	--$mes;
+	
+	if($mes == 0)
+	{	
+		array_push($vetor,12);
+		array_push($vetor,$ano-1);
+	}
+	else
+	{
+		array_push($vetor,$mes);
+		array_push($vetor,$ano);
+		
+	}
+		
+	return $vetor;
+}
+
+function formata_mes_semestre($mes,$ano)
+{
+	$vetor = array();
+	
+	if($mes < 7)
+	{
+		array_push($vetor,$mes+6);
+		array_push($vetor,$ano-1);
+	}
+	else
+	{
+		array_push($vetor,$mes-6);
+		array_push($vetor,$ano);
+	}
+	
+	return $vetor;
+	
+}
+
+function formata_ano_anterior($mes,$ano)
+{
+	$vetor = array();
+
+	array_push($vetor,$mes);
+	array_push($vetor,$ano-1);
+	
+	return $vetor;
+	
+}
+
+function retorna_variacao($mes,$ano,$cidade,$gasto_mensal_produtos,$prod_oficial)
+{
+	$i = 0;
+	$variacao = array();
+	
+	$strsql = "SELECT A.produto_preco_total FROM tabela_pesquisa_resultados_produtos A NATURAL JOIN tabela_produtos P,tabela_pesquisas B WHERE EXTRACT(MONTH FROM B.pesquisa_data) = '".$mes."' AND EXTRACT(YEAR FROM B.pesquisa_data) = '".$ano."' AND A.cidade_id = '".$cidade."' AND  A.pesquisa_id = B.pesquisa_id AND P.produto_cesta = '".$prod_oficial."' ORDER BY A.produto_id";
+							
+	$res = mysql_query($strsql) or die(mysql_error());
+						
+	while ($row = mysql_fetch_array($res))
+	{
+								
+		if($row['produto_preco_total'] != '')
+			$variacao[$i] = round_valor((($gasto_mensal_produtos[$i]/$row['produto_preco_total'])-1)*100,2);
+		else
+			$variacao[$i] = '';
+								
+			$i++;
+	}
+	
+	return $variacao;
+											
+}
+
+function retorna_pesquisa($mes,$ano)
+{
+	$pesquisa = array();
+	$strsql = "SELECT A.pesquisa_id,B.mes_id, EXTRACT(YEAR FROM A.pesquisa_data) AS ano,B.mes_nome FROM tabela_pesquisas A,tabela_mes B WHERE EXTRACT(MONTH FROM A.pesquisa_data) = '".$mes."' AND EXTRACT(YEAR FROM A.pesquisa_data) = '".$ano."' AND B.mes_id = EXTRACT(MONTH FROM A.pesquisa_data)";
+	
+	$res = mysql_query($strsql) or die(mysql_error());
+	$row = mysql_fetch_array($res);
+	$pesquisa = array('pesquisa_id' =>$row['pesquisa_id'],'mes' => $row['mes_nome'],'ano' => $row['ano'],'salario'=>$row['salario_id'],'mes_id' =>$row['mes_id']);
+	
+	return $pesquisa;
+}
+
+function converte_horas($horas)
+{
+	$hora = (int) $horas;
+	$minutos = round_valor(($horas - $hora) * 60,0);
+	$tempo_trabalho = $hora."h ".$minutos."min";
+	
+	return $tempo_trabalho;
+}
+
+function atualiza_coletas($coleta,$oficial)
+{
+	$total_coleta = 0;
+	
+	$strsql = "SELECT R.produto_id,R.medida_id,R.racao_minima_transformador,R.racao_minima_quantidade,P.precos_id,AVG(AUX_P.preco_produto) AS media FROM tabela_produtos PRO NATURAL JOIN tabela_racao_minima R NATURAL JOIN tabela_delimitador_racao D, tabela_precos P NATURAL JOIN tabela_auxiliar_precos AUX_P WHERE (D.delimitador_oficial = '".$oficial."' AND D.delimitador_em_uso = '1') AND (R.produto_id,R.medida_id,P.precos_id) IN (SELECT produto_id,medida_id,precos_id FROM tabela_precos WHERE coleta_id = '".$coleta."') AND PRO.produto_cesta = '".$oficial."' GROUP BY P.precos_id ORDER BY PRO.produto_id";
+	
+	$res = mysql_query($strsql) or die(mysql_error());
+	
+	if($res && mysql_num_rows($res)>0)
+	{
+		while ($row = mysql_fetch_array($res))
+		{
+			$transformador = $row['racao_minima_transformador'];
+			$quantidade = $row['racao_minima_quantidade'];
+			$media_obs = round_valor($row['media'],2);
+			$media = round_valor(($media_obs*$transformador),2);
+			$total = round_valor(($media*$quantidade),2);
+			$total_coleta += $total;
+				
+			$strsql = "UPDATE tabela_precos SET precos_media_observado = '".$media_obs."',precos_media = '".$media."',precos_total = '".$total."' WHERE coleta_id = '".$coleta."' AND precos_id = '".$row['precos_id']."'";
+			
+			mysql_query($strsql) or die(mysql_error());
+		}
+	}
+	
+	return $total_coleta;
+		
+}
+
+function retorna_variacao_cidades($data_mes,$data_ano,$cidade,$gasto_mensal_cesta)
+{
+	
+		$str = "SELECT A.pesquisa_id,A.cidade_id,A.gasto_mensal_cesta FROM tabela_pesquisas_cidades A,tabela_pesquisas B WHERE EXTRACT(MONTH FROM B.pesquisa_data) = '".$data_mes."' AND EXTRACT(YEAR FROM B.pesquisa_data) = '".$data_ano."' AND A.pesquisa_id = B.pesquisa_id AND A.cidade_id = '".$cidade."'";
+		
+		$res_v = mysql_query($str) or die(mysql_error());
+		$row_v = mysql_fetch_array($res_v);
+		
+		if($row_v['gasto_mensal_cesta'] != NULL && $row_v['gasto_mensal_cesta']>0)
+			$variacao = round_valor((($gasto_mensal_cesta/$row_v['gasto_mensal_cesta'])-1)*100,2);
+		else
+			$variacao = "";
+			
+		return $variacao;
+		
+}			
+
+function isNull($str)
+{
+	return ($str==NULL)?' - ':$str;
+}
+
+function isNegative($str)
+{
+	return ($str<0)?'style="color:#FF3300;"':'';
+}
+
+function isNullBD($str)
+{
+	if($str == '')
+		return "NULL";
+	else
+		return "'".$str."'";
+}
+
+function calcula_crl($salario,$gasto_mensal)
+{
+
+	$crl = round_valor(($gasto_mensal/$salario)*100,2);
+	
+	return $crl;
+}
+
+function calcula_cfa($valor)
+{
+	
+	return round_valor($valor*3,2);
+	
+}
+
+function calcula_qvs($cfa,$salario)
+{
+	
+	return ($salario>0)?round_valor($cfa/$salario,2):0;
+}
+
+function busca_chave($key,$array)
+{
+	for($i=0;$i<count($array);$i++)
+		if($array[$i] == $key)
+			return $i;
+	
+	return -1; 
+ }
+ 
+/*function formata_numero($num)
+{
+	if($num == NULL)
+		return NULL;
+ 	$num = str_replace(".", ",", $num);
+	return $num;
+}
+*/
+function formata_numero($num,$decimal=2,$casas=2,$decimal_separador=','){
+
+    return str_replace('.',$decimal_separador,sprintf('%'.$casas.'.'.$decimal.'f',(float)$num));
+
+}
+?>

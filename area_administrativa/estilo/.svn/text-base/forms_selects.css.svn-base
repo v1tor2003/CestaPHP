@@ -1,0 +1,12 @@
+/* CSS Document */
+input,select,textarea{
+color:#003366;
+background: #EDEFF3;
+border: 1px solid #999999;
+}
+
+.botao_submit{
+margin-left: 3.8em;
+color: #00014e;
+background: #DFE3EE;
+}

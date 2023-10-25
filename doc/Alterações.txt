@@ -1,0 +1,16 @@
+BD
+
+ - Novo relacionamento criado entre tabela_pesquisa_resultados_produtos e tabela_pesquisa_cidades 1:n.
+ - Criado campo pesquisa_data na tabela_pesquisa em substituição aos campos pesquisa_mes e pesquisa_id. Mudança em função da facilidade de manusear datas com funções jah preparadas em SQL.
+
+	(Verificar o arquivo cesta_basica.xml)
+
+Sistema PHP
+
+ - cadastro_pesquisas.php
+
+	- verificação de permissão de fechar um cadeado. Pesquisas com coletas abertas não podem ser fechadas.
+
+ - cadastro_coletas_precos.php
+
+	- Colaco um select para filtrar os estabelecimentos por cidade. 

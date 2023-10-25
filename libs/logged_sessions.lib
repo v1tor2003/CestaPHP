@@ -1,0 +1,25 @@
+<?php
+  //Abre a conexao com o banco de dados
+  
+  //Elimina as sessoes inativas
+  $CurrentTime = time();
+  $strsql = "DELETE FROM tabela_sessao WHERE sessao_tempo<($CurrentTime-1800)";
+  mysqli_query($conn, $strsql);   
+  
+  //Inicia sessao ou recupera os dados da sessao atual
+  session_start();
+  $_sid = session_id();
+  
+  //extraindo dados da sessao do BD
+  $strsql = "SELECT * FROM tabela_sessao WHERE sessao_id = '".$_sid."'";
+  $bd_sessao = mysqli_query($conn, $strsql);
+  
+  //verificando se existem os dados da sessao
+  if($bd_sessao && mysqli_num_rows($bd_sessao)>0){
+    $strsql = "UPDATE tabela_sessao SET sessao_tempo = '".$CurrentTime."'";
+    mysqli_query($conn, $strsql);
+    $bd_sessao = mysql_fetch_array($bd_sessao);
+    $_user = $bd_sessao['sessao_usuario'];  
+	header("location: $PathRedirect");
+  }
+?>

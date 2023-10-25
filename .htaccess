@@ -1,0 +1,50 @@
+#RewriteEngine On
+#RewriteCond %{SERVER_PORT} 80
+#RewriteRule ^(.*)$ https://labbi.uesc.br/cesta/$1 [R,L]
+
+RewriteEngine On
+RewriteRule (login|admin|acesso|area_restrita|area\srestrita)$ login.php 
+
+
+#<Directory "/var/www/cesta">
+#     Options Indexes FollowSymLinks Includes
+#     AllowOverride AuthConfig
+     #AllowOverride All
+
+#     Autenticação de Usuário
+#     AuthName "Acesso ao Cesta"
+#     AuthType Basic
+#     AuthUserFile /etc/apache2/passwd/cesta
+#     require valid-user
+#     Order allow,deny
+#     Allow from all
+#</Directory>
+
+<Limit GET POST>
+    Order allow,deny
+    Allow from all
+</Limit>
+
+<Limit PUT DELETE PATCH PROPPATCH MKCOL COPY MOVE LOCK UNLOCK OPTIONS PROPFIND>
+    Order deny,allow
+    Deny from all
+</Limit>
+
+<FilesMatch ".inc$">
+    Order deny,allow
+    Deny from all
+</FilesMatch>
+
+<FilesMatch ".lib$">
+    Order deny,allow
+    Deny from all
+</FilesMatch>
+
+<FilesMatch ".tpl$">
+    Order deny,allow
+    Deny from all
+</FilesMatch>
+
+AddType application/x-httpd-php .php
+php_value auto_prepend_file globals.inc
+php_value include_path ".:/var/www/html/cesta/libs:/var/www/html/cesta/rtf"

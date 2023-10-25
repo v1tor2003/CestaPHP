@@ -1,0 +1,27 @@
+Data 15/02 – 17/02
+
+	-Abastecimento de coletas no BD.
+
+Data 19/02
+
+	- Título da página cadastro_medidas.php mudado para Cadastro de Unidade de Medidas
+	- Título da página cadastro_delimitador.php mudou para Ração Mínima Essencial e menu lateral do cadastro para C.B. Oficial
+	- O usuário precisa apenas preencher o salário bruto e o desconto sendo o valor líquido gerado automaticamente.
+	-Página visualização_coleta_precos.php teve a tabela com o tamanho ajustado.
+	-Add campo Referência no cadastro dos estabelecimentos.
+
+Data 20/02
+
+	- Modificação na forma de cadastro das medidas na página: cadastro_produtos.php
+	- Abastecimento de coletas Outubro/2007.
+
+Data 21/02 – 22/02
+
+	-Abastecimento de coletas Novembro/2007.
+	- Paginação das páginas cadastro_produtos.php e cadastro_pesquisas.php.
+	-Alterado o formulário da página cadastro_produtos.php 
+	-Verificação dos resultados dos cálculos e comparação com os do Excel.
+	-Colocado o botão Voltar nas páginas add_coletas.php,cadastro_coletas.php e vizualização_pesquisa.php
+
+
+

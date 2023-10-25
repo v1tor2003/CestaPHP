@@ -1,0 +1,497 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/vluzrmos/!svn/ver/122/cesta_basica/area_administrativa
+END
+boletim.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/boletim.php
+END
+menu_superior.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/vluzrmos/!svn/ver/62/cesta_basica/area_administrativa/menu_superior.php
+END
+add_estabelecimentos.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/add_estabelecimentos.php
+END
+resultados_pesquisa.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/resultados_pesquisa.php
+END
+visualizacao_pesquisa_det.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/visualizacao_pesquisa_det.php
+END
+cadastro_pesquisa_cidade.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/cadastro_pesquisa_cidade.php
+END
+resultado_compara.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/resultado_compara.php
+END
+lista_pesquisas_consultas.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/vluzrmos/!svn/ver/52/cesta_basica/area_administrativa/lista_pesquisas_consultas.php
+END
+res_data_referencia.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/res_data_referencia.php
+END
+teste_funcoes.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/vluzrmos/!svn/ver/30/cesta_basica/area_administrativa/teste_funcoes.php
+END
+add_varias_coletas.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/add_varias_coletas.php
+END
+edita_pesquisa_n_det.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/vluzrmos/!svn/ver/30/cesta_basica/area_administrativa/edita_pesquisa_n_det.php
+END
+cadastro_tipos_produtos.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/cadastro_tipos_produtos.php
+END
+grafico_por_referencia.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/grafico_por_referencia.php
+END
+res_grafico_por_produto.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/res_grafico_por_produto.php
+END
+compara_produtos.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/compara_produtos.php
+END
+cadastro_coletas_precos_simples.php
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/cadastro_coletas_precos_simples.php
+END
+cadastro_salario_minimo.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/cadastro_salario_minimo.php
+END
+menu_lateral_boletim.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/vluzrmos/!svn/ver/30/cesta_basica/area_administrativa/menu_lateral_boletim.php
+END
+info_prod_oficiais.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/vluzrmos/!svn/ver/30/cesta_basica/area_administrativa/info_prod_oficiais.php
+END
+cadastro_coletas_precos.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/cadastro_coletas_precos.php
+END
+altera_medida_produto.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/vluzrmos/!svn/ver/48/cesta_basica/area_administrativa/altera_medida_produto.php
+END
+edicao_delimitadores.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/edicao_delimitadores.php
+END
+res_compara_produtos.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/res_compara_produtos.php
+END
+att_data_coletas.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/att_data_coletas.php
+END
+res_grafico_por_cidade.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/res_grafico_por_cidade.php
+END
+visualizacao_coleta_precos.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/visualizacao_coleta_precos.php
+END
+cadastro_pesquisas.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/cadastro_pesquisas.php
+END
+cadastro_racao_minima.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/cadastro_racao_minima.php
+END
+cabecalho.php
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/cabecalho.php
+END
+add_coletas.php
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/add_coletas.php
+END
+add_precos.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/add_precos.php
+END
+visualizacao_pesquisa.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/visualizacao_pesquisa.php
+END
+gra_custo_cesta.php
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/vluzrmos/!svn/ver/30/cesta_basica/area_administrativa/gra_custo_cesta.php
+END
+vis_produtos_oficiais.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/vluzrmos/!svn/ver/30/cesta_basica/area_administrativa/vis_produtos_oficiais.php
+END
+cadastro_estabelecimentos.php
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/cadastro_estabelecimentos.php
+END
+grafico_por_produto.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/grafico_por_produto.php
+END
+index.php
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/index.php
+END
+rodape.php
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/vluzrmos/!svn/ver/30/cesta_basica/area_administrativa/rodape.php
+END
+info_dados_pesquisa.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/vluzrmos/!svn/ver/30/cesta_basica/area_administrativa/info_dados_pesquisa.php
+END
+topo.php
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/vluzrmos/!svn/ver/30/cesta_basica/area_administrativa/topo.php
+END
+info_medidas.php
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/vluzrmos/!svn/ver/30/cesta_basica/area_administrativa/info_medidas.php
+END
+vis_produtos_n_oficiais.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/vluzrmos/!svn/ver/30/cesta_basica/area_administrativa/vis_produtos_n_oficiais.php
+END
+consulta_por_data_referencia.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/consulta_por_data_referencia.php
+END
+add_produtos.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/add_produtos.php
+END
+arquivar_boletins.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/arquivar_boletins.php
+END
+procura_bairros.php
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/vluzrmos/!svn/ver/30/cesta_basica/area_administrativa/procura_bairros.php
+END
+edita_pesquisa - Cópia.php
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/vluzrmos/!svn/ver/30/cesta_basica/area_administrativa/edita_pesquisa%20-%20C%C3%B3pia.php
+END
+edita_pesquisa.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/vluzrmos/!svn/ver/30/cesta_basica/area_administrativa/edita_pesquisa.php
+END
+edita_precos.php
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/vluzrmos/!svn/ver/48/cesta_basica/area_administrativa/edita_precos.php
+END
+cadastro_pesquisas_antigas.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/cadastro_pesquisas_antigas.php
+END
+menu_lateral_consultas.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/vluzrmos/!svn/ver/30/cesta_basica/area_administrativa/menu_lateral_consultas.php
+END
+globals.inc
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/vluzrmos/!svn/ver/30/cesta_basica/area_administrativa/globals.inc
+END
+graficos_consulta.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/graficos_consulta.php
+END
+boletim_rtf.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/vluzrmos/!svn/ver/30/cesta_basica/area_administrativa/boletim_rtf.php
+END
+lista_pesquisas.php
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/vluzrmos/!svn/ver/53/cesta_basica/area_administrativa/lista_pesquisas.php
+END
+cadastro_coletas.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/cadastro_coletas.php
+END
+edita_coleta.php
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/vluzrmos/!svn/ver/30/cesta_basica/area_administrativa/edita_coleta.php
+END
+add_coletas_cidades.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/add_coletas_cidades.php
+END
+procura_estabelecimentos.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/vluzrmos/!svn/ver/30/cesta_basica/area_administrativa/procura_estabelecimentos.php
+END
+add_pesquisas_det.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/add_pesquisas_det.php
+END
+lista_pesquisas_n_det.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/vluzrmos/!svn/ver/48/cesta_basica/area_administrativa/lista_pesquisas_n_det.php
+END
+menu_lateral_coletas.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/vluzrmos/!svn/ver/30/cesta_basica/area_administrativa/menu_lateral_coletas.php
+END
+grafico_por_cidade.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/grafico_por_cidade.php
+END
+consulta_por_produto.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/consulta_por_produto.php
+END
+gasto_no_ano_cesta.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/vluzrmos/!svn/ver/30/cesta_basica/area_administrativa/gasto_no_ano_cesta.php
+END
+cadastro_usuarios.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/cadastro_usuarios.php
+END
+res_consulta_por_produto.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/res_consulta_por_produto.php
+END
+cadastro_produtos.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/cadastro_produtos.php
+END
+gra_preco_produtos.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/vluzrmos/!svn/ver/30/cesta_basica/area_administrativa/gra_preco_produtos.php
+END
+cadastro_precos_cidade.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/cadastro_precos_cidade.php
+END
+info_pesquisa.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/vluzrmos/!svn/ver/30/cesta_basica/area_administrativa/info_pesquisa.php
+END
+cadastro_cronograma.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/cadastro_cronograma.php
+END
+cadastro_cbnoficial.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/cadastro_cbnoficial.php
+END
+menu_lateral_cadastros.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/vluzrmos/!svn/ver/104/cesta_basica/area_administrativa/menu_lateral_cadastros.php
+END
+cadastro_cidades.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/cadastro_cidades.php
+END
+cadastro_delimitador.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/cadastro_delimitador.php
+END
+cadastro_bairros.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/cadastro_bairros.php
+END
+consulta_pesquisas.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/consulta_pesquisas.php
+END
+add_pesquisas.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/add_pesquisas.php
+END
+cadastro_medidas.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/cadastro_medidas.php
+END
+tabelas_boletim.php
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/vluzrmos/!svn/ver/140/cesta_basica/area_administrativa/tabelas_boletim.php
+END

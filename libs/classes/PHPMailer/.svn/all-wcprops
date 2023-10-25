@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/vluzrmos/!svn/ver/156/cesta_basica/libs/classes/PHPMailer
+END
+class.phpmailer.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/vluzrmos/!svn/ver/156/cesta_basica/libs/classes/PHPMailer/class.phpmailer.php
+END
+class.pop3.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/vluzrmos/!svn/ver/156/cesta_basica/libs/classes/PHPMailer/class.pop3.php
+END
+class.smtp.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/vluzrmos/!svn/ver/156/cesta_basica/libs/classes/PHPMailer/class.smtp.php
+END

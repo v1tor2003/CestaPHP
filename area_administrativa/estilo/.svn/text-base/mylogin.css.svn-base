@@ -1,0 +1,90 @@
+/*estilo do menu de login*/
+/*<!--
+Nome: Vagner Luz do Carmo - (nick: Vluzrmos)
+Graduando em Ci&ecirc;ncias da Computa&ccedil;&atilde;o - UESC
+Desenvolvedor WEB: PHP, MySQL, JavaScript, XHTML Strict 1.0
+Celular: +55(73)8128-9319
+Emails: 	vagner_g@hotmail.com ( e msn tamb&eacute;m)
+            vluzrmos@gmail.com    (email principal)
+Ilh&eacute;us-Bahia, Brasil
+-->
+*/
+body *
+{
+    text-align:center;
+    margin: 0 auto 0 auto;
+    font-family:Arial;
+}
+
+
+fieldset
+{ 
+    -moz-border-radius: 15px; /*firefox*/
+    border-radius: 15px; /*chrome*/
+    -webkit-border-radius:15px;/*outros*/
+    position:relative;
+    width:250px;
+    padding:15px 15px 15px 15px;
+    border:2px solid #cccccc;
+    margin-bottom: 16px;
+    background-color:#c7d6e8;
+
+}
+
+input
+{ 
+    -moz-border-radius: 2px; /*firefox*/
+    border-radius: 2px;/*Chrome*/
+    -webkit-border-radius:2px;/*outros*/
+    text-align:left;
+    margin-top:10px;
+}
+
+label
+{
+    font-size:12pt;
+    font-weight:bolder;
+}
+.text
+{
+    color:gray;
+}
+
+#errologin
+{
+    padding:6px;
+    color: red;
+    font-weight:bold;
+    background-color:lightyellow;
+}
+
+
+
+h2
+{ 
+    margin-top: 16px;
+    font-size:18pt;
+    color: #6192cf;
+}
+
+hr
+{
+    border-color: transparent;
+}
+#recsenha
+{
+    float:right;
+    font-size:11px;
+}
+.rodape{
+    margin-top:20px;
+}
+
+a:visited
+{
+    color:blue;
+}
+a
+{
+    text-decoration:none;
+}

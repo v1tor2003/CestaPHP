@@ -1,0 +1,13 @@
+<?php
+  //DADOS PARA CONECTAR AO SERVIDOR MySQL
+  $db_host = "localhost";
+  $db_user = "root";
+  $db_pass = "";
+  $db_name = "cesta_php";
+  //CONEXAO AO SERVIDOR MySQL
+  $conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
+  if (!$conn) die(mysql_error());
+  if (!mysqli_select_db($conn, $db_name)) die(mysql_error());
+  mysqli_set_charset($conn,'utf8');
+  ini_set('default_charset','UTF-8');
+?>

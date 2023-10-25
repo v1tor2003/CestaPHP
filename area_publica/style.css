@@ -1,0 +1,510 @@
+body {
+    font-family: tahoma, helvetica, arial, sans-serif;
+    font-size: 10px;
+    text-align: center;
+    color: #787878;
+}
+
+html, body, #wrapper, h1 {
+    margin: 0;
+    padding: 0;
+}
+
+#wrapper
+{
+    border: 10px solid #0b67c6;
+}
+
+th, td {
+    font-size: 10px;
+}
+
+img { border: 0; }
+
+a {
+    color: #525d8c;
+}
+
+p{
+    text-align:justify;
+}
+
+#wrapper {
+    margin: auto;
+    text-align: left;
+    width: 814px;
+
+}
+
+h1, h2, h3 {
+    font-size: 10px;
+}
+
+
+h1 {
+    line-height: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+h2 {
+    margin: 0 0 5px 0;
+    padding: 0;
+}
+
+h3 {
+    padding: 4px 0 0 0;
+}
+
+.block {
+    display: block;
+}
+
+.clear {
+    clear: both;
+    height: 10px;
+}
+
+.left {
+    float: left;
+    margin: -1px 5px 0px 0px;
+}
+
+.readmore {
+    text-align: right;
+}
+
+#nav {
+    float:left;
+    width:790px;
+
+}
+/*
+#nav ul {
+    list-style: none;
+	margin:0px -50px;
+	width:810px;
+
+
+}
+
+#nav li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    float:left;
+}
+
+#nav a {
+    color: #666;
+    text-decoration: none;
+    display: block;
+    padding: 6px 0 6px 30px;
+}
+
+* html #nav a {
+    width: 100%;
+    w\idth: 76px;
+    padding: 5px 0 5px 30px;
+    padd\ing: 6px 0 6px 30px;
+}
+
+#nav a:hover {
+    background: #5b8c29;
+    color: white;
+}
+*/
+#booking {
+    position: absolute;
+    top: 0;
+    left: 555px;
+    width: 245px;
+    height: 172px;
+    background: #1ab0e7;
+    padding: 0;
+}
+
+#booking h2 {
+    background: #27a2ce;
+    color: #0c4366;
+    border-bottom: 1px solid white;
+    padding: 7px 15px;
+}
+
+#booking .jtype {
+    text-align: center;
+    padding: 0 0.7em 1em 0em;
+}
+
+#booking form {
+    margin: 1.5em 0 0.5em 1.5em;
+    padding: 0;
+}
+
+#booking th, #booking td {
+    text-align: left;
+    padding-right: 7px;
+    padding-bottom: 10px;
+    color: #0c4366;
+}
+
+#booking .text {
+    width: 90px;
+    border: 1px solid #0c8dbd;
+}
+
+#booking .submit {
+    border: 1px solid #0a5f7e;
+    background: #177da2;
+    color: white;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+#booking .advanced {
+    margin-top: 3px;
+    margin-left: 20px;
+}
+
+#booking,
+#booking a {
+    color: #0c4366;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#booking img {
+    float: left;
+    margin-right: 10px;
+    margin-top: 1px;
+}
+
+#main {
+    padding-top: 20px;
+    width: 100%;
+
+}
+
+#main .inner {
+    border-right:1px solid #CCCCCC;
+    float:left;
+    margin:0px 10px;
+    padding-right:20px;
+    width:45%;
+}
+
+#packagesheader {
+    position: absolute;
+    top: 113px;
+    margin-top: 6em;
+    left: 448px;
+}
+
+.equipe
+{
+    color: #b4b4b4;
+    background: url(images/email.png) no-repeat;
+    padding: 5px 0 3px 30px
+}
+
+a.anostyle{
+    color:inherit;
+    text-decoration: none;
+}
+
+a.anostyle1{
+    color:#010F1A;
+    font-size: 1.2em;
+    padding-bottom: 10px;
+}
+
+#packages {
+    float: right;
+    clear: both;
+    width: 315px;
+    padding-top: 143px;
+    margin-top: 6em;
+    margin-right: 18px;
+    line-height: 1.6;
+}
+
+* html #packages {
+    margin-right: 8px;
+}
+
+#packages h2 {
+    margin-left: 0px;
+    background:#000066;
+}
+
+#packages .golden {
+    color: #ba9f35;
+    background: url(images/gold.png) no-repeat;
+    padding: 3px 0 6px 30px;
+}
+
+#packages .silveren {
+    color: #b4b4b4;
+    background: url(images/economia.png) no-repeat;
+    padding: 5px 0 3px 30px;
+}
+
+#special {
+    border-top: 1px solid #ccc;
+    padding: 30px 0 0 0;
+    text-align: center;
+}
+
+#footer {
+    clear: both;
+    background:  #026CAF ;
+    color: white;
+    text-align: center;
+    padding: 7px 0;
+    
+}
+
+.blue {
+    color: #4165af;
+}
+
+.green {
+    color: #598e1e;
+}
+
+.yellow {
+    color: #FFCC00;
+}
+
+
+.msg_atencao
+{
+    color:#FFFF00;
+    font-weight:bold;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+}
+
+/* MENU */
+#MainMenu 
+{
+    height:35px;
+    background:#FFF url(images/bmid_092.gif);
+    border:0;
+    margin:0;
+}
+#tab 
+{
+    top:0;
+    height:0;
+    background:repeat-x top;
+    margin:0px 15px;;
+}
+#tab ul 
+{
+    list-style:none;
+    float:left;
+    margin:0;
+    padding:0;
+}
+#tab li 
+{
+    display:inline;
+    float:left;
+    margin:0;
+    padding:0;
+}
+#tab a 
+{
+    background:#000 url(images/bright_092.gif) no-repeat right top;
+    text-decoration:none;
+    border:0;
+    display:block;
+    float:left;
+    margin:0;
+    padding:0;
+}
+#tab a span 
+{
+    display:block;
+    background:url(images/bleft_092.gif) no-repeat left top;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:11px;
+    color:#FFF;
+    font-weight:700;
+    line-height:35px;
+    padding:0 15px 0 13px;
+}
+#tab a:hover,#tab li.item_active a 
+{
+    background-position:right bottom;
+}
+#tab a:hover span,#tab li.item_active a span 
+{
+    background-position:left bottom;
+    color:#FFF;
+    font-weight:700;
+    font-style:normal;
+    text-decoration:none;
+}
+.dropmenudiv,.dropmenudiv ul,.dropmenudiv li ul 
+{
+    position:absolute;
+    top:0;
+    float:left;
+    display:block;
+    visibility:hidden;
+    border:0;
+    background:#FFF url(images/bmid_092.gif);
+    color:#FFF;
+    z-index:100;
+    text-decoration:none;
+    margin:0;
+    padding:0;
+}
+.dropmenudiv ul 
+{
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+.dropmenudiv li 
+{
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+.dropmenudiv a:link,.dropmenudiv a:visited 
+{
+    width:180px;
+    display:block;
+    border:0;
+    color:#FFF;
+    background:url(images/bleft_092.gif) no-repeat left top;
+    font-weight:700;
+    font-style:normal;
+    text-decoration:none;
+    margin:0;
+    padding:0;
+}
+.dropmenudiv a span 
+{
+    display:block;
+    line-height:35px;
+    background:url(images/bright_092.gif) no-repeat right top;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:11px;
+    color:#FFF;
+    float:none;
+    padding:0 15px 0 13px;
+}
+.dropmenudiv a:hover 
+{
+    border:0;
+    background-position:left bottom;
+    font-weight:700;
+    font-style:normal;
+    text-decoration:none;
+    color:#FFF;
+}
+.dropmenudiv a:hover span 
+{
+    background-position:right bottom;
+    color:#FFF;
+    font-weight:700;
+}
+#restrito
+{
+    float:right;
+}
+
+
+
+.construcao
+{
+    margin:0px auto;
+    text-align: center;
+    font-size:15pt;
+}
+
+.paginacontatos h3
+{
+    font-size:18pt;
+    padding-left: 40px;
+}
+
+.paginacontatos ul li .nivelcontato
+{
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.paginacontatos ul li .email
+{
+    text-decoration:none;
+}
+.paginacontatos ul li .email:hover
+{
+    text-decoration: underline;
+}
+
+.nomainpage{
+  
+    
+}
+.noMainPage #inner {
+    font-size:10pt;
+    padding: 0 20px;
+}
+.noMainPage #inner h1{
+    font-size:12pt;
+}
+.noMainPage #inner h2{
+    font-size:10pt;
+}
+.noMainPage #inner h3{
+    font-size:9pt;
+}
+.noMainPage #inner h4{
+    font-size:8pt;
+}
+.noMainPage #inner h5{
+    font-size:8pt;
+}
+.noMainPage #inner h6{
+    font-size:8pt;
+}
+.noMainPage #inner .title{
+    position:static;
+    
+    margin-bottom:10px;
+}
+
+.noMainPage #inner ul#contatos{
+    padding: 0;
+}
+
+img.social_contact_img {
+    width: 24px;
+    height: 24px;
+    padding-right: 5px;
+}
+
+div.box_selecao{
+    background-color: #026CAF;
+    border-style: outset;
+    min-height: 100px; 
+    padding: 5px;
+}
+
+div.box_selecao a{
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+div.box_selecao p{
+    text-align: center;
+    font-size: 2.5em;
+}

@@ -1,0 +1,11 @@
+<ul>
+	<li><h2>Tabelas</h2></li>
+	<li><a href="compara_produtos.php" title="">Por Cidade</a></li>
+	<li><a href="consulta_por_produto.php" title="">Por Produto</a></li>
+	<li><a href="consulta_por_data_referencia.php" title="">Por Data de Refer&ecirc;ncia</a></li>
+	<li><h2>Gr&aacute;ficos</h2></li>
+	<li><a href="grafico_por_cidade.php" title="">Por Cidade</a></li>
+	<li><a href="grafico_por_produto.php" title="">Por Produto</a></li>
+</ul>	
+<br />
+<br />

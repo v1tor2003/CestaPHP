@@ -1,0 +1,131 @@
+label{
+color: #00014e;
+width: 7.5em;
+float: left;
+text-align: right;
+margin-right: 0.5em;
+padding:0;
+vertical-align:middle;
+}
+
+input,select,textarea{
+color: #00014e;
+background: #EDEFF3;
+border: 1px solid #999999;
+}
+
+.inactive{
+color:#666666;
+background: #e8e8e8;
+}
+
+.active
+{
+background:#FFFFFF;
+}
+
+.botao_submit{
+margin-left: 3.8em;
+color: #00014e;
+background: #DFE3EE;
+}
+
+.botao_cancelar{
+margin-left: 0.5em;
+color: #00014e;
+background: #DFE3EE;
+}
+
+.botao_adicionar
+{
+	background-image: url(../images/add.png);
+	background-repeat:no-repeat;
+}
+
+
+fieldset{
+	position: relative;
+	margin: 2em 10px 10px 0px;
+	padding: 3em 0px 10px 10px;
+	background-color:#FFF;
+	border-width:2px 2px 2px 10px;
+	border-style:solid;
+	border-color:#B5C0CE;
+	overflow: auto;
+	font-family:Arial, Helvetica, sans-serif ;
+	font-size:small;
+	float:left;
+	vertical-align:middle;
+	color:#00014e;	
+}
+
+hr
+{
+	color: #B5C0CE;
+	background:#B5C0CE;
+	margin-bottom:20px;
+	margin-top:20px;
+
+}
+legend{
+	line-height: 100%;
+	/*position:absolute;*/ /*Comentado por Vagner do Carmo*/
+	padding: 3px 5px ;
+	top: 0px;	
+	background-color: #EDEFF3;
+	border-width:1px 1px 1px 10px;
+	border-color:#B5C0CE;
+	border-style:solid;	
+	color:#00014e;
+	font-weight:bold;
+	text-transform:uppercase;
+	font-size:90%;
+	text-align:center;
+
+}
+.obrig{
+  color:#ff0000;
+}
+
+.legend_filtro{
+font-family:Arial, Helvetica, sans-serif ;
+color:#00014e;
+font-weight:bold;
+}
+
+.label_sem_margin
+{
+	color: #00014e;
+	width: 7.5em;
+	float: left;
+	text-align: right;
+	padding:0;
+	vertical-align:middle;
+}
+
+b
+{
+	margin: 0 0 0 10px;
+}
+
+.parte_direita
+{
+	float: right;
+	margin-top:0px;
+	margin-bottom:10px;
+	padding: 0px 80px;
+	width: 80px;
+	color:#00014e;
+}
+
+.parte_esquerda
+{
+	float: left;
+	margin-top:10px;
+	margin-bottom:10px;
+	padding: 0px 0px;
+	width: 340px;
+	color:#00014e;
+}
+
+
