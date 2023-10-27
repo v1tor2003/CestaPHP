@@ -12,7 +12,7 @@ mysqli_set_charset($conn,'utf8');
 /*
  * Classe Data
  */
-include_once CLASS_DATA_PATH;
+include_once "./libs/" . CLASS_DATA_PATH;
 /*
  * Array padroes e definicoes
  */
