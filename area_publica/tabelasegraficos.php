@@ -9,12 +9,13 @@ $thisFile = basename(__FILE__);
  * Variavel com o nome da pasta de recursos para esse arquivo
  */
 $path_recursos = "./tabelasegraficos/";
-@require_once($path_recursos.'utils.php');
-@require_once($path_recursos.'validacao.php');
+require_once $path_recursos.'utils.php';
+require_once $path_recursos.'validacao.php';
 
 $form = array_merge($_POST,$_GET);
 $f = &$form;
 
+error_reporting(E_ERROR | E_PARSE);
 /*
  * Gera data inicial do periodo baseado na quantidade maxima
  * de meses possiveis para os gráficos (GRAFICOS_MAX_MESES)

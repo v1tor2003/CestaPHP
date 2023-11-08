@@ -37,6 +37,7 @@ include ('cabecalho.php');?>
 		  while ($res_boletim_array = mysqli_fetch_array($res_boletim))
 		  {
 				$ano = (int)$res_boletim_array['ano'];
+				if(!isset($lin[$ano])) $lin[$ano] = '';
 				$lin[$ano] .= "<tr ><td><a type=\"aplication/pdf\" href='../boletins/" . $res_boletim_array['boletim_nome'] . "' alt='' title='Clique para visualizar'>".$res_boletim_array['mes']."</a></td></tr>";
 			}
 						

@@ -92,7 +92,7 @@ foreach ($info as $c_nome => $p) {
         $data = "{ name: '{$prod_nome}', data: [ " . substr($data, 0, strrpos($data, ',')) . " ] }";
         $series[] = $data;
     }
-    $chartSeries = "series: [ " . implode($series, ',') . " ]";
+    $chartSeries = "series: [ " . implode(',',$series) . " ]";
 ?>
     <sub>Passe o mouse sobre o gr&aacute;fico para obter mais informa&ccedil;&otilde;es</sub>
     <div  id="<?php echo $container_id; ?>"  class="graficoCidade"></div>
