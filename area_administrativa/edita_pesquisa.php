@@ -16,43 +16,43 @@
 	if($situacao != 0)
 	{
 		
-		// Verifica - se a existência de coletas pertencentes a pesquisa ainda não encerradas
+		// Verifica - se a existï¿½ncia de coletas pertencentes a pesquisa ainda nï¿½o encerradas
 		$strsql = "SELECT * FROM tabela_coletas WHERE pesquisa_id = '".$pesquisa_id."' AND coleta_fechada = '0'";
-		$res = mysql_query($strsql) or die(mysql_error());
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 		
-		if($res && mysql_num_rows($res)>0)
+		if($res && mysqli_num_rows($res)>0)
 			$flag = false;
 		else
 		{
-			//Primeira atualiza para os produtos que compõem a cesta (1) e depois para os que não compõem (0)
-			atualiza_pesquisa(1,$pesquisa_id);
-			atualiza_pesquisa(0,$pesquisa_id);
+			//Primeira atualiza para os produtos que compï¿½em a cesta (1) e depois para os que nï¿½o compï¿½em (0)
+			atualiza_pesquisa(1,$pesquisa_id,$conn);
+			atualiza_pesquisa(0,$pesquisa_id, $conn);
 		}
 		
 	}//else situacao != 0
 	else
 	{
 		$strsql = "DELETE FROM tabela_pesquisa_resultados_produtos WHERE pesquisa_id = ".$pesquisa_id;
-		mysql_query($strsql) or die(mysql_error());
+		mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 		
 		
 		$strsql = "DELETE FROM tabela_pesquisas_cidades WHERE pesquisa_id = '".$pesquisa_id."'";
-		mysql_query($strsql) or die(mysql_error());
+		mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 	}
 		
 	
 	if($flag)
 	{
 		$strsql = "SELECT salario_valor_bruto,salario_id FROM tabela_salarios A WHERE salario_em_uso = '1'";
-		$res = mysql_query($strsql) or die(mysql_error());
-		$row = mysql_fetch_array($res);
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+		$row = mysqli_fetch_array($res);
 		$salario = $row['salario_valor_bruto'];
 		$salario_id = $row['salario_id'];
 			
 		$strsql = "SELECT delimitador_id FROM tabela_delimitador_racao WHERE delimitador_em_uso = '1' AND delimitador_oficial='1'";
 		
-		$res = mysql_query($strsql) or die(mysql_error());
-		$row = mysql_fetch_array($res);
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+		$row = mysqli_fetch_array($res);
 		$delimitador_em_uso = $row['delimitador_id'];
 	
 		$salario_id = isNullBD($salario_id);
@@ -60,34 +60,34 @@
 		
 		$strsql = "UPDATE tabela_pesquisas SET pesquisa_fechada = '".$situacao."',salario_id = ".$salario_id.",delimitador_id = ".$delimitador_em_uso." WHERE pesquisa_id = '".$pesquisa_id."'";
 	
-		mysql_query($strsql) or die(mysql_error());
+		mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 		echo("");
 	}
 	else
 		echo("Pesquisa nao pode ser concluida.\nHa coletas nao finalizadas!");
 		
 		
-	function atualiza_pesquisa($oficial,$pesquisa)
+	function atualiza_pesquisa($oficial,$pesquisa,$conn)
 	{
-			//Se exitirem então deve - se pegar o salario utilizado e o delimitador em uso
+			//Se exitirem entï¿½o deve - se pegar o salario utilizado e o delimitador em uso
 			$strsql = "SELECT salario_valor_bruto,salario_id FROM tabela_salarios A WHERE salario_em_uso = '1'";
-			$res = mysql_query($strsql) or die(mysql_error());
-			$row = mysql_fetch_array($res);
+			$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+			$row = mysqli_fetch_array($res);
 			$salario = $row['salario_valor_bruto'];
 			$salario_id = $row['salario_id'];
 			
 			$strsql = "SELECT delimitador_id FROM tabela_delimitador_racao WHERE delimitador_em_uso = '1' AND delimitador_oficial='".$oficial."'";
 			
-			$res = mysql_query($strsql) or die(mysql_error());
-			$row = mysql_fetch_array($res);
+			$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+			$row = mysqli_fetch_array($res);
 			
 			$delimitador_em_uso = $row['delimitador_id'];
 
-			//Se todas coletas referentes a pesquisa de um determinado mês estiverem fechadas então pega - se o mês e o ano da pesquisa 
+			//Se todas coletas referentes a pesquisa de um determinado mï¿½s estiverem fechadas entï¿½o pega - se o mï¿½s e o ano da pesquisa 
 			$strsql = "SELECT EXTRACT(MONTH FROM pesquisa_data) AS mes_id,EXTRACT(YEAR FROM pesquisa_data)AS pesquisa_ano FROM tabela_pesquisas WHERE pesquisa_id = '".$pesquisa."'";
 			
-			$res = mysql_query($strsql) or die(mysql_error());
-			$row = mysql_fetch_array($res);
+			$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+			$row = mysqli_fetch_array($res);
 			
 			$pesquisa_mes = $row['mes_id'];
 			$pesquisa_ano = $row['pesquisa_ano'];
@@ -95,14 +95,14 @@
 			$data_mes_semestre = formata_mes_semestre($pesquisa_mes,$pesquisa_ano);
 			$data_ano_anterior = formata_ano_anterior($pesquisa_mes,$pesquisa_ano);
 			
-			//Pega - se todas as cidades que compõem o projeto da Cesta Básica
+			//Pega - se todas as cidades que compï¿½em o projeto da Cesta Bï¿½sica
 			$strsql = "SELECT cidade_id FROM tabela_cidades A";
-			$res = mysql_query($strsql) or die(mysql_error());
+			$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 		
-			if($res && mysql_num_rows($res)>0)
-				while ($row = mysql_fetch_array($res))
+			if($res && mysqli_num_rows($res)>0)
+				while ($row = mysqli_fetch_array($res))
 				{
-					//E para cada cidade é realizado os cálculos que serão armazenados na tabela TABELA_PESQUISA_RESULTADOS_PRODUTOS TABELA_PESQUISA_CIDADES 
+					//E para cada cidade ï¿½ realizado os cï¿½lculos que serï¿½o armazenados na tabela TABELA_PESQUISA_RESULTADOS_PRODUTOS TABELA_PESQUISA_CIDADES 
 					$gasto_mensal_cesta = 0;
 					$cidade_id = $row['cidade_id'];
 					$strsql = "SELECT A.coleta_id,A.produto_id, C.produto_nome, AVG( A.precos_media ) AS media_produto,AVG(A.precos_total) AS media_total,D.racao_minima_quantidade FROM tabela_precos A NATURAL JOIN tabela_coletas B NATURAL JOIN tabela_produtos C NATURAL JOIN tabela_racao_minima D WHERE (B.pesquisa_id ='".$pesquisa."' AND B.estabelecimento_id IN (SELECT estabelecimento_id FROM tabela_estabelecimentos A NATURAL JOIN tabela_bairros B WHERE B.cidade_id = '".$cidade_id."')) AND C.produto_cesta = '".$oficial."' AND D.delimitador_id = '".$delimitador_em_uso."' GROUP BY produto_id";
@@ -113,13 +113,13 @@
 					$gasto_mensal = array();
 					$tempo_trabalho = array();
 					
-					$res1 = mysql_query($strsql) or die(mysql_error());
+					$res1 = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 						
-					if($res1 && mysql_num_rows($res1)>0)
+					if($res1 && mysqli_num_rows($res1)>0)
 					{
 						$i=0;
 							
-						while ($row1 = mysql_fetch_array($res1))
+						while ($row1 = mysqli_fetch_array($res1))
 						{
 							$produto_id[$i] = $row1['produto_id'];
 							$preco_medio[$i] = round_valor($row1['media_produto'],2);
@@ -142,7 +142,7 @@
 						{
 							$strsql = "INSERT INTO tabela_pesquisa_resultados_produtos (produto_id,cidade_id,pesquisa_id,produto_preco_medio,produto_preco_total,produto_tempo_trabalho,produto_variacao_mensal,produto_variacao_semestral,produto_variacao_anual) VALUES ('".$produto_id[$i]."','".$cidade_id."','".$pesquisa."','".$preco_medio[$i]."','".$gasto_mensal[$i]."','".$tempo_trabalho[$i]."',".isNullBD($variacao_mensal[$i]).",".isNullBD($variacao_semestral[$i]).",".isNullBD($variacao_no_ano[$i]).")";
 							
-							mysql_query($strsql) or die(mysql_error());
+							mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 						}
 						
 						if($oficial == 1)
@@ -161,10 +161,10 @@
 				
 						$strsql = "INSERT INTO tabela_pesquisas_cidades (cidade_id,pesquisa_id,gasto_mensal_cesta,variacao_mensal,variacao_semestral,variacao_anual,tempo_trabalho) VALUES ('".$cidade_id."','".$pesquisa."','".$gasto_mensal_cesta."',".isNullBD($variacao[0]).",".isNullBD($variacao[1]).",".isNullBD($variacao[2]).",'".$total_trabalho."')";
 									
-							mysql_query($strsql) or die(mysql_error());
+							mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 						}
 						
-				}//if se verifica se há pesquisa em determinada cidade
+				}//if se verifica se hï¿½ pesquisa em determinada cidade
 					
 			}// while que verifica as cidades
 			

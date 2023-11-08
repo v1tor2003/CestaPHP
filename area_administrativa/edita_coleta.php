@@ -1,5 +1,4 @@
 <?php
-
 	$situacao = $_REQUEST['situacao'];
 	$coleta_id = $_REQUEST['hid'];
 	$media = 0;
@@ -12,9 +11,9 @@
 	
 		/**************************************************************************************************************
 		*	
-		*	Ao fechar uma coleta são atualizados os campos precos_media_observado,precos_media e precos_total da 
+		*	Ao fechar uma coleta sï¿½o atualizados os campos precos_media_observado,precos_media e precos_total da 
 		*   tabela_precos de cada produto referente a mesma. 
-		*	1 = produtos da cesta 	0 = produtos que não compõem a cesta
+		*	1 = produtos da cesta 	0 = produtos que nï¿½o compï¿½em a cesta
 		*   
 		**************************************************************************************************************/
 		
@@ -29,13 +28,13 @@
 	//echo($prod_oficial);
 	/**************************************************************************************************************
 	*	
-	*	A tabela_coletas é atualizada para 1(fechada) ou 0(aberta). E também o campo coleta_preco_cesta é 
+	*	A tabela_coletas ï¿½ atualizada para 1(fechada) ou 0(aberta). E tambï¿½m o campo coleta_preco_cesta ï¿½ 
 	*   atualizado.
 	*   
 	**************************************************************************************************************/
 	$strsql = "UPDATE tabela_coletas SET coleta_fechada = '".$situacao."',coleta_preco_cesta ='".$total_coleta."' WHERE coleta_id = '".$coleta_id."'";
 	
 	//die($strsql);
-	mysql_query($strsql) or die(mysql_error());
+	mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 	echo('');
 ?>

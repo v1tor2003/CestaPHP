@@ -23,9 +23,9 @@ require("cabecalho.php");
 		<?php 
 			
 			$strsql = "SELECT * FROM tabela_estabelecimentos A,tabela_bairros B,tabela_cidades C WHERE A.bairro_id = B.bairro_id AND B.cidade_id = C.cidade_id ORDER BY A.estabelecimento_id";
-			$estabelecimentos = mysql_query($strsql) or die(mysql_error());
+			$estabelecimentos = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 							
-			if ($estabelecimentos && mysql_num_rows($estabelecimentos)>0)
+			if ($estabelecimentos && mysqli_num_rows($estabelecimentos)>0)
 			{	
 		?>
 		
@@ -53,7 +53,7 @@ require("cabecalho.php");
 			
 			<?php
 				
-				while ($row = mysql_fetch_array($estabelecimentos))
+				while ($row = mysqli_fetch_array($estabelecimentos))
 				{
 					if($l_cor == '') $l_cor = "par"; else $l_cor = "";
 			 ?>

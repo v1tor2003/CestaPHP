@@ -1,6 +1,6 @@
 <?php 
 	
-	mysql_set_charset('utf8');
+	mysqlii_set_charset($conn,'utf8');
 
 	$action = $_REQUEST['haction'];
 	$produto_id = $_REQUEST['hid'];
@@ -27,10 +27,10 @@
 	
 		$strsql = "SELECT A.produto_id,A.produto_nome,A.produto_cesta,A.produto_nome_visualizacao,B.medida_descricao,B.medida_simbolo,C.medida_id,C.medida_pesquisada,A.produto_tipo FROM tabela_produtos A, tabela_unidade_medidas B, tabela_produtos_medidas C WHERE (A.produto_id = C.produto_id AND C.medida_id = B.medida_id) AND A.produto_id ='".$produto_id."'";
 		
-		$res = mysql_query($strsql) or die(mysql_error());
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 		
-		if ($res && mysql_num_rows($res)>0)	
-			while($row = mysql_fetch_array($res))
+		if ($res && mysqli_num_rows($res)>0)	
+			while($row = mysqli_fetch_array($res))
 			{
 				$produto_nome = $row['produto_nome'];
 				$produto_nome_visualizacao = $row['produto_nome_visualizacao'];
@@ -49,9 +49,9 @@
 		  
 			$strsql = "SELECT * FROM tabela_produtos WHERE produto_nome = '".$produto_nome."' AND produto_id <> '".$produto_id."'";
 			
-			$res = mysql_query($strsql) or die(mysql_error()); 	
+			$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn)); 	
 				
-			if ($res && mysql_num_rows($res)>0)
+			if ($res && mysqli_num_rows($res)>0)
 			  $herr = "Existe outro produto com o mesmo nome.";
 			else
 			{
@@ -75,22 +75,22 @@
 				if ($produto_id!='')
 			  	{
 			  		$strsql = "UPDATE tabela_produtos SET produto_nome = '".$produto_nome."',produto_nome_visualizacao = '".$produto_nome_visualizacao."', produto_cesta= '".$produto_cesta."',produto_tipo= '".$produto_tipo."' WHERE produto_id = '".$produto_id."'"; 					
-					mysql_query($strsql) or die(mysql_error());	
+					mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 				
 					$strsql = "DELETE FROM tabela_produtos_medidas WHERE produto_id = '".$produto_id."'";
-					mysql_query($strsql) or die(mysql_error());
+					mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 				
 			  	} 		
 			  	else
 			  	{
 					$strsql = "INSERT INTO tabela_produtos (produto_nome,produto_nome_visualizacao,produto_cesta,produto_tipo) VALUES ('".$produto_nome."','".$produto_nome_visualizacao."','".$produto_cesta."','".$produto_tipo."')";
 					//die($strsql);
-					mysql_query($strsql) or die(mysql_error());	
+					mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 					
 					
 					$strsql = "SELECT produto_id FROM tabela_produtos WHERE produto_nome = '".$produto_nome."'";
-					$res = mysql_query($strsql) or die(mysql_error());
-					$row = mysql_fetch_array($res);
+					$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+					$row = mysqli_fetch_array($res);
 					$produto_id = $row['produto_id'];	
 				} 	
 				
@@ -104,7 +104,7 @@
 				{
 					
 					$strsql = "INSERT INTO tabela_produtos_medidas (produto_id,medida_id,medida_pesquisada) VALUES ('".$produto_id."','".$medidas[$i]."','".$medidas_pesquisada[$i]."')";
-					mysql_query($strsql) or die(mysql_error());	
+					mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 				}
 				
 			}//fim do else de (num_rows > 0)
@@ -128,10 +128,10 @@
 			{
 			
 				/*$strsql = "DELETE FROM tabela_produtos_medidas WHERE produto_id= '".$produto_id."'";
-				mysql_query($strsql) or die(mysql_error());	*/
+				mysqli_query($conn, $strsql) or die(mysqli_error($conn));	*/
 				
 				$strsql = "DELETE FROM tabela_produtos WHERE produto_id= '".$produto_id."'";
-				mysql_query($strsql) or die(mysql_error());	
+				mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 				
 				
 				header("Location: ".$_SERVER['PHP_SELF']."?hp=".$_REQUEST['hp']);
@@ -141,8 +141,8 @@
 	$records_per_page = 5;		
   	$start_rec = ($_REQUEST['hp']!='') ? $_REQUEST['hp'] : 0;
   	$strsql = "SELECT * FROM tabela_produtos";   
-	$produtos = mysql_query($strsql) or die(mysql_error());
-	$total_rec = mysql_num_rows($produtos);
+	$produtos = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+	$total_rec = mysqli_num_rows($produtos);
 	
 	if ($start_rec>=$total_rec) $start_rec -= $records_per_page;
 	if ($start_rec<0) $start_rec=0;	
@@ -181,9 +181,9 @@ require("cabecalho.php");
 					<?php 
 						  	$strsql = "SELECT * FROM tabela_produtos ORDER BY produto_id LIMIT ".$start_rec.",".$records_per_page;
 
-							$produtos = mysql_query($strsql) or die(mysql_error());
+							$produtos = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 							
-							if ($produtos && mysql_num_rows($produtos)>0){	
+							if ($produtos && mysqli_num_rows($produtos)>0){	
 					?>
 					<table cellspacing="0" id="listTable" summary="Tabela de Produtos" style="width:613px;">
 					<colgroup>
@@ -203,7 +203,7 @@ require("cabecalho.php");
 					</thead>
 						 <?php
 						 	
-							while ($row = mysql_fetch_array($produtos)){
+							while ($row = mysqli_fetch_array($produtos)){
 								if($l_cor == '') $l_cor = "par"; else $l_cor = "";
 						  ?>
 							   <tr class="<?php echo ($l_cor);?>">
@@ -296,10 +296,10 @@ require("cabecalho.php");
 						<?php
 							
 							$strsql = "SELECT * FROM tabela_tipos_produtos";
-							$tipos = mysql_query($strsql) or die(mysql_error());
+							$tipos = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 					
-							if ($tipos && mysql_num_rows($tipos)>0)	
-								while($row = mysql_fetch_array($tipos))
+							if ($tipos && mysqli_num_rows($tipos)>0)	
+								while($row = mysqli_fetch_array($tipos))
 								{
 						?>
 						
@@ -316,15 +316,15 @@ require("cabecalho.php");
 			<?php 
 			
 				$strsql = "SELECT * FROM tabela_unidade_medidas";
-						$med = mysql_query($strsql) or die(mysql_error());
+						$med = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 					
 						$i = 0;
-						if ($med && mysql_num_rows($med)>0){	
+						if ($med && mysqli_num_rows($med)>0){	
 			?>
 				<table class="tabela_produtos" cellpadding="0" cellspacing="0">
 				<caption style="margin-right:270px;">Medidas Pesquisadas</caption>
 				<?				
-						while($row = mysql_fetch_array($med))
+						while($row = mysqli_fetch_array($med))
 						{
 							
 							$checked = '';

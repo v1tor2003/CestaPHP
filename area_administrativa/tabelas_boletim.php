@@ -4,8 +4,8 @@
 	$pesquisa_id = $_REQUEST['hid'];
 	
 	$strsql = "SELECT B.mes_nome,B.mes_id FROM tabela_pesquisas A, tabela_mes B WHERE B.mes_id = EXTRACT(MONTH FROM A.pesquisa_data) AND A.pesquisa_id = '".$pesquisa_id."'";
-	$res = mysql_query($strsql) or die(mysql_error());
-	$row = mysql_fetch_array($res);
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+	$row = mysqli_fetch_array($res);
 	$mes_atual = $row['mes_nome'];
 	$mes_id = $row['mes_id'];
 	$data_mes_anterior = formata_mes_anterior($mes_id,$pesquisa_ano);
@@ -20,9 +20,9 @@
 
 	$strsql = "SELECT * FROM tabela_pesquisas_cidades A,tabela_pesquisas B,tabela_mes C,tabela_salarios D WHERE A.cidade_id = '".$cidade."' AND EXTRACT(YEAR FROM B.pesquisa_data) = '".$pesquisa_ano."' AND EXTRACT(MONTH FROM B.pesquisa_data) = C.mes_id AND A.pesquisa_id = B.pesquisa_id AND B.salario_id = D.salario_id ORDER BY C.mes_id DESC";
 	
-	$res = mysql_query($strsql) or die(mysql_error());
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 
-	while($row = mysql_fetch_array($res))
+	while($row = mysqli_fetch_array($res))
 	{
 		$mes[] = $row['mes_nome'];
 		$gasto_mensal[] = $row['gasto_mensal_cesta'];
@@ -44,11 +44,11 @@
 	
 	$strsql = "SELECT * FROM tabela_pesquisa_resultados_produtos A, tabela_pesquisas B,tabela_produtos C WHERE A.pesquisa_id = B.pesquisa_id AND A.pesquisa_id = '".$pesquisa_id."' AND A.cidade_id = '".$cidade."' AND A.produto_id = C.produto_id ORDER BY A.produto_id";
 	
-	$res = mysql_query($strsql) or die(mysql_error());
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 	
 	$i=0;
 	$prod_gasto_total = 0;
-	while($row = mysql_fetch_array($res))
+	while($row = mysqli_fetch_array($res))
 	{
 		$produto_id[] = $row['produto_id'];
 		$produto[] = $row['produto_nome_visualizacao'];
@@ -76,8 +76,8 @@
 	
 	$strsql = "SELECT * FROM tabela_racao_minima A,tabela_delimitador_racao B,tabela_unidade_medidas C WHERE A.delimitador_id = B.delimitador_id AND B.delimitador_em_uso = '1' AND A.produto_id IN ".$prod_buscar." AND A.racao_minima_medida = C.medida_id GROUP BY A.produto_id";
 
-	$res = mysql_query($strsql) or die(mysql_error());
-	while($row = mysql_fetch_array($res))
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+	while($row = mysqli_fetch_array($res))
 	{
 		$quantidade[] = $row['racao_minima_quantidade'];
 		//$unidade_medida[] = $row['medida_simbolo'];
@@ -85,10 +85,10 @@
 	
 	$strsql = "SELECT * FROM tabela_pesquisa_resultados_produtos A, tabela_pesquisas B,tabela_produtos C WHERE A.pesquisa_id = B.pesquisa_id AND A.pesquisa_id = '".$pesquisa_mes_anterior['pesquisa_id']."' AND A.cidade_id = '".$cidade."' AND A.produto_id = C.produto_id ORDER BY A.produto_id";
 	
-	$res = mysql_query($strsql) or die(mysql_error());
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 	
 	$prod_gasto_total_anterior = 0;
-	while($row = mysql_fetch_array($res))
+	while($row = mysqli_fetch_array($res))
 	{
 		$gasto_mensal_anterior[] = $row['produto_preco_total'];
 		$prod_gasto_total_anterior += $row['produto_preco_total'];
@@ -98,16 +98,16 @@
 		
 		
 	$strsql = "SELECT * FROM tabela_pesquisas A,tabela_salarios B WHERE A.salario_id = B.salario_id AND A.pesquisa_id = '".$pesquisa_id."'";
-	$res = mysql_query($strsql) or die(mysql_error());
-	$row = mysql_fetch_array($res);
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+	$row = mysqli_fetch_array($res);
 	$salario_simbolo = $row['salario_simbolo'];
 	$salario_liquido = $row['salario_valor_liquido'];
 	$salario_bruto = $row['salario_valor_bruto'];
 	
 	$strsql = "SELECT * FROM tabela_pesquisas A,tabela_delimitador_racao B WHERE A.pesquisa_id = '".$pesquisa_id."' AND A.delimitador_id = B.delimitador_id";
 	
-	$res = mysql_query($strsql) or die(mysql_error());
-	$row = mysql_fetch_array($res);
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+	$row = mysqli_fetch_array($res);
 	$delimitador = $row['delimitador_descricao'];
 	
 	$data_aux = formata_mes_anterior($pesquisa_mes_anterior['mes_id'],$pesquisa_mes_anterior['ano']);
@@ -121,8 +121,8 @@
 		
 		$j=0;
 		
-		$res = mysql_query($strsql) or die(mysql_error());
-		while($row = mysql_fetch_array($res))
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+		while($row = mysqli_fetch_array($res))
 		{
 			$analise_prod[$i][$j]['variacao_mensal'] = $row['produto_variacao_mensal']; 
 			$j++;
@@ -134,9 +134,9 @@
 	
 	$strsql = "SELECT * FROM tabela_pesquisas A NATURAL JOIN tabela_pesquisas_cidades B WHERE A.pesquisa_id = '".$pesquisa_id."' AND B.cidade_id = '".$cidade."'";
 	
-	$res = mysql_query($strsql) or die(mysql_error());
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 	
-	while($row = mysql_fetch_array($res))
+	while($row = mysqli_fetch_array($res))
 	{
 		$tot_var_mensal = $row['variacao_mensal'];
 		$tot_var_semestral = $row['variacao_semestral'];

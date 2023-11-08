@@ -7,8 +7,8 @@
 	 
 	if ($action=='edit'){	  
 	  	$strsql = "SELECT * FROM tabela_coletas WHERE coleta_id = '".$coleta_id."'";
-		$res = mysql_query($strsql) or die(mysql_error());
-		$res = mysql_fetch_array($res);
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+		$res = mysqli_fetch_array($res);
 		$coleta_id = $res['coleta_id'];
 		$estabelecimento_id = $res['estabelecimento_id'];
 		$coleta_data = formata_data($res['coleta_data'],1);
@@ -20,9 +20,9 @@
 	  
 		$strsql = "SELECT * FROM tabela_coletas WHERE (estabelecimento_id= '".$estabelecimento_id."' AND coleta_data= '".$coleta_data."') AND (coleta_id <> '".$coleta_id."') AND pesquisa_id = ".$pesquisa_id;
 	  
-	  $res = mysql_query($strsql) or die(mysql_error()); 		
+	  $res = mysqli_query($conn, $strsql) or die(mysqli_error($conn)); 		
 		
-		if ($res && mysql_num_rows($res)>0)
+		if ($res && mysqli_num_rows($res)>0)
 		  $herr = "Existe outra coleta no mesmo estabelecimento e data.";
 		else{
 		  
@@ -32,7 +32,7 @@
 		    $strsql = "INSERT INTO tabela_coletas (estabelecimento_id,pesquisa_id,coleta_data) VALUES ('".$estabelecimento_id."','".$pesquisa_id."','".$coleta_data."')";
 			
 			
-			mysql_query($strsql) or die(mysql_error());	
+			mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 			
 			$coleta_id = '';
 			$estabelecimento_id = '';
@@ -49,13 +49,13 @@
 	if ($action=='del'){
                 
                 $strsql = "DELETE FROM tabela_precos WHERE coleta_id = '$coleta_id'";
-                mysql_query($strsql) or die(mysql_error() . " - SQL: " . $strsql . " - Arquivo: " . __FILE__ . " - Linha: " . __LINE__);
+                mysqli_query($conn, $strsql) or die(mysqli_error($conn) . " - SQL: " . $strsql . " - Arquivo: " . __FILE__ . " - Linha: " . __LINE__);
                 
                 $strsql = "DELETE FROM tabela_coleta_est_sec WHERE coleta_id = '$coleta_id'";
-                mysql_query($strsql) or die(mysql_error() . " - SQL: " . $strsql . " - Arquivo: " . __FILE__ . " - Linha: " . __LINE__);
+                mysqli_query($conn, $strsql) or die(mysqli_error($conn) . " - SQL: " . $strsql . " - Arquivo: " . __FILE__ . " - Linha: " . __LINE__);
                 
 	  	$strsql = "DELETE FROM tabela_coletas WHERE coleta_id = '".$coleta_id."'";
-		mysql_query($strsql) or die(mysql_error() . " - SQL: " . $strsql . " - Arquivo: " . __FILE__ . " - Linha: " . __LINE__);
+		mysqli_query($conn, $strsql) or die(mysqli_error($conn) . " - SQL: " . $strsql . " - Arquivo: " . __FILE__ . " - Linha: " . __LINE__);
                 
 		header("Location: cadastro_coletas.php?pesquisa_id=".$pesquisa_id);
 	}
@@ -82,10 +82,10 @@ require("cabecalho.php");
 			<!-- Contedo referente a esta pgina -->
 			<?php 
 						  	$strsql = "SELECT B.mes_nome,EXTRACT(YEAR FROM A.pesquisa_data) AS pesquisa_ano FROM tabela_pesquisas A, tabela_mes B WHERE EXTRACT(MONTH FROM A.pesquisa_data) = B.mes_id AND A.pesquisa_id = '".$pesquisa_id."'";
-							$pesquisas = mysql_query($strsql) or die(mysql_error());
+							$pesquisas = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 							
-					if ($pesquisas && mysql_num_rows($pesquisas)>0){
-						$row = mysql_fetch_array($pesquisas)	
+					if ($pesquisas && mysqli_num_rows($pesquisas)>0){
+						$row = mysqli_fetch_array($pesquisas)	
 					?>
 					<h1 id="Mcaption" style="text-align:left">Pesquisa: <?php echo ($row['mes_nome']."/".$row['pesquisa_ano']); ?> <a href="cadastro_coletas.php?pesquisa_id=<?php echo($pesquisa_id);?>"><img style=" float:right; border:none; margin-right:15px;" src="images/seta_azul.png" ></a></h1>
 					<?php } ?>
@@ -117,17 +117,17 @@ require("cabecalho.php");
 							{
 								$strsql = "SELECT * FROM tabela_cidades A,tabela_estabelecimentos B,tabela_bairros C WHERE C.bairro_id = B.bairro_id AND C.cidade_id = A.cidade_id AND B.estabelecimento_id = '".$estabelecimento_id."'";
 								//die($strsql);
-								$cidade = mysql_query($strsql) or die(mysql_error());
-								$row = mysql_fetch_array($cidade);
+								$cidade = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+								$row = mysqli_fetch_array($cidade);
 								$cidade_id = $row['cidade_id'];
 							}
 							
 							
 							$strsql = "SELECT * FROM tabela_cidades";
-							$cidades = mysql_query($strsql) or die(mysql_error());
+							$cidades = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 					
-							if ($cidades && mysql_num_rows($cidades)>0)	
-								while($row = mysql_fetch_array($cidades))
+							if ($cidades && mysqli_num_rows($cidades)>0)	
+								while($row = mysqli_fetch_array($cidades))
 								{
 						?>
 						
@@ -149,10 +149,10 @@ require("cabecalho.php");
 						<?php if($action == 'edit'){ 
 						
 						$strsql = "SELECT * FROM tabela_estabelecimentos A,tabela_cidades B,tabela_bairros C WHERE (A.bairro_id = C.bairro_id AND B.cidade_id = C.cidade_id) AND B.cidade_id = '".$cidade_id."'";
-						$estabelecimentos = mysql_query($strsql) or die(mysql_error());
+						$estabelecimentos = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 					
-						if ($estabelecimentos && mysql_num_rows($estabelecimentos)>0)	
-							while($row = mysql_fetch_array($estabelecimentos))
+						if ($estabelecimentos && mysqli_num_rows($estabelecimentos)>0)	
+							while($row = mysqli_fetch_array($estabelecimentos))
 							{?>
 							<option value="<?php echo($row['estabelecimento_id']); ?>" <?php if($estabelecimento_id == $row['estabelecimento_id']){?>selected="selected" <?php } ?>  > <?php echo ($row['estabelecimento_nome']." (".$row['bairro_nome'].")");?></option>
 							

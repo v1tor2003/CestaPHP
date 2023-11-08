@@ -4,18 +4,18 @@
 	
 /********************************************************************************************************************************
 *
-*	Dados da primeira tabela do boletim que mostra o gasto e variação mensal de cada cidade
+*	Dados da primeira tabela do boletim que mostra o gasto e variaï¿½ï¿½o mensal de cada cidade
 *
 ********************************************************************************************************************************/
 
 	$strsql = "SELECT B.mes_nome,EXTRACT(YEAR FROM A.pesquisa_data) AS pesquisa_ano,B.mes_id FROM tabela_pesquisas A, tabela_mes B WHERE EXTRACT(MONTH FROM A.pesquisa_data) = B.mes_id AND A.pesquisa_id = '".$pesquisa_id."'";
 	
 	
-	$pesquisas = mysql_query($strsql) or die(mysql_error());
+	$pesquisas = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 								
-	if ($pesquisas && mysql_num_rows($pesquisas)>0)
+	if ($pesquisas && mysqli_num_rows($pesquisas)>0)
 	{
-		$row = mysql_fetch_array($pesquisas);
+		$row = mysqli_fetch_array($pesquisas);
 				
 		$mes_atual = utf8_encode($row['mes_nome']);
 		$pesquisa_mes = $row['mes_id'];
@@ -32,11 +32,11 @@
 	$variacao_mensal = array();
 	$gasto_mes_anterior = array();
 	
-	$res = mysql_query($strsql) or die(mysql_error());
-	if($res && mysql_num_rows($res)>0)
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+	if($res && mysqli_num_rows($res)>0)
 	{
 	
-		while($row = mysql_fetch_array($res))
+		while($row = mysqli_fetch_array($res))
 		{
 			$cidade_id[] = $row['cidade_id'];
 			$cidade_nome[] = $row['cidade_nome'];
@@ -48,9 +48,9 @@
 		{
 			$strsql = "SELECT A.pesquisa_id,A.gasto_mensal_cesta,A.variacao_mensal,C.cidade_id FROM tabela_pesquisas_cidades A,tabela_pesquisas B,tabela_cidades C WHERE A.cidade_id = C.cidade_id AND A.pesquisa_id = '".$pesquisa_id."' AND A.pesquisa_id = B.pesquisa_id AND A.cidade_id = '".$cidade_id[$i]."'";
 			
-			$res1 = mysql_query($strsql) or die(mysql_error());
+			$res1 = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 			
-			while($row1 = mysql_fetch_array($res1))
+			while($row1 = mysqli_fetch_array($res1))
 			{				
 				array_push($gasto_mes_atual,str_replace(".", ",", isNull($row1['gasto_mensal_cesta'])));
 				array_push($variacao_mensal,str_replace(".", ",", isNull($row1['variacao_mensal']))); 
@@ -58,9 +58,9 @@
 			
 			$strsql = "SELECT A.pesquisa_id,A.cidade_id,A.gasto_mensal_cesta FROM tabela_pesquisas_cidades A,tabela_pesquisas B WHERE A.pesquisa_id = B.pesquisa_id AND B.pesquisa_id = '".$pesquisa_mes_anterior['pesquisa_id']."'";
 			
-			$res1 = mysql_query($strsql) or die(mysql_error());
+			$res1 = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 			
-			while($row1 = mysql_fetch_array($res1))
+			while($row1 = mysqli_fetch_array($res1))
 				array_push($gasto_mes_anterior,isNull($row1['gasto_mensal_cesta']));
 			
 		}
@@ -69,7 +69,7 @@
 	
 /**********************************************************************************************************
 *
-*	Pequisa para a tabela com o G.M., Variações e CRL de todos os meses do ano da pesquisa solicitada.
+*	Pequisa para a tabela com o G.M., Variaï¿½ï¿½es e CRL de todos os meses do ano da pesquisa solicitada.
 *
 **********************************************************************************************************/
 
@@ -78,9 +78,9 @@
 	
 		$strsql = "SELECT * FROM tabela_pesquisas_cidades A,tabela_pesquisas B,tabela_mes C,tabela_salarios D WHERE A.cidade_id = '".$cidade_id[$a]."' AND EXTRACT(YEAR FROM B.pesquisa_data) = '".$pesquisa_ano."' AND EXTRACT(MONTH FROM B.pesquisa_data) = C.mes_id AND A.pesquisa_id = B.pesquisa_id AND B.salario_id = D.salario_id ORDER BY C.mes_id DESC";
 		
-		$res = mysql_query($strsql) or die(mysql_error());
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 		
-		while($row = mysql_fetch_array($res))
+		while($row = mysqli_fetch_array($res))
 		{
 			$mes[] = $row['mes_nome'];
 			$gasto_mensal[$a][] = str_replace(".", ",", isNull($row['gasto_mensal_cesta']));
@@ -103,10 +103,10 @@
 	{
 		$strsql = "SELECT * FROM tabela_pesquisa_resultados_produtos A, tabela_pesquisas B,tabela_produtos C WHERE  A.pesquisa_id = B.pesquisa_id AND A.pesquisa_id = '".$pesquisa_id."' AND A.cidade_id = '".$cidade_id[$j]."' AND A.produto_id = C.produto_id AND C.produto_cesta = '1' ORDER BY A.produto_id";
 
-		$res = mysql_query($strsql) or die(mysql_error());
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 		
 		$i=0;
-		while($row = mysql_fetch_array($res))
+		while($row = mysqli_fetch_array($res))
 		{
 			$produto_id[$j][] = $row['produto_id'];
 			$produto[$j][] = $row['produto_nome_visualizacao'];
@@ -132,8 +132,8 @@
 		
 		$strsql = "SELECT * FROM tabela_racao_minima A,tabela_delimitador_racao B,tabela_unidade_medidas C WHERE A.delimitador_id = B.delimitador_id AND B.delimitador_em_uso = '1' AND A.produto_id IN ".$prod_buscar." AND A.racao_minima_medida = C.medida_id GROUP BY A.produto_id";
 	
-		$res = mysql_query($strsql) or die(mysql_error());
-		while($row = mysql_fetch_array($res))
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+		while($row = mysqli_fetch_array($res))
 		{
 			$quantidade[] = str_replace(".", ",", $row['racao_minima_quantidade']);
 			$prod_medida[] = $row['medida_simbolo'];
@@ -142,9 +142,9 @@
 		$strsql = "SELECT * FROM tabela_pesquisa_resultados_produtos A, tabela_pesquisas B,tabela_produtos C WHERE A.pesquisa_id = B.pesquisa_id AND A.pesquisa_id = '".$pesquisa_mes_anterior['pesquisa_id']."' AND A.cidade_id = '".$cidade_id[$j]."' AND A.produto_id = C.produto_id AND C.produto_cesta = '1' ORDER BY A.produto_id";
 		
 		//die($strsql);
-		$res = mysql_query($strsql) or die(mysql_error());
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 		
-		while($row = mysql_fetch_array($res))
+		while($row = mysqli_fetch_array($res))
 		{
 			$gasto_mensal_anterior[$j][] = str_replace(".", ",", isNull($row['produto_preco_total']));
 			$preco_medio_anterior[$j][] = str_replace(".", ",", isNull($row['produto_preco_medio']));
@@ -153,9 +153,9 @@
 		
 		$strsql = "SELECT * FROM tabela_pesquisas A NATURAL JOIN tabela_pesquisas_cidades B WHERE A.pesquisa_id = '".$pesquisa_id."' AND B.cidade_id = '".$cidade_id[$j]."'";
 		//die($strsql);
-		$res = mysql_query($strsql) or die(mysql_error());
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 		
-		while($row = mysql_fetch_array($res))
+		while($row = mysqli_fetch_array($res))
 		{
 			$preco_mensal_total[$j] = str_replace(".", ",", $row['gasto_mensal_cesta']);
 			$tot_var_mensal[$j] = str_replace(".", ",", isNull($row['variacao_mensal']));
@@ -164,27 +164,27 @@
 			$tot_tempo_trabalho[$j] = $row['tempo_trabalho'];
 		}
 		
-	}// for com informações de cada cidade
+	}// for com informaï¿½ï¿½es de cada cidade
 
 
 
 /************************************************************************************************************************/
 
 	$strsql = "SELECT * FROM tabela_pesquisas A,tabela_salarios B WHERE A.salario_id = B.salario_id AND A.pesquisa_id = '".$pesquisa_id."'";
-	$res = mysql_query($strsql) or die(mysql_error());
-	$row = mysql_fetch_array($res);
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+	$row = mysqli_fetch_array($res);
 	$salario_simbolo = $row['salario_simbolo'];
 	$salario_liquido = $row['salario_valor_liquido'];
 	$salario_bruto = $row['salario_valor_bruto'];
 	
 	$strsql = "SELECT * FROM tabela_pesquisas A,tabela_delimitador_racao B WHERE A.pesquisa_id = '".$pesquisa_id."' AND A.delimitador_id = B.delimitador_id";
 	
-	$res = mysql_query($strsql) or die(mysql_error());
-	$row = mysql_fetch_array($res);
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+	$row = mysqli_fetch_array($res);
 	$delimitador = $row['delimitador_descricao'];
 
 
-	$legenda_tabelas = "Cesta BÃ¡sica de acordo com o Decreto-Lei nº 399 de 30 de abril de 1938, que instituiu as Comissoes do Salario Minimo.<br>Fonte: Projeto de extensao Acompanhamento do Custo da Cesta Basica - ACCB/UESC.";
+	$legenda_tabelas = "Cesta BÃ¡sica de acordo com o Decreto-Lei nï¿½ 399 de 30 de abril de 1938, que instituiu as Comissoes do Salario Minimo.<br>Fonte: Projeto de extensao Acompanhamento do Custo da Cesta Basica - ACCB/UESC.";
 	//VariaÃ§Ã£o Mensal Cesta BÃ¡sica PreÃ§o MÃ©dio
 	
 	//////////////

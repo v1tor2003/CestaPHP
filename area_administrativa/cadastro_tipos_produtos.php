@@ -6,8 +6,8 @@
 
 	if ($action=='edit'){	  
 	  	$strsql = "SELECT * FROM tabela_tipos_produtos WHERE tipo_id = '".$tipo_id."'";
-		$res = mysql_query($strsql) or die(mysql_error());
-		$res = mysql_fetch_array($res);
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+		$res = mysqli_fetch_array($res);
 		$tipo_id = $res['tipo_id'];
 		$tipo_nome = $res['tipo_nome'];
 	}
@@ -15,9 +15,9 @@
 	if ($action=='save'){	  
 	  
 	  $strsql = "SELECT * FROM tabela_tipos_produtos WHERE tipo_nome= '".$tipo_nome."' AND tipo_id <> '".$tipo_id."'";
-	  $res = mysql_query($strsql) or die(mysql_error()); 		
+	  $res = mysqli_query($conn, $strsql) or die(mysqli_error($conn)); 		
 		
-		if ($res && mysql_num_rows($res)>0)
+		if ($res && mysqli_num_rows($res)>0)
 		  $herr = "Existe outro tipo de produto com a mesma descrição.";
 		else{
 		  
@@ -26,7 +26,7 @@
 		  else
 		    $strsql = "INSERT INTO tabela_tipos_produtos (tipo_nome) VALUES ('".$tipo_nome."')";
 			
-			mysql_query($strsql) or die(mysql_error());	
+			mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 			
 			$tipo_id = '';
 			$tipo_nome = '';
@@ -36,7 +36,7 @@
 	
 	if ($action=='del'){
 	  $strsql = "DELETE FROM tabela_tipos_produtos WHERE tipo_id = '".$tipo_id."'";
-		mysql_query($strsql) or die(mysql_error());	
+		mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 		header("Location:".$_SERVER['PHP_SELF']);
 	}
 
@@ -61,9 +61,9 @@ require("cabecalho.php");
 			<!-- Conteúdo referente a esta página -->
 					<?php 
 						  	$strsql = "SELECT * FROM tabela_tipos_produtos";
-							$tipos = mysql_query($strsql) or die(mysql_error());
+							$tipos = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 							
-					if ($tipos && mysql_num_rows($tipos)>0){	
+					if ($tipos && mysqli_num_rows($tipos)>0){	
 					?>
 					<h1 id="Mcaption" style="text-align:left">Cadastro de Tipos de Produtos</h1>
 					<table cellspacing="0" id="listTable" summary="Tabela de Tipos" style="width:533px;">
@@ -81,7 +81,7 @@ require("cabecalho.php");
 					</thead>
 						 <?php
 						 	
-							while ($row = mysql_fetch_array($tipos)){
+							while ($row = mysqli_fetch_array($tipos)){
 								if($l_cor == '') $l_cor = "par"; else $l_cor = "";
 						  ?>
 							   <tr class="<?php echo ($l_cor);?>">

@@ -75,10 +75,10 @@ require("cabecalho.php");
                             <select name="produtos" id="produtos" style="width:180px;">
                                 <?php
                                 $strsql = "SELECT * FROM tabela_produtos WHERE produto_cesta = '1'";
-                                $res = mysql_query($strsql) or die(mysql_error());
+                                $res = mysqli_query($conn, $strsql) or die(mysqli_error());
 
-                                if ($res || mysql_num_rows($res))
-                                    while ($row = mysql_fetch_array($res)) {
+                                if ($res || mysqli_num_rows($res))
+                                    while ($row = mysqli_fetch_array($res)) {
                                 ?>
                                         <option value="<?php echo($row['produto_id']); ?>"><?php echo($row['produto_nome_visualizacao']); ?></option>
                                 <?php
@@ -117,10 +117,10 @@ require("cabecalho.php");
                             <select name="cidade_id" id="cidade_id" multiple="multiple" size="6" style="width:140px;">
 <?php
                                 $strsql = "SELECT * FROM tabela_cidades";
-                                $cidades = mysql_query($strsql) or die(mysql_error());
+                                $cidades = mysqli_query($conn, $strsql) or die(mysqli_error());
 
-                                if ($cidades && mysql_num_rows($cidades) > 0)
-                                    while ($row = mysql_fetch_array($cidades)) {
+                                if ($cidades && mysqli_num_rows($cidades) > 0)
+                                    while ($row = mysqli_fetch_array($cidades)) {
 ?>
 
                                         <option value="<?php echo($row['cidade_id']); ?>" > <?php echo ($row['cidade_nome']); ?></option>

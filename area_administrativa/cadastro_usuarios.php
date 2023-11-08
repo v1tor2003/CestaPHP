@@ -1,8 +1,8 @@
 <?php
 
   	$usuario_id = addslashes(htmlspecialchars($_REQUEST['hid']));
-	$usuario_nome = mysql_escape_string(addslashes(htmlspecialchars($_REQUEST['usuario_nome'])));
-	$usuario_email = mysql_escape_string(addslashes(htmlspecialchars($_REQUEST['usuario_email'])));
+	$usuario_nome = mysqli_escape_string($conn, addslashes(htmlspecialchars($_REQUEST['usuario_nome'])));
+	$usuario_email = mysqli_escape_string($conn, addslashes(htmlspecialchars($_REQUEST['usuario_email'])));
 	$usuario_senha = addslashes(htmlspecialchars($_REQUEST['usuario_senha']));
 	$action = addslashes(htmlspecialchars($_REQUEST['haction']));
 	$herr = '';
@@ -10,8 +10,8 @@
 	if ($action=='edit')
 	{	  
 	  	$strsql = "SELECT * FROM tabela_usuarios WHERE usuario_id = '".$usuario_id."'";
-		$res = mysql_query($strsql) or die(mysql_error());
-		$res = mysql_fetch_array($res);
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+		$res = mysqli_fetch_array($res);
 		$usuario_id = $res['usuario_id'];
 		$usuario_nome = $res['usuario_nome'];
 		$usuario_email = $res['usuario_email'];
@@ -23,9 +23,9 @@
 	  
 	 	$strsql = "SELECT * FROM tabela_usuarios WHERE usuario_nome= '".$usuario_nome."' AND usuario_id <> '".$usuario_id."'";
 		$sqlemail = "SELECT * FROM tabela_usuarios WHERE usuario_email='".$usuario_email."'";
-	  	$res = mysql_query($strsql) or die(mysql_error()); 		
-		$resEmail = mysql_query($sqlemail) or die(mysql_error());
-		if ($res && mysql_num_rows($res)>0)
+	  	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn)); 		
+		$resEmail = mysqli_query($conn, $sqlemail) or die(mysqli_error($conn));
+		if ($res && mysqli_num_rows($res)>0)
 			$herr = "Existe outro usu�rio com o mesmo nome!";
 		else
 		{
@@ -34,7 +34,7 @@
 		  	else
 		    	$strsql = "INSERT INTO tabela_usuarios (usuario_nome,usuario_senha,usuario_email) VALUES ('".$usuario_nome."','".$usuario_senha."','".$usuario_email."')";
 			
-			mysql_query($strsql) or die(mysql_error());	
+			mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 			
 			$usuario_id = '';
 			$usuario_nome = '';
@@ -48,7 +48,7 @@
 	if ($action=='del')
 	{
 	 	$strsql = "DELETE FROM tabela_usuarios WHERE usuario_id = '".$usuario_id."'";
-		mysql_query($strsql) or die(mysql_error());	
+		mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 		header("Location:".$_SERVER['PHP_SELF']);
 		die();
 	}
@@ -75,10 +75,10 @@ require("cabecalho.php");
 					
 					<?php 
 						$strsql = "SELECT * FROM tabela_usuarios";
-						$usuarios = mysql_query($strsql) or die(mysql_error());
+						$usuarios = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 							
 						/*Se houverem usuário cadastrados é construída a tabela de listagem de usuário */
-						if ($usuarios && mysql_num_rows($usuarios)>0)
+						if ($usuarios && mysqli_num_rows($usuarios)>0)
 						{	
 					?>
 					
@@ -101,7 +101,7 @@ require("cabecalho.php");
 					
 					<?php
 						
-						while ($row = mysql_fetch_array($usuarios))
+						while ($row = mysqli_fetch_array($usuarios))
 						{
 							if($l_cor == '') $l_cor = "par"; else $l_cor = "";
 					?>

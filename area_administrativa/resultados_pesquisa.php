@@ -21,11 +21,11 @@
 			<?php 
 				
 				$strsql = "SELECT A.pesquisa_id,B.mes_nome,EXTRACT(YEAR FROM A.pesquisa_data) AS pesquisa_ano,B.mes_id FROM tabela_pesquisas A, tabela_mes B WHERE EXTRACT(MONTH FROM A.pesquisa_data) = B.mes_id AND A.pesquisa_id = '".$pesquisa_id."'";
-				$pesquisas = mysql_query($strsql) or die(mysql_error());
+				$pesquisas = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 							
-					if ($pesquisas && mysql_num_rows($pesquisas)>0)
+					if ($pesquisas && mysqli_num_rows($pesquisas)>0)
 					{
-						$row = mysql_fetch_array($pesquisas);
+						$row = mysqli_fetch_array($pesquisas);
 						
 					$mes_atual = $row['mes_nome'];
 					$pesquisa_mes = $row['mes_id'];
@@ -41,8 +41,8 @@
 			}// if do titulo da pesquisa 
 				
 				$strsql = "SELECT A.salario_id,B.pesquisa_id,A.salario_simbolo FROM tabela_salarios A,tabela_pesquisas B WHERE A.salario_id = B.salario_id AND B.pesquisa_id = '".$pesquisa_id."'";
-				$salario = mysql_query($strsql) or die(mysql_error());
-				$row = mysql_fetch_array($salario);
+				$salario = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+				$row = mysqli_fetch_array($salario);
 			?>
 <h2 id="subtitulos" style="text-align:left">Custo da Cesta B&aacute;sica &nbsp;&nbsp;(<?php echo("em ".$row['salario_simbolo']); ?> )</h2>
 
@@ -54,11 +54,11 @@
 	$variacao_mensal = array();
 	$gasto_mes_anterior = array();
 	
-	$res = mysql_query($strsql) or die(mysql_error());
-	if($res && mysql_num_rows($res)>0)
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+	if($res && mysqli_num_rows($res)>0)
 	{
 	
-		while($row = mysql_fetch_array($res))
+		while($row = mysqli_fetch_array($res))
 		{
 			$cidade_id[] = $row['cidade_id'];
 			$cidade_nome[] = $row['cidade_nome'];
@@ -70,9 +70,9 @@
 		{
 			$strsql = "SELECT A.pesquisa_id,A.gasto_mensal_cesta,A.variacao_mensal,C.cidade_id FROM tabela_pesquisas_cidades A,tabela_pesquisas B,tabela_cidades C WHERE A.cidade_id = C.cidade_id AND A.pesquisa_id = '".$pesquisa_id."' AND A.pesquisa_id = B.pesquisa_id AND A.cidade_id = '".$cidade_id[$i]."'";
 			
-			$res1 = mysql_query($strsql) or die(mysql_error());
+			$res1 = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 			
-			while($row1 = mysql_fetch_array($res1))
+			while($row1 = mysqli_fetch_array($res1))
 			{				
 				array_push($gasto_mes_atual,formata_numero($row1['gasto_mensal_cesta']));
 				array_push($variacao_mensal,formata_numero($row1['variacao_mensal'])); 
@@ -80,9 +80,9 @@
 			
 			$strsql = "SELECT A.pesquisa_id,A.cidade_id,A.gasto_mensal_cesta FROM tabela_pesquisas_cidades A,tabela_pesquisas B WHERE A.pesquisa_id = B.pesquisa_id AND B.pesquisa_id = '".$pesquisa_mes_anterior['pesquisa_id']."'";
 			
-			$res1 = mysql_query($strsql) or die(mysql_error());
+			$res1 = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 			
-			while($row1 = mysql_fetch_array($res1))
+			while($row1 = mysqli_fetch_array($res1))
 				array_push($gasto_mes_anterior,formata_numero($row1['gasto_mensal_cesta']));
 			
 		}
@@ -131,10 +131,10 @@
 						<?php
 							
 							$strsql = "SELECT * FROM tabela_cidades";
-							$cidades = mysql_query($strsql) or die(mysql_error());
+							$cidades = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 					
-							if ($cidades && mysql_num_rows($cidades)>0)	
-								while($row = mysql_fetch_array($cidades))
+							if ($cidades && mysqli_num_rows($cidades)>0)	
+								while($row = mysqli_fetch_array($cidades))
 								{
 						?>
 						

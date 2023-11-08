@@ -7,8 +7,8 @@
 
 	if ($action=='edit'){	  
 	  	$strsql = "SELECT * FROM tabela_bairros WHERE bairro_id = '".$bairro_id."'";
-		$res = mysql_query($strsql) or die(mysql_error());
-		$res = mysql_fetch_array($res);
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+		$res = mysqli_fetch_array($res);
 		$bairro_id = $res['bairro_id'];
 		$bairro_nome = $res['bairro_nome'];
 		$cidade_id = $res['cidade_id'];
@@ -17,13 +17,13 @@
 	if ($action=='save'){	  
 	  
 	  $strsql = "SELECT * FROM tabela_bairros WHERE (bairro_nome= '".$bairro_nome."' AND bairro_id <> '".$bairro_id."') AND cidade_id = '".$cidade_id."'";
-	  $res = mysql_query($strsql) or die(mysql_error()); 		
+	  $res = mysqli_query($conn, $strsql) or die(mysqli_error($conn)); 		
 		
-		if ($res && mysql_num_rows($res)>0)
+		if ($res && mysqli_num_rows($res)>0)
 		{
 		  $strsql = "SELECT * FROM tabela_cidades WHERE cidade_id = '".$cidade_id."'";
-		  $res = mysql_query($strsql) or die(mysql_error());
-		  $res = mysql_fetch_array($res);
+		  $res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+		  $res = mysqli_fetch_array($res);
 		  $herr = "Existe outro bairro com o mesmo nome em ".$res['cidade_nome'];
 		}
 		else{
@@ -36,7 +36,7 @@
 			
 			//die($strsql);
 			
-			mysql_query($strsql) or die(mysql_error());	
+			mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 			
 			$bairro_id = '';
 			$bairro_nome = '';
@@ -47,7 +47,7 @@
 	
 	if ($action=='del'){
 	  $strsql = "DELETE FROM tabela_bairros WHERE bairro_id = '".$bairro_id."'";
-		mysql_query($strsql) or die(mysql_error());	
+		mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 		header("Location:".$_SERVER['PHP_SELF']);
 		die();
 	}
@@ -73,9 +73,9 @@ require("cabecalho.php");
 			<!-- Conteúdo referente a esta página -->
 					<?php 
 						  	$strsql = "SELECT * FROM tabela_bairros A, tabela_cidades B WHERE A.cidade_id = B.cidade_id";
-							$bairros = mysql_query($strsql) or die(mysql_error());
+							$bairros = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 							
-					if ($bairros && mysql_num_rows($bairros)>0){	
+					if ($bairros && mysqli_num_rows($bairros)>0){	
 					?>
 					<h1 id="Mcaption" style="text-align:left">Cadastro de Bairros</h1>
 					<table cellspacing="0" id="listTable" summary="Tabela de Bairros" style="width:533px;">
@@ -95,7 +95,7 @@ require("cabecalho.php");
 					</thead>
 						 <?php
 						 	
-							while ($row = mysql_fetch_array($bairros)){
+							while ($row = mysqli_fetch_array($bairros)){
 								if($l_cor == '') $l_cor = "par"; else $l_cor = "";
 						  ?>
 							   <tr class="<?php echo ($l_cor);?>">
@@ -145,10 +145,10 @@ require("cabecalho.php");
 						<?php
 							
 							$strsql = "SELECT * FROM tabela_cidades";
-							$cidades = mysql_query($strsql) or die(mysql_error());
+							$cidades = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 					
-							if ($cidades && mysql_num_rows($cidades)>0)	
-								while($row = mysql_fetch_array($cidades))
+							if ($cidades && mysqli_num_rows($cidades)>0)	
+								while($row = mysqli_fetch_array($cidades))
 								{
 						?>
 						

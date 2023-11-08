@@ -14,8 +14,8 @@
 	{	  
 	  	$strsql = "SELECT * FROM tabela_racao_minima A,tabela_unidade_medidas B,tabela_produtos C WHERE A.delimitador_id = '".$delimitador_id."' AND (A.produto_id = '".$produto_id."' AND A.medida_id = '".$medida_id."') AND (A.medida_id = B.medida_id AND A.produto_id = C.produto_id)";
 	
-		$res = mysql_query($strsql) or die(mysql_error());
-		$res = mysql_fetch_array($res);
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+		$res = mysqli_fetch_array($res);
 		$racao_minima_quantidade = $res['racao_minima_quantidade'];
 		$transformador = $res['racao_minima_transformador'];
 		$produto_id = $res['produto_id'];
@@ -35,7 +35,7 @@
 			$strsql = "INSERT INTO tabela_racao_minima (racao_minima_quantidade,racao_minima_transformador,produto_id,delimitador_id,racao_minima_medida,medida_id) VALUES ('".$racao_minima_quantidade."','".$transformador."','".$aux[0]."','".$delimitador_id."','".$racao_minima_medida."','".$aux[1]."')";
 			
 			
-			mysql_query($strsql) or die(mysql_error());	
+			mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 			
 			$produto_id = '';
 			$racao_minima_quantidade = '';
@@ -50,7 +50,7 @@
 	if ($action=='del')
 	{
 	  $strsql = "DELETE FROM tabela_racao_minima WHERE delimitador_id = '".$delimitador_id."' AND (produto_id='".$produto_id."' AND medida_id = '".$medida_id."')";
-		mysql_query($strsql) or die(mysql_error());	
+		mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 		header("Location:".$_SERVER['PHP_SELF']."?delimitador_id=".$delimitador_id );
 
 	}
@@ -77,12 +77,12 @@ require("cabecalho.php");
 		<?php 
 			
 			$strsql = "SELECT * FROM tabela_delimitador_racao WHERE delimitador_id = '".$delimitador_id."'";
-			$delimitador = mysql_query($strsql) or die(mysql_error());
+			$delimitador = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 							
-			if ($delimitador && mysql_num_rows($delimitador)>0)
+			if ($delimitador && mysqli_num_rows($delimitador)>0)
 			{
 				
-				$row = mysql_fetch_array($delimitador)	
+				$row = mysqli_fetch_array($delimitador)	
 		?>
 		
 		
@@ -93,9 +93,9 @@ require("cabecalho.php");
 		
 			$strsql = "SELECT * FROM tabela_racao_minima A,tabela_unidade_medidas B,tabela_produtos C WHERE (A.medida_id= B.medida_id AND A.produto_id = C.produto_id) AND delimitador_id = '".$delimitador_id."' ORDER BY A.produto_id";
 							
-			$produtos = mysql_query($strsql) or die(mysql_error());
+			$produtos = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 							
-			if ($produtos && mysql_num_rows($produtos)>0)
+			if ($produtos && mysqli_num_rows($produtos)>0)
 			{	
 		
 		?>
@@ -123,7 +123,7 @@ require("cabecalho.php");
 						 
 			<?php
 					 	
-					while ($row = mysql_fetch_array($produtos))
+					while ($row = mysqli_fetch_array($produtos))
 					{
 						if($l_cor == '') $l_cor = "par"; else $l_cor = "";
 			?>
@@ -135,8 +135,8 @@ require("cabecalho.php");
 						<?php
 							
 							$strsql = "SELECT * FROM tabela_unidade_medidas WHERE medida_id = '".$row['racao_minima_medida']."'";
-								 $medida = mysql_query($strsql) or die(mysql_error());
-								 $row1 = mysql_fetch_array($medida);	
+								 $medida = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+								 $row1 = mysqli_fetch_array($medida);	
 								?>
 								 <td class="tdboder"><?php echo($row['racao_minima_quantidade']. " (".$row1['medida_simbolo'].")"); ?></td>
 								 <td class="tdboder"><?php echo($row['racao_minima_transformador']); ?></td>
@@ -190,10 +190,10 @@ require("cabecalho.php");
 						}
 						
 								
-						$produtos = mysql_query($strsql) or die(mysql_error());
+						$produtos = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 					
-						if ($produtos && mysql_num_rows($produtos)>0)	
-							while($row = mysql_fetch_array($produtos))
+						if ($produtos && mysqli_num_rows($produtos)>0)	
+							while($row = mysqli_fetch_array($produtos))
 							{
 						?>
 						<option value="<?php echo($row['produto_id']."/".$row['medida_id']); ?>" <?php if($produto_id == $row['produto_id'] && ($medida_id == $row['medida_id'])){?>selected="selected" <?php } ?>  > <?php echo ($row['produto_nome']." (".$row['medida_simbolo'].")");?></option>
@@ -214,11 +214,11 @@ require("cabecalho.php");
 					<?php
 							
 						$strsql = "SELECT * FROM tabela_unidade_medidas";
-						$medidas = mysql_query($strsql) or die(mysql_error());
+						$medidas = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 					
 						
-						if ($medidas && mysql_num_rows($medidas)>0)	
-						while($row = mysql_fetch_array($medidas))
+						if ($medidas && mysqli_num_rows($medidas)>0)	
+						while($row = mysqli_fetch_array($medidas))
 						{
 			
 					?>

@@ -18,13 +18,13 @@
 	
 		$strsql = "DELETE FROM tabela_pesquisa_resultados_produtos WHERE pesquisa_id = ".$pesquisa_id." AND cidade_id = ".$cidade_id;
 		
-		$res = mysql_query($strsql) or die(mysql_error());
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 		
 		for($i=0;$i<count($codigo);$i++)
 		{
 			$strsql = "INSERT INTO tabela_pesquisa_resultados_produtos(produto_id,produto_preco_medio,pesquisa_id,cidade_id) VALUES ('".$codigo[$i]."','".$precos[$i]."','".$pesquisa_id."','".$cidade_id."')";	
 			
-			$res = mysql_query($strsql) or die(mysql_error());
+			$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 	
 		}
 		
@@ -41,7 +41,7 @@
 		for($i=0;$i<count($produto_selecionados);$i++)
 		{
 			$strsql = "INSERT INTO tabela_pesquisa_resultados_produtos (produto_id,cidade_id,pesquisa_id) VALUES ('".$produto_selecionados[$i]."','".$cidade_id."','".$pesquisa_id."')";	
-			$res = mysql_query($strsql) or die(mysql_error());
+			$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 						
 		}
 		
@@ -55,7 +55,7 @@
 		
 		$strsql = "DELETE FROM tabela_pesquisa_resultados_produtos WHERE cidade_id = '".$cidade_id."' AND produto_id = '".$produto_id."' AND pesquisa_id = '".$pesquisa_id."'";
 	
-		mysql_query($strsql) or die(mysql_error());	
+		mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 		header("Location:".$_SERVER['PHP_SELF']."?hid=".$cidade_id."&rpp=".$records_per_page."&pid=".$pesquisa_id);	
 				
 	}
@@ -67,8 +67,8 @@
 	
 	$strsql = "SELECT * FROM tabela_produtos B NATURAL JOIN tabela_pesquisa_resultados_produtos P WHERE P.pesquisa_id = '".$pesquisa_id."' AND P.cidade_id = '".$cidade_id."'  LIMIT ".$start_rec.",".$records_per_page;
  
-  	$produtos = mysql_query($strsql) or die(mysql_error());
-  	$total_rec = mysql_num_rows($produtos);
+  	$produtos = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+  	$total_rec = mysqli_num_rows($produtos);
 	if ($start_rec>=$total_rec) $start_rec -= $records_per_page;
 	if ($start_rec<0) $start_rec=0;	
   	$last_rec = ($start_rec + $records_per_page > $total_rec) ? $total_rec : $start_rec + $records_per_page;  
@@ -104,21 +104,21 @@ require("cabecalho.php");
 			
 			$strsql = "SELECT B.mes_nome,EXTRACT(YEAR FROM A.pesquisa_data) AS pesquisa_ano FROM tabela_pesquisas A, tabela_mes B WHERE EXTRACT(MONTH FROM A.pesquisa_data) = B.mes_id AND A.pesquisa_id = '".$pesquisa_id."'";
 			
-			$pesquisas = mysql_query($strsql) or die(mysql_error());
-			if ($pesquisas && mysql_num_rows($pesquisas)>0)
+			$pesquisas = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+			if ($pesquisas && mysqli_num_rows($pesquisas)>0)
 			{
-				$row = mysql_fetch_array($pesquisas);
+				$row = mysqli_fetch_array($pesquisas);
 				
 				$detalhes = $row['mes_nome']." / ".$row['pesquisa_ano']; 
 			}	
 					
 			$strsql = "SELECT * FROM tabela_cidades WHERE cidade_id = '".$cidade_id."' ";
 					
-			$coletas = mysql_query($strsql) or die(mysql_error());
+			$coletas = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 							
-			if ($coletas && mysql_num_rows($coletas)>0)
+			if ($coletas && mysqli_num_rows($coletas)>0)
 			{
-				$row = mysql_fetch_array($coletas);		
+				$row = mysqli_fetch_array($coletas);		
 				$cidade_nome = $row['cidade_nome'];
 						
 			}
@@ -134,10 +134,10 @@ require("cabecalho.php");
 				$strsql = "SELECT * FROM tabela_produtos B NATURAL JOIN tabela_pesquisa_resultados_produtos P WHERE P.pesquisa_id = '".$pesquisa_id."' AND P.cidade_id = '".$cidade_id."'  LIMIT ".$start_rec.",".$records_per_page;
 				
 				
-				$produtos = mysql_query($strsql) or die(mysql_error());
-				if ($produtos && mysql_num_rows($produtos)>0){
+				$produtos = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+				if ($produtos && mysqli_num_rows($produtos)>0){
 				
-				$qtd_prod = mysql_num_rows($produtos);
+				$qtd_prod = mysqli_num_rows($produtos);
 			?>
 			<form method="post" action="<?php echo($_SERVER['PHP_SELF']); ?>">
 			<a href="<?php echo('cadastro_coletas.php?pesquisa_id='.$pesquisa_id); ?>"> </a>
@@ -158,7 +158,7 @@ require("cabecalho.php");
 					</tr>
 				</thead>
 				<?php
-						while ($row = mysql_fetch_array($produtos))
+						while ($row = mysqli_fetch_array($produtos))
 						{
 			
 							if($l_cor == '') 
@@ -236,10 +236,10 @@ require("cabecalho.php");
 						
 					$strsql = "SELECT * FROM tabela_produtos A WHERE (A.produto_id) NOT IN (SELECT produto_id FROM tabela_pesquisa_resultados_produtos WHERE pesquisa_id = '".$pesquisa_id."' AND cidade_id = '".$cidade_id."') ORDER BY A.produto_id";
 					
-					$produtos = mysql_query($strsql) or die(mysql_error());
+					$produtos = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 					
-					if ($produtos && mysql_num_rows($produtos)>0)	
-						while($row = mysql_fetch_array($produtos))
+					if ($produtos && mysqli_num_rows($produtos)>0)	
+						while($row = mysqli_fetch_array($produtos))
 								{
 					?>
 						

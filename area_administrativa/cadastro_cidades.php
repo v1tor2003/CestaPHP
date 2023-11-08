@@ -6,8 +6,8 @@
 
 	if ($action=='edit'){	  
 	  	$strsql = "SELECT * FROM tabela_cidades WHERE cidade_id = '".$cidade_id."'";
-		$res = mysql_query($strsql) or die(mysql_error());
-		$res = mysql_fetch_array($res);
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+		$res = mysqli_fetch_array($res);
 		$cidade_id = $res['cidade_id'];
 		$cidade_nome = $res['cidade_nome'];
 	}
@@ -15,9 +15,9 @@
 	if ($action=='save'){	  
 	  
 	  $strsql = "SELECT * FROM tabela_cidades WHERE cidade_nome= '".$cidade_nome."' AND cidade_id <> '".$cidade_id."'";
-	  $res = mysql_query($strsql) or die(mysql_error()); 		
+	  $res = mysqli_query($conn, $strsql) or die(mysqli_error($conn)); 		
 		
-		if ($res && mysql_num_rows($res)>0)
+		if ($res && mysqli_num_rows($res)>0)
 		  $herr = "Existe outra cidade com o mesmo nome.";
 		else{
 		
@@ -31,7 +31,7 @@
 			
 			//die($strsql);
 			
-			mysql_query($strsql) or die(mysql_error());	
+			mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 			
 			$cidade_id = '';
 			$cidade_nome = '';
@@ -41,7 +41,7 @@
 	
 	if ($action=='del'){
 	  $strsql = "DELETE FROM tabela_cidades WHERE cidade_id = '".$cidade_id."'";
-		mysql_query($strsql) or die(mysql_error());	
+		mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 		header("Location:".$_SERVER['PHP_SELF']);
 		die();
 	}
@@ -67,9 +67,9 @@ require("cabecalho.php");
 			<!-- Conteúdo referente a esta página -->
 					<?php 
 						  	$strsql = "SELECT * FROM tabela_cidades";
-							$cidades = mysql_query($strsql) or die(mysql_error());
+							$cidades = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 							
-					if ($cidades && mysql_num_rows($cidades)>0){	
+					if ($cidades && mysqli_num_rows($cidades)>0){	
 					?>
 					<h1 id="Mcaption" style="text-align:left">Cadastro de Cidades</h1>
 					<table cellspacing="0" id="listTable" summary="Tabela de Cidades" style="width:533px;">
@@ -87,7 +87,7 @@ require("cabecalho.php");
 					</thead>
 						 <?php
 						 	
-							while ($row = mysql_fetch_array($cidades)){
+							while ($row = mysqli_fetch_array($cidades)){
 								if($l_cor == '') $l_cor = "par"; else $l_cor = "";
 						  ?>
 							   <tr class="<?php echo ($l_cor);?>">

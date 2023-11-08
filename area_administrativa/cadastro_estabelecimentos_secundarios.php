@@ -23,9 +23,9 @@ require("cabecalho.php");
 		<?php 
 			
 			$strsql = "SELECT * FROM tabela_estabelecimentos_secundarios ORDER BY estabelecimento_sec_id";
-			$estabelecimentos = mysql_query($strsql) or die(mysql_error());
+			$estabelecimentos = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 							
-			if ($estabelecimentos && mysql_num_rows($estabelecimentos)>0)
+			if ($estabelecimentos && mysqli_num_rows($estabelecimentos)>0)
 			{	
 		?>
 		
@@ -47,7 +47,7 @@ require("cabecalho.php");
 			
 			<?php
 				
-				while ($row = mysql_fetch_array($estabelecimentos))
+				while ($row = mysqli_fetch_array($estabelecimentos))
 				{
 					if($l_cor == '') $l_cor = "par"; else $l_cor = "";
 			 ?>

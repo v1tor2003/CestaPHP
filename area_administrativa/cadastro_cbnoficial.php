@@ -12,8 +12,8 @@
 	{
 		  
 	  	$strsql = "SELECT * FROM tabela_delimitador_racao WHERE delimitador_id = '".$delimitador_id."'";
-		$res = mysql_query($strsql) or die(mysql_error());
-		$res = mysql_fetch_array($res);
+		$res = mysqli_query($conn, $conn, $strsql) or die(mysqli_error($conn));
+		$res = mysqli_fetch_array($res);
 		$delimitador_id = $res['delimitador_id'];
 		$delimitador_descricao = $res['delimitador_descricao'];
 		$delimitador_data = formata_data($res['delimitador_data_registro'],1);
@@ -25,9 +25,9 @@
 	{	  
 	  
 		$strsql = "SELECT * FROM tabela_delimitador_racao WHERE (delimitador_descricao= '".$delimitador_descricao."' AND delimitador_id <> '".$delimitador_id."') ";
-	  	$res = mysql_query($strsql) or die(mysql_error()); 		
+	  	$res = mysqli_query($conn, $conn, $strsql) or die(mysqli_error($conn)); 		
 		
-		if ($res && mysql_num_rows($res)>0)
+		if ($res && mysqli_num_rows($res)>0)
 			$herr = "Existe outro delimitador com a mesma descri��o.";
 		else
 		{
@@ -36,9 +36,9 @@
 			{
 			
 				$strsql = "SELECT * FROM tabela_delimitador_racao WHERE (delimitador_em_uso= '1' AND delimitador_oficial='0' AND delimitador_id <> '".$delimitador_id."') ";
-				$res = mysql_query($strsql) or die(mysql_error()); 	
+				$res = mysqli_query($conn, $conn, $strsql) or die(mysqli_error($conn)); 	
 				
-				if ($res && mysql_num_rows($res)>0)
+				if ($res && mysqli_num_rows($res)>0)
 				{
 				  $herr = "Existe outro delimitador em uso!";
 				  $flag = false;
@@ -54,7 +54,7 @@
 				else//Vamos a insertar
 					$strsql = "INSERT INTO tabela_delimitador_racao (delimitador_descricao,delimitador_data_registro,delimitador_em_uso,delimitador_oficial) VALUES ('".$delimitador_descricao."','".$delimitador_data."','".$delimitador_em_uso."','0')";
 					
-				mysql_query($strsql) or die(mysql_error());	
+				mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 					
 				$delimitador_id = '';
 				$delimitador_descricao = '';
@@ -69,10 +69,10 @@
 	if ($action=='del')
 	{
 		$strsql = "DELETE FROM tabela_racao_minima WHERE delimitador_id = '".$delimitador_id."'";
-		mysql_query($strsql) or die(mysql_error());	
+		mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 		
 	  	$strsql = "DELETE FROM tabela_delimitador_racao WHERE delimitador_id = '".$delimitador_id."'";
-		mysql_query($strsql) or die(mysql_error());	
+		mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 		header("Location:".$_SERVER['PHP_SELF']);
 	}
 
@@ -100,9 +100,9 @@ require("cabecalho.php");
 				<?php
 				 
 				$strsql = "SELECT * FROM tabela_delimitador_racao WHERE delimitador_oficial = 0";
-				$delimitador = mysql_query($strsql) or die(mysql_error());
+				$delimitador = mysqli_query($conn, $conn, $strsql) or die(mysqli_error($conn));
 							
-				if ($delimitador && mysql_num_rows($delimitador)>0)
+				if ($delimitador && mysqli_num_rows($delimitador)>0)
 				{	
 				?>
 					<table cellspacing="0" id="listTable" summary="Tabela de Delimitadores" style="width:563px;">
@@ -122,7 +122,7 @@ require("cabecalho.php");
 					</thead>
 				<?php
 						 	
-					while ($row = mysql_fetch_array($delimitador))
+					while ($row = mysqli_fetch_array($delimitador))
 					{
 								
 						if($l_cor == '') 

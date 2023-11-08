@@ -16,7 +16,7 @@
 		for($i=0;$i<$qt;$i++)
 		{
 			 $strsql = "UPDATE tabela_coletas SET coleta_data = '".formata_data($coletas[$i],2)."' WHERE coleta_id = '".$ids[$i]."'"; 			 
-			 $res = mysql_query($strsql) or die(mysql_error());
+			 $res = mysqli_query($conn,$strsql) or die(mysqli_error($conn));
 		}
 		
 		header("Location: cadastro_coletas.php?pesquisa_id=".$pesquisa_id);
@@ -28,11 +28,11 @@
 	
 	$strsql = "SELECT * FROM tabela_coletas NATURAL JOIN tabela_estabelecimentos NATURAL JOIN tabela_bairros WHERE pesquisa_id = '".$pesquisa_id."' AND coleta_data = '0000-00-00'";
 	
-	$res = mysql_query($strsql) or die(mysql_error());
+	$res = mysqli_query($conn,$strsql) or die(mysqli_error($conn));
 					
 	
-	if ($res && mysql_num_rows($res)>0)	
-	while($row = mysql_fetch_array($res))
+	if ($res && mysqli_num_rows($res)>0)	
+	while($row = mysqli_fetch_array($res))
 	{
 		$estabelecimento_id[] = $row['estabelecimento_id'];
 		$coleta[] = $row['coleta_id'];
@@ -65,10 +65,10 @@ require("cabecalho.php");
 			<!-- Contedo referente a esta pgina -->
 			<?php 
 						  	$strsql = "SELECT B.mes_nome,EXTRACT(YEAR FROM A.pesquisa_data) AS pesquisa_ano FROM tabela_pesquisas A, tabela_mes B WHERE EXTRACT(MONTH FROM A.pesquisa_data) = B.mes_id AND A.pesquisa_id = '".$pesquisa_id."'";
-							$pesquisas = mysql_query($strsql) or die(mysql_error());
+							$pesquisas = mysqli_query($conn,$strsql) or die(mysqli_error($conn));
 							
-					if ($pesquisas && mysql_num_rows($pesquisas)>0){
-						$row = mysql_fetch_array($pesquisas)	
+					if ($pesquisas && mysqli_num_rows($pesquisas)>0){
+						$row = mysqli_fetch_array($pesquisas)	
 					?>
 					<h1 id="Mcaption" style="text-align:left">Pesquisa: <?php echo ($row['mes_nome']."/".$row['pesquisa_ano']); ?> <a href="cadastro_coletas.php?pesquisa_id=<?php echo($pesquisa_id);?>"><img style=" float:right; border:none; margin-right:15px;" src="images/seta_azul.png" ></a></h1>
 					<?php } ?>

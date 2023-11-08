@@ -12,7 +12,7 @@
 	$strsql =  "UPDATE tabela_precos SET medida_id = '".$medida."' WHERE precos_id = '".$precos_id."' AND produto_id = '".$produto."'"; 
 	
 	
-	$res = mysql_query($strsql) or die(mysql_error()); 
+	$res = mysqli_query($conn,$strsql) or die(mysqli_error($conn)); 
 	
 	echo('Medida alterada com sucesso!');
 

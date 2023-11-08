@@ -23,10 +23,10 @@ require("cabecalho.php");
 			<!-- Contedo referente a esta pgina -->
 					<?php 
 					$strsql = "SELECT B.mes_nome,EXTRACT(YEAR FROM A.pesquisa_data) AS pesquisa_ano FROM tabela_pesquisas A, tabela_mes B WHERE EXTRACT(MONTH FROM A.pesquisa_data) = B.mes_id AND A.pesquisa_id = '".$pesquisa_id."'";
-					$pesquisas = mysql_query($strsql) or die(mysql_error());
+					$pesquisas = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 							
-					if ($pesquisas && mysql_num_rows($pesquisas)>0){
-						$row = mysql_fetch_array($pesquisas)	
+					if ($pesquisas && mysqli_num_rows($pesquisas)>0){
+						$row = mysqli_fetch_array($pesquisas)	
 					?>
 					<h1 id="Mcaption" style="text-align:left">Pesquisa: <?php echo ($row['mes_nome']."/".$row['pesquisa_ano']); ?><a href="cadastro_pesquisas.php"><img style=" float:right; border:none; margin-right:5px;" src="images/seta_azul.png" ></a></h1>
 					<h1 id="Mcaption" style="text-align:left">Cadastro de Coletas</h1>
@@ -36,11 +36,11 @@ require("cabecalho.php");
 					<?php 
 						  	$strsql = "SELECT * FROM tabela_coletas A, tabela_estabelecimentos B,tabela_cidades C,tabela_bairros D WHERE A.pesquisa_id = '".$pesquisa_id."' AND (A.estabelecimento_id = B.estabelecimento_id) AND (B.bairro_id = D.bairro_id) AND (D.cidade_id = C.cidade_id) ORDER BY A.coleta_id,B.estabelecimento_nome";
 							
-							$coletas = mysql_query($strsql) or die(mysql_error());
+							$coletas = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 							
-							$qtd_prod = mysql_num_rows($coletas);
+							$qtd_prod = mysqli_num_rows($coletas);
 							
-					if ($coletas && mysql_num_rows($coletas)>0){	
+					if ($coletas && mysqli_num_rows($coletas)>0){	
 					?>
 					<form method="post">
 					<table cellspacing="0" id="listTable" summary="Tabela de Coletas" style="width:630px;">
@@ -64,7 +64,7 @@ require("cabecalho.php");
 					</thead>
 						 <?php
 						 	
-							while ($row = mysql_fetch_array($coletas)){
+							while ($row = mysqli_fetch_array($coletas)){
 								if($l_cor == '') $l_cor = "par"; else $l_cor = "";
 								
 								$id_editar = $row['coleta_id']."edit";

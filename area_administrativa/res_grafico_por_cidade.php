@@ -16,8 +16,8 @@
 	
 	$strsql = "SELECT * FROM tabela_produtos WHERE produto_cesta = '1' ORDER BY produto_id";
 	
-	$res = mysql_query($strsql) or die(mysql_error());
-	while($row = mysql_fetch_array($res))
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+	while($row = mysqli_fetch_array($res))
 	{
 		$prod_cesta[] = $row['produto_nome_visualizacao'];
 		$prod_cesta_id[] = $row['produto_id'];
@@ -29,10 +29,10 @@
 	{
 		$strsql = "SELECT PRP.produto_preco_total,EXTRACT(MONTH FROM P.pesquisa_data) AS mes,EXTRACT(YEAR FROM P.pesquisa_data) AS ano FROM tabela_pesquisa_resultados_produtos PRP NATURAL JOIN tabela_pesquisas P WHERE PRP.produto_id = '".$prod_cesta_id[$i]."' AND PRP.cidade_id = '".$cidade."' AND P.pesquisa_data BETWEEN '".$dti."/00' AND '".$dtf."/00' ORDER BY P.pesquisa_data";
 
-		$res = mysql_query($strsql) or die(mysql_error());
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 		
 		$j = 0;
-		while($row = mysql_fetch_array($res))
+		while($row = mysqli_fetch_array($res))
 		{
 			$vetor_info[$i][$j] = $row['produto_preco_total'];
 			$vetor_periodo[$j++] = $row['mes']."/".$row['ano'];
@@ -63,8 +63,8 @@
 	}
 	*/
 	$strsql = "SELECT C.cidade_nome FROM tabela_cidades C WHERE C.cidade_id = '".$cidade."'";
-	$res = mysql_query($strsql) or die(mysql_error());
-	$row = mysql_fetch_array($res);
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+	$row = mysqli_fetch_array($res);
 	
 	$cidade_nome = $row['cidade_nome'];
         
@@ -94,11 +94,11 @@ require("cabecalho.php");
 			<?php 
 				
 				$strsql = "SELECT P.produto_nome_visualizacao,P.produto_id FROM tabela_produtos P WHERE P.produto_cesta = '1' ORDER BY P.produto_id";
-				$res = mysql_query($strsql) or die(mysql_error());
+				$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 				
 				$i=0;
 				$j=0;
-				while($row = mysql_fetch_array($res))
+				while($row = mysqli_fetch_array($res))
 				{
 				
 					if($i == 4)

@@ -19,10 +19,10 @@
 	{
 		//Pega todas informações do cronograma de coletas de um determinado ano
 		$strsql = "SELECT * FROM tabela_cronograma_coletas NATURAL JOIN tabela_auxiliar_cronograma NATURAL JOIN tabela_mes WHERE cronograma_id = '".$cronograma_id."' ORDER BY mes_id";
-		$res = mysql_query($strsql) or die(mysql_error());
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 		
 		$i = 0;
-		while($row = mysql_fetch_array($res))
+		while($row = mysqli_fetch_array($res))
 		{
 			$cronograma_id = $row['cronograma_id'];
 			$ano = $row['ano'];
@@ -37,9 +37,9 @@
 		{
 		
 			 $strsql = "SELECT * FROM tabela_cronograma_coletas WHERE ano= '".$ano."' AND cronograma_id <> '".$cronograma_id."'";
-			 $res = mysql_query($strsql) or die(mysql_error()); 
+			 $res = mysqli_query($conn, $strsql) or die(mysqli_error($conn)); 
 			 
-			if ($res && mysql_num_rows($res)>0)
+			if ($res && mysqli_num_rows($res)>0)
 				$herr = "Existe outra cronograma para '".$ano."'.";
 			else
 			{
@@ -54,20 +54,20 @@
 			  	if ($cronograma_id!='')
 			  	{
 					$strsql = "UPDATE tabela_cronograma_coletas SET ano = '".$ano."' WHERE cronograma_id = '".$cronograma_id."'";  	
-					mysql_query($strsql) or dir(mysql_error());
+					mysqli_query($conn, $strsql) or dir(mysqli_error($conn));
 				
 					$strsql = "DELETE FROM tabela_auxiliar_cronograma WHERE cronograma_id = '".$cronograma_id."'";
-					mysql_query($strsql) or dir(mysql_error());
+					mysqli_query($conn, $strsql) or dir(mysqli_error($conn));
 				
 			  	}			
 			  	else
 			  	{
 					$strsql = "INSERT INTO tabela_cronograma_coletas (ano) VALUES ('".$ano."')";
-					mysql_query($strsql) or die(mysql_error());
+					mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 				
 					$strsql = "SELECT * FROM tabela_cronograma_coletas WHERE ano = '".$ano."'";
-					$res = mysql_query($strsql) or die(mysql_error());
-					$row = mysql_fetch_array($res);
+					$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+					$row = mysqli_fetch_array($res);
 					$cronograma_id = $row['cronograma_id'];
 				}
 			  
@@ -76,7 +76,7 @@
 				
 					 $strsql = "INSERT INTO tabela_auxiliar_cronograma (cronograma_id,mes_id,inicio_coleta,fim_coleta) VALUES ('".$cronograma_id."','".($i+1)."','".$data_inicio[$i]."','".$data_fim[$i]."');";
 					  
-					mysql_query($strsql) or die(mysql_error());
+					mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 					
 				}
 				
@@ -92,24 +92,24 @@
 			if($action == 'del')
 			{
 				$strsql = "DELETE FROM tabela_cronograma_coletas WHERE cronograma_id = '".$cronograma_id."'";
-				mysql_query($strsql) or die(mysql_error());
+				mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 				header("Location:".$_SERVER['PHP_SELF']);
 			}
 			
 	$strsql = "SELECT * FROM tabela_cronograma_coletas";
-	$cronograma = mysql_query($strsql) or die(mysql_error());
-	$qtd_crono =  mysql_num_rows($cronograma);
+	$cronograma = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+	$qtd_crono =  mysqli_num_rows($cronograma);
 								
 	if ($cronograma && $qtd_crono>0)
 	{	
-		while ($row = mysql_fetch_array($cronograma))
+		while ($row = mysqli_fetch_array($cronograma))
 		{
 			$codigo[] = $row['cronograma_id'];
 			$ano_array[] = $row['ano'];
 		}
 	}
 	
-	$aux_ano = date(Y) + 1;
+	$aux_ano = date('Y') + 1;
 	
 	if($qtd_crono>0)
 	{	
@@ -146,12 +146,12 @@
 	$qt_select = count($ano_select);
 	
 	$strsql = "SELECT * FROM tabela_mes";
-	$mes = mysql_query($strsql) or die(mysql_error());
-	$qt_mes = mysql_num_rows($mes);	
+	$mes = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+	$qt_mes = mysqli_num_rows($mes);	
 	
-	if ($mes && mysql_num_rows($mes)>0)
+	if ($mes && mysqli_num_rows($mes)>0)
 	{
-		while($row = mysql_fetch_array($mes))
+		while($row = mysqli_fetch_array($mes))
 		{
 			$mes_nome[] = $row['mes_nome'];
 		}

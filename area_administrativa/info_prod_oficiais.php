@@ -5,8 +5,8 @@
 	$info = array();
 	
 	$strsql = "SELECT cidade_nome FROM tabela_cidades WHERE cidade_id = '".$cidade_id."'";
-	$cidade = mysql_query($strsql) or die(mysql_error());
-	$row = mysql_fetch_array($cidade);
+	$cidade = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+	$row = mysqli_fetch_array($cidade);
 ?>
 <h2 id="Mcaption" style="text-align:left"><?php echo("Cesta B&aacute;sica: ".$row['cidade_nome']); ?>&nbsp;&nbsp;<label style="font-family:Arial, Helvetica, sans-serif; color:#003366; font-size:11px;">(Pre&ccedil;o M&eacute;dio,Gasto Mensal,Varia&ccedil;&otilde;es,Tempo de Trabalho Necess&aacute;rio)</label></h2>
 <table cellspacing="0" id="listTable" style="width:630px;">
@@ -32,10 +32,10 @@
 	
 	$strsql = "SELECT A.produto_id,B.produto_nome_visualizacao, A.produto_preco_medio, A.produto_preco_total, C.racao_minima_quantidade,D.medida_simbolo,A.produto_tempo_trabalho,A.produto_variacao_mensal,A.produto_variacao_semestral,A.produto_variacao_anual FROM tabela_pesquisa_resultados_produtos A, tabela_produtos B, tabela_racao_minima C,tabela_unidade_medidas D WHERE A.pesquisa_id ='".$pesquisa_id."' AND A.produto_id = B.produto_id AND B.produto_cesta = '1' AND B.produto_id = C.produto_id AND C.racao_minima_medida = D.medida_id AND A.cidade_id = '".$cidade_id."' GROUP BY A.produto_id";
 	//die($strsql);
-	$pesquisa = mysql_query($strsql) or die(mysql_error());
+	$pesquisa = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 	$gasto_mensal = 0;
 	$total_horas = 0;
-	while($row = mysql_fetch_array($pesquisa))
+	while($row = mysqli_fetch_array($pesquisa))
 	{
 		if($l_cor == '') $l_cor = "par"; else $l_cor = "";
 		$gasto_mensal += $row['produto_preco_total'];
@@ -72,8 +72,8 @@
 		<?php 
 		$strsql = "SELECT variacao_mensal,variacao_anual,variacao_semestral FROM tabela_pesquisas_cidades WHERE pesquisa_id = '".$pesquisa_id."' AND cidade_id = '".$cidade_id."'";
 			
-		$res = mysql_query($strsql) or die(mysql_error());
-		$row = mysql_fetch_array($res);
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+		$row = mysqli_fetch_array($res);
 	
 		$variacao_mensal = ($row['variacao_mensal']=!''?$row['variacao_mensal']:'-');
 		$variacao_semestral = ($row['variacao_semestral']!=''?$row['variacao_semestral']:'-');

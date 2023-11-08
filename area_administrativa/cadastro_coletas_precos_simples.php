@@ -17,9 +17,9 @@
 		$medida_id = $aux[1];
 		
 		$strsql = "SELECT produto_id FROM tabela_precos WHERE coleta_id = '".$coleta_id."' AND produto_id = '".$produto_id."'";
-		$res = mysql_query($strsql) or die(mysql_error());
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 		
-		if(mysql_num_rows($res)>0)
+		if(mysqli_num_rows($res)>0)
 		{
 			$flag = true;
 			$herr = 'Produto já cadastrado com outra medida!';
@@ -29,13 +29,13 @@
 		{
 			$strsql = "SELECT produto_nome FROM tabela_produtos WHERE produto_id = ".$produto_id."";
 			
-			$res = mysql_query($strsql) or die(mysql_error());
-			$res = mysql_fetch_array($res);
+			$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+			$res = mysqli_fetch_array($res);
 			$produto_nome = $res['produto_nome_visualizacao'];
 			
 			$strsql = "INSERT INTO tabela_precos (produto_id,coleta_id,medida_id) VALUES ('".$produto_id."','".$coleta_id."','".$medida_id."')";
 		
-			$res = mysql_query($strsql) or die(mysql_error());
+			$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 			$action = 'edit';
 		}
 	}
@@ -45,14 +45,14 @@
 		
 	
 		$strsql = "SELECT A.precos_id,B.produto_nome_visualizacao FROM tabela_precos A,tabela_produtos B WHERE A.coleta_id = '".$coleta_id."' AND ( A.produto_id='".$produto_id."' AND A.medida_id = '".$medida_id."' ) AND (A.produto_id = B.produto_id)";
-		$res = mysql_query($strsql) or die(mysql_error());
-		$res = mysql_fetch_array($res);
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+		$res = mysqli_fetch_array($res);
 		$precos_id = $res['precos_id'];
 		$produto_nome = $res['produto_nome_visualizacao'];
 		
 		$strsql = "SELECT COUNT(*) cont FROM tabela_auxiliar_precos WHERE precos_id = ".$precos_id."";
-		$res = mysql_query($strsql) or die(mysql_error());
-		$res = mysql_fetch_array($res);
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+		$res = mysqli_fetch_array($res);
 		$cont = $res['cont'];
 		
 		$precos = array();
@@ -61,9 +61,9 @@
 		{
 		
 			$strsql = "SELECT preco_produto FROM tabela_auxiliar_precos WHERE precos_id = '".$precos_id."'";
-			$res = mysql_query($strsql) or die(mysql_error());
+			$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 			
-			while ($row = mysql_fetch_array($res, MYSQL_ASSOC))	
+			while ($row = mysqli_fetch_array($res, MYSQLI_ASSOC))	
 				array_push($precos,$row['preco_produto']);
 				
 		}
@@ -74,7 +74,7 @@
 	{	
 		
 		$strsql = "DELETE FROM tabela_precos WHERE coleta_id = '".$coleta_id."' AND (produto_id = '".$produto_id."' AND medida_id = '".$medida_id."')";
-		mysql_query($strsql) or die(mysql_error());	
+		mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 		header("Location:".$_SERVER['PHP_SELF']."?coleta_id=".$coleta_id."&pid=".$pesquisa_id);	
 				
 	}
@@ -83,8 +83,8 @@
 	$records_per_page = 5;		
   	$start_rec = ($_REQUEST['hp']!='') ? $_REQUEST['hp'] : 0;
   	$strsql = "SELECT A.produto_id,B.produto_nome_visualizacao,C.medida_descricao,C.medida_simbolo,A.precos_id,A.medida_id FROM tabela_precos A,tabela_produtos B,tabela_unidade_medidas C WHERE A.coleta_id = '".$coleta_id."' AND (A.produto_id = B.produto_id AND A.medida_id = C.medida_id)";   
-  	$produtos = mysql_query($strsql) or die(mysql_error());
-  	$total_rec = mysql_num_rows($produtos);
+  	$produtos = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+  	$total_rec = mysqli_num_rows($produtos);
 	if ($start_rec>=$total_rec) $start_rec -= $records_per_page;
 	if ($start_rec<0) $start_rec=0;	
   	$last_rec = ($start_rec + $records_per_page > $total_rec) ? $total_rec : $start_rec + $records_per_page;  
@@ -120,11 +120,11 @@ require("cabecalho.php");
 					
 			$strsql = "SELECT * FROM tabela_coletas A, tabela_estabelecimentos B,tabela_bairros C,tabela_cidades D  WHERE (A.estabelecimento_id = B.estabelecimento_id) AND coleta_id = '".$coleta_id."' AND C.bairro_id = B.bairro_id AND C.cidade_id = D.cidade_id";
 					
-			$coletas = mysql_query($strsql) or die(mysql_error());
+			$coletas = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 							
-			if ($coletas && mysql_num_rows($coletas)>0)
+			if ($coletas && mysqli_num_rows($coletas)>0)
 			{
-				$row = mysql_fetch_array($coletas);		
+				$row = mysqli_fetch_array($coletas);		
 				$estabelecimento_nome = $row['estabelecimento_nome'];
 				$data = formata_data($row['coleta_data'],1);
 				$bairro = $row['bairro_nome'];
@@ -140,16 +140,16 @@ require("cabecalho.php");
 			<?php 
 					
 				$strsql = "SELECT A.produto_id,B.produto_nome_visualizacao,C.medida_descricao,C.medida_simbolo,A.precos_id,A.medida_id FROM tabela_precos A,tabela_produtos B,tabela_unidade_medidas C WHERE A.coleta_id = '".$coleta_id."' AND (A.produto_id = B.produto_id AND A.medida_id = C.medida_id) ORDER BY A.produto_id  LIMIT ".$start_rec.",".$records_per_page;
-				$produtos = mysql_query($strsql) or die(mysql_error());
-				if ($produtos && mysql_num_rows($produtos)>0){
+				$produtos = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+				if ($produtos && mysqli_num_rows($produtos)>0){
 				
-				$qtd_prod = mysql_num_rows($produtos);
+				$qtd_prod = mysqli_num_rows($produtos);
 				
 				$strsql = "SELECT MAX(quantidade) as maximo FROM (SELECT precos_id, count(*) as
 quantidade FROM tabela_auxiliar_precos GROUP BY precos_id) As table1";
 
-				$res= mysql_query($strsql) or die(mysql_error()); 
-				$res = mysql_fetch_array($res);
+				$res= mysqli_query($conn, $strsql) or die(mysqli_error($conn)); 
+				$res = mysqli_fetch_array($res);
 				$qt = $res['maximo'];
 			?>
 			<table cellspacing="0" id="listTable" summary="Tabela de PreÃ§os das Coletas" style="width:580px;">
@@ -172,7 +172,7 @@ quantidade FROM tabela_auxiliar_precos GROUP BY precos_id) As table1";
 					</tr>
 				</thead>
 				<?php
-						while ($row = mysql_fetch_array($produtos))
+						while ($row = mysqli_fetch_array($produtos))
 						{
 			
 							if($l_cor == '') 
@@ -187,13 +187,13 @@ quantidade FROM tabela_auxiliar_precos GROUP BY precos_id) As table1";
 					<?php
 								 
 						$strsql = "SELECT * FROM tabela_auxiliar_precos WHERE precos_id = '".$row['precos_id']."'";			
-						$precos_produto = mysql_query($strsql) or die(mysql_error()); 
+						$precos_produto = mysqli_query($conn, $strsql) or die(mysqli_error($conn)); 
 									
-						if ($precos_produto && mysql_num_rows($precos_produto)>=0){
+						if ($precos_produto && mysqli_num_rows($precos_produto)>=0){
 																
 							for($i=0;$i<$qt;$i++){
 								
-								$row1 = mysql_fetch_array($precos_produto);
+								$row1 = mysqli_fetch_array($precos_produto);
 											
 										
 					?>
@@ -255,10 +255,10 @@ quantidade FROM tabela_auxiliar_precos GROUP BY precos_id) As table1";
 					<?php
 						
 					$strsql = "SELECT * FROM tabela_produtos A,tabela_produtos_medidas B,tabela_unidade_medidas C WHERE (B.produto_id,B.medida_id) <> ALL (SELECT produto_id,medida_id FROM tabela_precos C WHERE C.coleta_id = '".$coleta_id."') AND (A.produto_id = B.produto_id AND B.medida_id = C.medida_id) ORDER BY B.produto_id";
-					$produtos = mysql_query($strsql) or die(mysql_error());
+					$produtos = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 					
-					if ($produtos && mysql_num_rows($produtos)>0)	
-						while($row = mysql_fetch_array($produtos))
+					if ($produtos && mysqli_num_rows($produtos)>0)	
+						while($row = mysqli_fetch_array($produtos))
 								{
 					?>
 						

@@ -29,10 +29,10 @@
 	for( $i = 0 ; $i<$qt_cit ; $i++)
 	{
 		$strsql = "SELECT PRP.".$tipo_dado.",EXTRACT(MONTH FROM P.pesquisa_data) AS mes,EXTRACT(YEAR FROM P.pesquisa_data) AS ano FROM tabela_pesquisa_resultados_produtos PRP NATURAL JOIN tabela_pesquisas P WHERE PRP.produto_id = '".$produto."' AND PRP.cidade_id = '".$cits[$i]."' AND P.pesquisa_data BETWEEN '".$dti."/00' AND '".$dtf."/00' ORDER BY P.pesquisa_data";
-		$res = mysql_query($strsql) or die(mysql_error());
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 		
 		$j = 0;
-		while($row = mysql_fetch_array($res))
+		while($row = mysqli_fetch_array($res))
 		{
 			$vetor_info[$i][$j] = $row[$tipo_dado];
 			$vetor_periodo[$j++] = $row['mes']."/".$row['ano'];
@@ -52,8 +52,8 @@
 	
 
 	$strsql = "SELECT C.cidade_nome FROM tabela_cidades C WHERE C.cidade_id IN ".$str_aux." ORDER BY C.cidade_id";
-	$res = mysql_query($strsql) or die(mysql_error());
-	while($row = mysql_fetch_array($res))
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+	while($row = mysqli_fetch_array($res))
 	{
 		$cit_nome[] = $row['cidade_nome'];
 	}
@@ -61,8 +61,8 @@
 	$qt_cit = count($cit_nome);
 	
 	$strsql = "SELECT P.produto_nome_visualizacao FROM tabela_produtos P WHERE P.produto_id= '".$produto."'";
-	$res = mysql_query($strsql) or die(mysql_error());
-	$row = mysql_fetch_array($res);
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+	$row = mysqli_fetch_array($res);
 	
 	$produto_nome = $row['produto_nome_visualizacao'];
 

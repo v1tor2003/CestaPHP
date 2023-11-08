@@ -5,8 +5,8 @@
 	$start_rec = ($_REQUEST['hp']!='') ? $_REQUEST['hp'] : 0;
 	$strsql = "SELECT COUNT(A.produto_id) AS QT,SUM(C.precos_total) AS TOT FROM tabela_produtos A, tabela_unidade_medidas B,tabela_precos C WHERE (A.produto_id = C.produto_id AND B.medida_id = C.medida_id) AND C.coleta_id = '".$coleta_id."' AND A.produto_cesta = '1' GROUP BY C.coleta_id";   
 	
- 	$produtos = mysql_query($strsql) or die(mysql_error());
-	$row = mysql_fetch_array($produtos);
+ 	$produtos = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+	$row = mysqli_fetch_array($produtos);
 	$total_precos = $row['TOT'];
  	$total_rec = $row['QT'];
 	
@@ -22,15 +22,15 @@
 	
 	$strsql = "SELECT * FROM tabela_produtos A, tabela_unidade_medidas B,tabela_precos C WHERE (A.produto_id = C.produto_id AND B.medida_id = C.medida_id) AND coleta_id = '".$coleta_id."' AND A.produto_cesta = '1' ORDER BY A.produto_id LIMIT ".$start_rec.",".$records_per_page;
 						
-	$produtos = mysql_query($strsql) or die(mysql_error());
+	$produtos = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 	
-	if ($produtos && mysql_num_rows($produtos)>0)
+	if ($produtos && mysqli_num_rows($produtos)>0)
 	{
 			
 		$strsql = "SELECT MAX(quantidade) as maximo FROM (SELECT precos_id, count(*) as quantidade FROM tabela_auxiliar_precos GROUP BY precos_id) As table1";
 
-		$res= mysql_query($strsql) or die(mysql_error()); 
-		$res = mysql_fetch_array($res);
+		$res= mysqli_query($conn, $strsql) or die(mysqli_error($conn)); 
+		$res = mysqli_fetch_array($res);
 		$qt = $res['maximo'];
 	?>
 	<table cellspacing="0" id="listTable" summary="Tabela de Preços das Coletas" style="width:655px;">
@@ -55,7 +55,7 @@
 			</tr>
 		</thead>
 		<?php
-			while ($row = mysql_fetch_array($produtos))
+			while ($row = mysqli_fetch_array($produtos))
 			{
 				if($l_cor == '') $l_cor = "par"; else $l_cor = "";
 		?>
@@ -66,19 +66,19 @@
 				<?php
 									 
 				$strsql = "SELECT * FROM tabela_auxiliar_precos WHERE precos_id = '".$row['precos_id']."'";
-				$precos_produto = mysql_query($strsql) or die(mysql_error()); 
+				$precos_produto = mysqli_query($conn, $strsql) or die(mysqli_error($conn)); 
 										
 				for($i=0;$i<$qt;$i++)
 				{
-					$row1 = mysql_fetch_array($precos_produto);						
+					$row1 = mysqli_fetch_array($precos_produto);						
 				?>
 					<td class="tdboder"  width="50" align="center"><?php echo("&nbsp;".isEmpty($row1['preco_produto'])); ?></td>
 				<?php 
 				}
 				$strsql = "SELECT * FROM tabela_precos WHERE coleta_id = '".$coleta_id."' AND produto_id = '".$row['produto_id']."'";
 					
-				$resultados = mysql_query($strsql) or die(mysql_error()); 
-				$res = mysql_fetch_array($resultados);
+				$resultados = mysqli_query($conn, $strsql) or die(mysqli_error($conn)); 
+				$res = mysqli_fetch_array($resultados);
 				$total_oficiais += $res['precos_total'];
 						
 				?>

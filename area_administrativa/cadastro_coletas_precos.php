@@ -22,13 +22,13 @@ $aux = array();
 if ($action == 'salvar') {
     for ($i = 0; $i < count($precos_codigo); $i++) {
         $strsql = "DELETE FROM tabela_auxiliar_precos WHERE precos_id = " . $precos_codigo[$i];
-        $res = mysql_query($strsql) or die(mysql_error());
+        $res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 
         for ($j = ($i * 5); $j < ($i * 5 + 5); $j++) {
 
             if ($precos_coleta[$j] != "" || $precos_coleta[$j] != NULL) {
                 $strsql = "INSERT INTO tabela_auxiliar_precos(precos_id,preco_produto) VALUES ('" . $precos_codigo[$i] . "','" . $precos_coleta[$j] . "')";
-                $res = mysql_query($strsql) or die(mysql_error());
+                $res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
             }
         }
     }
@@ -39,21 +39,21 @@ if ($action == 'salvar') {
         if ($estabelecimentos_secundarios[$i] > 0) {
             //evita duplicatas
             $strsql = "SELECT * FROM tabela_coleta_est_sec WHERE coleta_id = $coleta_id AND est_has_sec_id = $estabelecimentos_secundarios[$i] AND  produto_id = $produtos_id[$i]";
-            $res = mysql_query($strsql) or die(mysql_error() . " - SQL: " . $strsql . " - Arquivo: " . __FILE__ . " - Linha: " . __LINE__);
+            $res = mysqli_query($conn, $strsql) or die(mysqli_error($conn) . " - SQL: " . $strsql . " - Arquivo: " . __FILE__ . " - Linha: " . __LINE__);
 
             //apaga outros estabelecimentos secundarios cadastrados para um mesmo produto
             $strsql = "DELETE FROM tabela_coleta_est_sec WHERE coleta_id=$coleta_id AND produto_id = $produtos_id[$i] AND est_has_sec_id != $estabelecimentos_secundarios[$i]";
-            mysql_query($strsql) or die(mysql_error() . " - SQL: " . $strsql . " - Arquivo: " . __FILE__ . " - Linha: " . __LINE__);
+            mysqli_query($conn, $strsql) or die(mysqli_error($conn) . " - SQL: " . $strsql . " - Arquivo: " . __FILE__ . " - Linha: " . __LINE__);
 
-            if (mysql_num_rows($res) < 1) {
+            if (mysqli_num_rows($res) < 1) {
                 $strsql = "INSERT INTO tabela_coleta_est_sec (coleta_id, est_has_sec_id, produto_id) VALUES (" . $coleta_id . "," . $estabelecimentos_secundarios[$i] . "," . $produtos_id[$i] . ")";
-                mysql_query($strsql) or die(mysql_error() . " - SQL: " . $strsql . " - Arquivo: " . __FILE__ . " - Linha: " . __LINE__);
+                mysqli_query($conn, $strsql) or die(mysqli_error($conn) . " - SQL: " . $strsql . " - Arquivo: " . __FILE__ . " - Linha: " . __LINE__);
             }
         }
     }
     //Apaga todos os estabelecimentos cadastrados para esta coleta que nao tem produtos assossiados"
     $strsql = "DELETE FROM tabela_coleta_est_sec WHERE coleta_id=$coleta_id AND produto_id NOT IN(" . implode(',', $produtos_id) . ")";
-    mysql_query($strsql) or die(mysql_error() . " - SQL: " . $strsql . " - Arquivo: " . __FILE__ . " - Linha: " . __LINE__);
+    mysqli_query($conn, $strsql) or die(mysqli_error($conn) . " - SQL: " . $strsql . " - Arquivo: " . __FILE__ . " - Linha: " . __LINE__);
 
 
 
@@ -77,23 +77,23 @@ if ($action == 'adicionar_produto') {
         $flag_cadastro[$i] = 1; //caso o produto ainda não esteja cadastrado recebe 1 como default
 
         $strsql = "SELECT produto_id,medida_id FROM tabela_precos WHERE coleta_id = '" . $coleta_id . "' AND produto_id = '" . $produto_selecionado[$i] . "'";
-        $res = mysql_query($strsql) or die(mysql_error());
+        $res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 
-        if (mysql_num_rows($res) > 0) {
+        if (mysqli_num_rows($res) > 0) {
             $flag = true;
             $herr_flag = true;
 
-            $row = mysql_fetch_array($res);
+            $row = mysqli_fetch_array($res);
             $strsql = "SELECT * FROM tabela_produtos WHERE produto_id = " . $row['produto_id'];
 
-            $res = mysql_query($strsql) or die(mysql_error());
-            $res = mysql_fetch_array($res);
+            $res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+            $res = mysqli_fetch_array($res);
             $produto_nome = $res['produto_nome_visualizacao'];
 
             $strsql = "SELECT * FROM tabela_unidade_medidas WHERE medida_id= " . $medida[$i];
 
-            $res = mysql_query($strsql) or die(mysql_error());
-            $res = mysql_fetch_array($res);
+            $res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+            $res = mysqli_fetch_array($res);
             $simbolo = $res['medida_simbolo'];
 
             $herr .= " - " . $produto_nome . " (" . $simbolo . ")\\n";
@@ -102,7 +102,7 @@ if ($action == 'adicionar_produto') {
         if (!$flag) {
 
             $strsql = "INSERT INTO tabela_precos (produto_id,coleta_id,medida_id) VALUES ('" . $produto_selecionado[$i] . "','" . $coleta_id . "','" . $medida[$i] . "')";
-            $res = mysql_query($strsql) or die(mysql_error());
+            $res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
         }
     }
 
@@ -114,10 +114,10 @@ if ($action == 'adicionar_produto') {
 if ($action == 'del') {
 
     $strsql = "DELETE FROM tabela_coleta_est_sec WHERE coleta_id = '$coleta_id' AND produto_id='$produto_id'";
-    mysql_query($strsql) or die(mysql_error() . " - SQL: " . $strsql . " - Arquivo: " . __FILE__ . " - Linha: " . __LINE__);
+    mysqli_query($conn, $strsql) or die(mysqli_error($conn) . " - SQL: " . $strsql . " - Arquivo: " . __FILE__ . " - Linha: " . __LINE__);
 
     $strsql = "DELETE FROM tabela_precos WHERE coleta_id = '" . $coleta_id . "' AND (produto_id = '" . $produto_id . "' AND medida_id = '" . $medida_id . "')";
-    mysql_query($strsql) or die(mysql_error());
+    mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 
     header("Location:" . $_SERVER['PHP_SELF'] . "?coleta_id=" . $coleta_id . "&rpp=" . $records_per_page . "&pid=" . $pesquisa_id);
 }
@@ -127,8 +127,8 @@ if ($records_per_page == '')
     $records_per_page = 12;
 $start_rec = ($_REQUEST['hp'] != '') ? $_REQUEST['hp'] : 0;
 $strsql = "SELECT A.produto_id,B.produto_nome_visualizacao,C.medida_descricao,C.medida_simbolo,A.precos_id,A.medida_id FROM tabela_precos A,tabela_produtos B,tabela_unidade_medidas C WHERE A.coleta_id = '" . $coleta_id . "' AND (A.produto_id = B.produto_id AND A.medida_id = C.medida_id)";
-$produtos = mysql_query($strsql) or die(mysql_error());
-$total_rec = mysql_num_rows($produtos);
+$produtos = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+$total_rec = mysqli_num_rows($produtos);
 if ($start_rec >= $total_rec)
     $start_rec -= $records_per_page;
 if ($start_rec < 0)
@@ -165,10 +165,10 @@ require("cabecalho.php");
             <?php
             $strsql = "SELECT * FROM tabela_coletas A, tabela_estabelecimentos B,tabela_bairros C,tabela_cidades D  WHERE (A.estabelecimento_id = B.estabelecimento_id) AND coleta_id = '" . $coleta_id . "' AND C.bairro_id = B.bairro_id AND C.cidade_id = D.cidade_id";
 
-            $coletas = mysql_query($strsql) or die(mysql_error());
+            $coletas = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 
-            if ($coletas && mysql_num_rows($coletas) > 0) {
-                $row = mysql_fetch_array($coletas);
+            if ($coletas && mysqli_num_rows($coletas) > 0) {
+                $row = mysqli_fetch_array($coletas);
                 $estabelecimento_id = $row['estabelecimento_id'];
                 $estabelecimento_nome = $row['estabelecimento_nome'];
                 $data = formata_data($row['coleta_data'], 1);
@@ -183,26 +183,26 @@ require("cabecalho.php");
             <!--<table  border="0px" id="link_table_add"  style="width:590px"><tr><td>[<a href="" id="link_adicionar" >Adicionar Produtos</a>]</td></tr></table>-->
             <?php
             $strsql = "SELECT A.precos_id,A.produto_id,B.produto_nome_visualizacao,C.medida_descricao,C.medida_simbolo,A.precos_id,A.medida_id FROM tabela_precos A,tabela_produtos B,tabela_unidade_medidas C WHERE A.coleta_id = '" . $coleta_id . "' AND (A.produto_id = B.produto_id AND A.medida_id = C.medida_id) ORDER BY A.produto_id  LIMIT " . $start_rec . "," . $records_per_page;
-            $produtos = mysql_query($strsql) or die(mysql_error());
-            if ($produtos && mysql_num_rows($produtos) > 0) {
+            $produtos = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+            if ($produtos && mysqli_num_rows($produtos) > 0) {
 
-                $qtd_prod = mysql_num_rows($produtos);
+                $qtd_prod = mysqli_num_rows($produtos);
                 $qt = 5;
 
                 $sql_estsecundarios = "SELECT * FROM tabela_estabelecimento_has_secundario tab_est_has_sec NATURAL JOIN tabela_estabelecimentos_secundarios WHERE tab_est_has_sec.estabelecimento_id = '" . $estabelecimento_id . "' ORDER BY estabelecimento_sec_nome";
-                $res_estsecundarios = mysql_query($sql_estsecundarios) or die(mysql_error());
+                $res_estsecundarios = mysqli_query($conn, $sql_estsecundarios) or die(mysqli_error($conn));
                 ;
                 $html_select_estsecundarios = '';
 
                 $sql_coleta_est_sec = "SELECT * FROM tabela_coleta_est_sec NATURAL JOIN tabela_estabelecimento_has_secundario WHERE coleta_id=" . $coleta_id;
-                $res_coleta_est_sec = mysql_query($sql_coleta_est_sec) or die(mysql_error() . " - SQL: " . $sql_coleta_est_sec . " - Arquivo: " . __FILE__ . " - Linha: " . __LINE__);
+                $res_coleta_est_sec = mysqli_query($conn, $sql_coleta_est_sec) or die(mysqli_error($conn) . " - SQL: " . $sql_coleta_est_sec . " - Arquivo: " . __FILE__ . " - Linha: " . __LINE__);
 
-                while ($row_coleta_est_sec = mysql_fetch_assoc($res_coleta_est_sec)) {
+                while ($row_coleta_est_sec = mysqli_fetch_assoc($res_coleta_est_sec)) {
                     $coleta_est_sec[] = $row_coleta_est_sec;
                 }
 
                 unset($estabelecimentos_secundarios); // = array();
-                while ($row_est_sec = mysql_fetch_assoc($res_estsecundarios)) {
+                while ($row_est_sec = mysqli_fetch_assoc($res_estsecundarios)) {
                     $estabelecimentos_secundarios[] = $row_est_sec;
                     //$html_select_estsecundarios .= '<option value="'.$row_estsecundarios['est_has_sec_id'].'">'.$row_estsecundarios['estabelecimento_sec_nome'].'</option>';
                 }
@@ -233,7 +233,7 @@ require("cabecalho.php");
                             </tr>
                         </thead>
                         <?php
-                        while ($row = mysql_fetch_array($produtos)) {
+                        while ($row = mysqli_fetch_array($produtos)) {
 
                             if ($l_cor == '' || $l_cor == 'impar')
                                 $l_cor = "par";
@@ -272,13 +272,13 @@ require("cabecalho.php");
                                 <td class="tdboder">
                                     <?php
                                     $strsql = "SELECT medida_id, medida_descricao,produto_id FROM tabela_produtos_medidas NATURAL JOIN tabela_unidade_medidas WHERE produto_id=" . $row['produto_id'];
-                                    $bd_medidas = mysql_query($strsql) or die(mysql_error());
+                                    $bd_medidas = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 
-                                    if ($bd_medidas && mysql_num_rows($bd_medidas) > 1) {
+                                    if ($bd_medidas && mysqli_num_rows($bd_medidas) > 1) {
                                         ?>
                                         <select name="medida_aux" id="medida_aux<?php echo($row['produto_id']); ?>" onChange="return altera_medida_produto('<?php echo($row['produto_id']); ?>')" style="width:100px;">
                                             <?php
-                                            while ($row_aux = mysql_fetch_array($bd_medidas)) {
+                                            while ($row_aux = mysqli_fetch_array($bd_medidas)) {
                                                 ?>
                                                 <option value="<?php echo($row_aux['medida_id'] . "/" . $row['produto_id'] . "/" . $row['precos_id']); ?>" <?php if ($row['medida_id'] == $row_aux['medida_id']) { ?>selected="selected" <?php } ?>  > <?php echo ($row_aux['medida_descricao']); ?></option>
                                             <?php }
@@ -293,13 +293,13 @@ require("cabecalho.php");
                             <input type="hidden" name="precos_codigo[]" value="<?php echo($row['precos_id']); ?>"  />
                             <?php
                             $strsql = "SELECT * FROM tabela_auxiliar_precos WHERE precos_id = '" . $row['precos_id'] . "'";
-                            $precos_produto = mysql_query($strsql) or die(mysql_error());
+                            $precos_produto = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 
-                            if ($precos_produto && mysql_num_rows($precos_produto) >= 0) {
+                            if ($precos_produto && mysqli_num_rows($precos_produto) >= 0) {
 
                                 for ($i = 0; $i < $qt; $i++) {
 
-                                    $row1 = mysql_fetch_array($precos_produto);
+                                    $row1 = mysqli_fetch_array($precos_produto);
 
                                     if ($row1 != '') {
                                         ?>
@@ -376,10 +376,10 @@ require("cabecalho.php");
                             <select name="produtos_selecionados[]" multiple="multiple" size="12" style="width:180px;" >
                                 <?php
                                 $strsql = "SELECT * FROM tabela_produtos A,tabela_produtos_medidas B,tabela_unidade_medidas C WHERE (B.produto_id,B.medida_id) <> ALL (SELECT produto_id,medida_id FROM tabela_precos C WHERE C.coleta_id = '" . $coleta_id . "') AND (A.produto_id = B.produto_id AND B.medida_id = C.medida_id) ORDER BY B.produto_id";
-                                $produtos = mysql_query($strsql) or die(mysql_error());
+                                $produtos = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 
-                                if ($produtos && mysql_num_rows($produtos) > 0)
-                                    while ($row = mysql_fetch_array($produtos)) {
+                                if ($produtos && mysqli_num_rows($produtos) > 0)
+                                    while ($row = mysqli_fetch_array($produtos)) {
                                         ?>
 
                                         <option value="<?php echo($row['produto_id'] . "/" . $row['medida_id']); ?>" <?php if ($produto_id == $row['produto_id'] && $medida_id == $row['medida_id']) { ?> selected="selected" <?php } ?>  >

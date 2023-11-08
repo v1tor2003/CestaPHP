@@ -52,7 +52,7 @@
 			<ul>
                             <?php
                                 $SQL_Equipe = "SELECT nome_completo, funcao FROM tabela_equipe eq, tabela_equipe_funcoes ef WHERE eq.funcao_id = ef.id AND eq.mostrar_home=TRUE ORDER BY nome_completo";
-                                $Equipe_res = mysqli_query($conn,$SQL_Equipe);
+                                $Equipe_res = mysqli_query($conn, $SQL_Equipe);
                                 while($Equipe_row = mysqli_fetch_assoc($Equipe_res)){
                                     echo "<li>".$Equipe_row['nome_completo']." - ".$Equipe_row['funcao']."</li>";
                                 }

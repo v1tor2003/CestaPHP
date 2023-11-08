@@ -14,21 +14,21 @@ include_once("mysql.lib");
 		$strsql = "SELECT pesquisa_id FROM tabela_pesquisas WHERE EXTRACT(MONTH FROM pesquisa_data) = '".$mes."' AND EXTRACT(YEAR FROM pesquisa_data) = '".$ano."' ";
 	
 		
-		$res = mysql_query($strsql) or die(mysql_error());
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 		
-		if(mysql_num_rows($res)==0)
+		if(mysqli_num_rows($res)==0)
 		{
 			$herr = 'Não existe uma pesquisa para este mês!';
 		}
 		else
 		{
 				
-			$row = mysql_fetch_array($res);
+			$row = mysqli_fetch_array($res);
 			$pesquisa_id = $row['pesquisa_id'];	
 			
 			$strsql = "SELECT * FROM tabela_boletim WHERE boletim_id = '".$pesquisa_id."'";
-			$res = mysql_query($strsql) or die(mysql_error());
-			$qtd = mysql_num_rows($res);
+			$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+			$qtd = mysqli_num_rows($res);
 				
 			if($qtd >0)
 			{
@@ -86,7 +86,7 @@ include_once("mysql.lib");
 				{
 					
 					$strsql = "INSERT INTO tabela_boletim(boletim_id,boletim_nome) VALUES ('".$pesquisa_id."','".$_FILES['userfile']['name']."')";
-					mysql_query($strsql) or die(mysql_error());
+					mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 				}	
 			}
 			
@@ -96,11 +96,11 @@ include_once("mysql.lib");
 		if($action == 'del')
 		{
 			$strsql = "SELECT * FROM `cesta_basica`.`tabela_boletim` WHERE boletim_id='".$pesquisa_id."'";
-			$sql =  mysql_query($strsql);
+			$sql =  mysqli_query($conn, $strsql);
 			//----------------------------------------------------------------------------------------------
 			//by vluzrmos..., 
 			if($sql)
-				$res =  mysql_fetch_assoc($sql);
+				$res =  mysqli_fetch_assoc($sql);
 			
 			$file = $res['boletim_nome'];
 		    $path = $dir_boletim.$file;
@@ -121,7 +121,7 @@ include_once("mysql.lib");
 			else
 			{
 				$strsql = "DELETE FROM tabela_boletim WHERE boletim_id = '".$pesquisa_id."'";
-				$res = mysql_query($strsql) or die(mysql_error());
+				$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 			}
 		
 		}
@@ -130,8 +130,8 @@ include_once("mysql.lib");
 	  $records_per_page = 5;		
 	  $start_rec = ($_REQUEST['hp']!='') ? $_REQUEST['hp'] : 0;
 	  $strsql = "SELECT * FROM tabela_boletim";   
-	  $produtos = mysql_query($strsql) or die(mysql_error());
-	  $total_rec = mysql_num_rows($produtos);
+	  $produtos = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+	  $total_rec = mysqli_num_rows($produtos);
 		if ($start_rec>=$total_rec) $start_rec -= $records_per_page;
 		if ($start_rec<0) $start_rec=0;	
 	  $last_rec = ($start_rec + $records_per_page > $total_rec) ? $total_rec : $start_rec + $records_per_page;  
@@ -162,9 +162,9 @@ require("cabecalho.php");
 			
 			<?php 
 						  	$strsql = "SELECT B.boletim_id,B.boletim_nome,EXTRACT(YEAR FROM P.pesquisa_data) AS ano,M.mes_nome AS mes FROM tabela_boletim B JOIN tabela_pesquisas P ON B.boletim_id = P.pesquisa_id,tabela_mes M WHERE M.mes_id = EXTRACT(MONTH FROM P.pesquisa_data) ORDER BY P.pesquisa_data DESC LIMIT ".$start_rec.",".$records_per_page;
-							$boletim = mysql_query($strsql) or die(mysql_error());
+							$boletim = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 							
-					if ($boletim && mysql_num_rows($boletim)>0){	
+					if ($boletim && mysqli_num_rows($boletim)>0){	
 					?>
 					<h1 id="Mcaption" style="text-align:left">Cadastro de Boletim</h1>
 					<table cellspacing="0" id="listTable" summary="Tabela de Boletim" style="width:537px;">
@@ -185,7 +185,7 @@ require("cabecalho.php");
 					</thead>
 						 <?php
 						 	
-							while ($row = mysql_fetch_array($boletim)){
+							while ($row = mysqli_fetch_array($boletim)){
 								if($l_cor == '') $l_cor = "par"; else $l_cor = "";
 						  ?>
 							   <tr class="<?php echo ($l_cor);?>">
@@ -260,10 +260,10 @@ require("cabecalho.php");
 						<?php
 							
 							$strsql = "SELECT * FROM tabela_mes";
-							$mes = mysql_query($strsql) or die(mysql_error());
+							$mes = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 					
-							if ($mes && mysql_num_rows($mes)>0)	
-								while($row = mysql_fetch_array($mes))
+							if ($mes && mysqli_num_rows($mes)>0)	
+								while($row = mysqli_fetch_array($mes))
 								{
 						?>
 						
@@ -284,7 +284,7 @@ require("cabecalho.php");
 					
 						<?php
 						
-							$ano = date(Y);
+							$ano = date('Y');
 							while($ano > 1998)
 							{
 						?>

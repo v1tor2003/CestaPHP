@@ -16,27 +16,27 @@ if($haction){
         
         if($id){
             $SQL_save = "UPDATE tabela_equipe SET nome_completo='$nome', email='$email', funcao_id='$funcao_id', mostrar_home='$mostrar_home', mostrar_contatos='$mostrar_contatos' WHERE id='$id'";
-            $SQL_saveres  = mysql_query($SQL_save);
+            $SQL_saveres  = mysqli_query($conn, $SQL_save);
             if($SQL_saveres)
             $save_edit_msg = 'Membro da equipe alterado com sucesso';
         }
         else{
             $SQL_insert = "INSERT INTO tabela_equipe (nome_completo, email, funcao_id, mostrar_home, mostrar_contatos) VALUES ('$nome','$email','$funcao_id','$mostrar_home','$mostrar_contatos')";
-            $SQL_insertres = mysql_query($SQL_insert);
+            $SQL_insertres = mysqli_query($conn, $SQL_insert);
             if($SQL_insertres)
             $save_edit_msg = 'Membro da equipe adicionado com sucesso';
         }
     }
     else if ($haction == 'edit'){
         $SQL_edit = "SELECT * FROM tabela_equipe WHERE id='$id'";
-        $SQL_editres = mysql_query($SQL_edit);
+        $SQL_editres = mysqli_query($conn, $SQL_edit);
         if($SQL_editres){
-            $membroequipe = mysql_fetch_assoc($SQL_editres);
+            $membroequipe = mysqli_fetch_assoc($SQL_editres);
         }
     }
     else if($haction == 'del'){
         $SQL_del = "DELETE FROM tabela_equipe WHERE id='$id'";
-        $SQL_delres = @mysql_query($SQL_del);
+        $SQL_delres = @mysqli_query($conn, $SQL_del);
         if($SQL_delres){
             $save_edit_msg = 'Membro da equipe deletado com sucesso!';
         }
@@ -65,7 +65,7 @@ require("cabecalho.php");
 					
 					<?php 
 						$SQL_Equipe = "SELECT eq.*, ef.id as ef_id, ef.funcao FROM tabela_equipe eq,  tabela_equipe_funcoes ef WHERE eq.funcao_id = ef.id ORDER BY nome_completo";
-                                                $Equipe_res = mysql_query($SQL_Equipe);
+                                                $Equipe_res = mysqli_query($conn, $SQL_Equipe);
 							
 					?>
 					
@@ -93,7 +93,7 @@ require("cabecalho.php");
 					
 					<?php
 						
-						while ($row = mysql_fetch_array($Equipe_res))
+						while ($row = mysqli_fetch_array($Equipe_res))
 						{
 							if($l_cor == '') $l_cor = "par"; else $l_cor = "";
 					?>
@@ -148,8 +148,8 @@ require("cabecalho.php");
                                                         <!--option value=""> -- Selecione a Fun&ccedil;&atilde;o --</option-->
                                                         <?php
                                                             $membroequipe_funcoes_sql = "SELECT * FROM tabela_equipe_funcoes ORDER BY funcao";
-                                                            $membroequipe_funcoes_res = mysql_query($membroequipe_funcoes_sql);
-                                                            while($memfunc_row = mysql_fetch_assoc($membroequipe_funcoes_res)){
+                                                            $membroequipe_funcoes_res = mysqli_query($conn, $membroequipe_funcoes_sql);
+                                                            while($memfunc_row = mysqli_fetch_assoc($membroequipe_funcoes_res)){
                                                                 echo "<option value='".$memfunc_row['id']."' ".(($membroequipe['funcao_id']==$memfunc_row['id'])?"selected":"").">".$memfunc_row['funcao']."</option>";
                                                             }
                                                         ?>

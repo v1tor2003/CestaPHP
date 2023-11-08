@@ -10,14 +10,14 @@
 	{
 	
 		$strsql = "DELETE FROM tabela_auxiliar_precos WHERE precos_id = '".$precos_id."' AND preco_produto ='".$preco_produto."'";
-		mysql_query($strsql) or die(mysql_error());	
+		mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 	}
 	else
 		if($action == 'save')
 		{
 		
 			$strsql = "DELETE FROM tabela_auxiliar_precos WHERE precos_id = '".$precos_id."'";
-			mysql_query($strsql) or die(mysql_error());	
+			mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 			
 			$precos = preg_split ('/[\/]/', $preco_produto);
 			$cont = count($precos);
@@ -26,7 +26,7 @@
 			{
 				
 				$strsql = "INSERT INTO tabela_auxiliar_precos (precos_id,preco_produto) VALUES ('".$precos_id."','".$precos[$i]."')";
-				mysql_query($strsql) or die(mysql_error());
+				mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 			
 			}
 			
@@ -35,8 +35,8 @@
 		}
 		
 	$strsql = "SELECT coleta_id,pesquisa_id FROM tabela_coletas WHERE coleta_id = ".$coleta_id;
-	$res = mysql_query($strsql) or die(mysql_error());
-	$res = mysql_fetch_array($res);
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+	$res = mysqli_fetch_array($res);
 	$pesquisa_id = $res['pesquisa_id'];
 		
 	header("Location: cadastro_coletas_precos.php?coleta_id=".$coleta_id."&pid=".$pesquisa_id."&hp=".$hp);

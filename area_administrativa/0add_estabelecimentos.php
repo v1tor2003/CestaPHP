@@ -14,8 +14,8 @@ if($_REQUEST['haction']){
 	if ($action=='edit')
 	{	  
 	  	$strsql = "SELECT * FROM tabela_estabelecimentos A,tabela_bairros B WHERE A.bairro_id = B.bairro_id AND estabelecimento_id = '".$estabelecimento_id."'";
-		$res = mysql_query($strsql) or die(mysql_error());
-		$res = mysql_fetch_array($res);
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+		$res = mysqli_fetch_array($res);
 		$estabelecimento_nome = $res['estabelecimento_nome'];
 		$estabelecimento_endereco = $res['estabelecimento_endereco'];
 		$estabelecimento_contato = $res['estabelecimento_contato'];
@@ -29,8 +29,8 @@ if($_REQUEST['haction']){
 	{
 		$strsql = "SELECT * FROM tabela_estabelecimentos WHERE (estabelecimento_nome = '".$estabelecimento_nome."') AND (estabelecimento_id <> '".$estabelecimento_id."' AND bairro_id = '".$bairro_id."')";
 		//die($strsql);
-	  	$res = mysql_query($strsql) or die(mysql_error()); 		
-		if ($res && mysql_num_rows($res)>0)
+	  	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn)); 		
+		if ($res && mysqli_num_rows($res)>0)
 			$herr = "Existe outro estabelecimento com o nome: ".$estabelecimento_nome." na mesma cidade e bairro";
 		else
 		{
@@ -41,7 +41,7 @@ if($_REQUEST['haction']){
 				$data = date('Y-m-d');
 		    	$strsql = "INSERT INTO tabela_estabelecimentos (estabelecimento_nome,estabelecimento_endereco, estabelecimento_ativo, estabelecimento_contato,estabelecimento_telefone,estabelecimento_data,bairro_id,estabelecimento_referencial) VALUES ('".$estabelecimento_nome."','".$estabelecimento_endereco."','".$estabelecimento_ativo."', '".$estabelecimento_contato."','".$estabelecimento_telefone."','".$data."','".$bairro_id."','".$estabelecimento_referencial."')";
 			}
-			mysql_query($strsql) or die(mysql_error());	
+			mysqli_query($conn,$strsql) or die(mysqli_error($conn));	
 			$estabelecimento_id = '';
 	    	$estabelecimento_nome = '';
 			$estabelecimento_endereco = '';
@@ -58,7 +58,7 @@ if($_REQUEST['haction']){
 	if ($action=='del')
 	{
 		$strsql = "DELETE FROM tabela_estabelecimentos WHERE estabelecimento_id = '".$estabelecimento_id."'";
-		mysql_query($strsql) or die(mysql_error());	
+		mysqli_query($conn,$strsql) or die(mysqli_error($conn));	
 		header("Location: cadastro_estabelecimentos.php");
 	}
 }
@@ -124,10 +124,10 @@ require("cabecalho.php");
 						<?php
 							
 							$strsql = "SELECT * FROM tabela_cidades";
-							$cidades = mysql_query($strsql) or die(mysql_error());
+							$cidades = mysqli_query($conn,$strsql) or die(mysqli_error($conn));
 					
-							if ($cidades && mysql_num_rows($cidades)>0)	
-								while($row = mysql_fetch_array($cidades))
+							if ($cidades && mysqli_num_rows($cidades)>0)	
+								while($row = mysqli_fetch_array($cidades))
 								{
 						?>
 						
@@ -151,10 +151,10 @@ require("cabecalho.php");
 					if($action == 'edit')
 					{
 					$strsql = "SELECT * FROM tabela_bairros WHERE cidade_id = '".$cidade_id."'";
-					$bairros = mysql_query($strsql) or die(mysql_error());
+					$bairros = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 					
-					if ($bairros && mysql_num_rows($bairros)>0)	
-						while($row = mysql_fetch_array($bairros))
+					if ($bairros && mysqli_num_rows($bairros)>0)	
+						while($row = mysqli_fetch_array($bairros))
 						{
 					?>
 						<option value="<?php echo($row['bairro_id']); ?>" <?php if($bairro_id == $row['bairro_id']){?>selected="selected" <?php } ?>  > <?php echo ($row['bairro_nome']);?></option>

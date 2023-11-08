@@ -1,7 +1,7 @@
 <?php
 ini_set('display_errors', '0'); 
 /*
- * 	Página escrita em ISO-8859-1 ou Latin1 em compatibilidade com o padrão do PHP 5.3
+ * 	Pï¿½gina escrita em ISO-8859-1 ou Latin1 em compatibilidade com o padrï¿½o do PHP 5.3
  */
     require_once 'PHPRtfLite.php';
     // register PHPRtfLite class loader
@@ -9,18 +9,18 @@ ini_set('display_errors', '0');
 	$pesquisa_id = $_REQUEST['hid'];
 /********************************************************************************************************************************
 *
-*	Dados da primeira tabela do boletim que mostra o gasto e variação mensal de cada cidade
+*	Dados da primeira tabela do boletim que mostra o gasto e variaï¿½ï¿½o mensal de cada cidade
 *
 ********************************************************************************************************************************/
 	
 	$strsql = "SELECT B.mes_nome,EXTRACT(YEAR FROM A.pesquisa_data) AS pesquisa_ano,B.mes_id FROM tabela_pesquisas A, tabela_mes B WHERE EXTRACT(MONTH FROM A.pesquisa_data) = B.mes_id AND A.pesquisa_id = '".$pesquisa_id."'";
 
 	
-	$pesquisas = mysql_query($strsql) or die(mysql_error());
+	$pesquisas = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 								
-	if ($pesquisas && mysql_num_rows($pesquisas)>0)
+	if ($pesquisas && mysqli_num_rows($pesquisas)>0)
 	{
-		$row = mysql_fetch_array($pesquisas);
+		$row = mysqli_fetch_array($pesquisas);
 		$mes_atual = utf8_encode($row['mes_nome']);
 		$pesquisa_mes = $row['mes_id'];
 		$pesquisa_ano = $row['pesquisa_ano'];
@@ -38,11 +38,11 @@ ini_set('display_errors', '0');
 	$variacao_mensal = array();
 	$gasto_mes_anterior = array();
 	
-	$res = mysql_query($strsql) or die(mysql_error());
-	if($res && mysql_num_rows($res)>0)
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+	if($res && mysqli_num_rows($res)>0)
 	{
 	
-		while($row = mysql_fetch_array($res))
+		while($row = mysqli_fetch_array($res))
 		{
 			$cidade_id[] = $row['cidade_id'];
 			$cidade_nome[] = $row['cidade_nome'];
@@ -53,9 +53,9 @@ ini_set('display_errors', '0');
 		{
 			$strsql = "SELECT A.pesquisa_id,A.gasto_mensal_cesta,A.variacao_mensal,C.cidade_id FROM tabela_pesquisas_cidades A,tabela_pesquisas B,tabela_cidades C WHERE A.cidade_id = C.cidade_id AND A.pesquisa_id = '".$pesquisa_id."' AND A.pesquisa_id = B.pesquisa_id AND A.cidade_id = '".$cidade_id[$i]."'";
 			
-			$res1 = mysql_query($strsql) or die(mysql_error());
+			$res1 = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 			
-			while($row1 = mysql_fetch_array($res1))
+			while($row1 = mysqli_fetch_array($res1))
 			{				
 				array_push($gasto_mes_atual,str_replace(".", ",", isNull($row1['gasto_mensal_cesta'])));
 				array_push($variacao_mensal,str_replace(".", ",", isNull($row1['variacao_mensal']))); 
@@ -63,9 +63,9 @@ ini_set('display_errors', '0');
 			
 			$strsql = "SELECT A.pesquisa_id,A.cidade_id,A.gasto_mensal_cesta FROM tabela_pesquisas_cidades A,tabela_pesquisas B WHERE A.pesquisa_id = B.pesquisa_id AND B.pesquisa_id = '".$pesquisa_mes_anterior['pesquisa_id']."'";
 			
-			$res1 = mysql_query($strsql) or die(mysql_error());
+			$res1 = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 			
-			while($row1 = mysql_fetch_array($res1))
+			while($row1 = mysqli_fetch_array($res1))
 				array_push($gasto_mes_anterior,isNull($row1['gasto_mensal_cesta']));
 			
 		}
@@ -74,7 +74,7 @@ ini_set('display_errors', '0');
 	
 /**********************************************************************************************************
 *
-*	Pequisa para a tabela com o G.M., Variações e CRL de todos os meses do ano da pesquisa solicitada.
+*	Pequisa para a tabela com o G.M., Variaï¿½ï¿½es e CRL de todos os meses do ano da pesquisa solicitada.
 *
 **********************************************************************************************************/
 
@@ -83,9 +83,9 @@ ini_set('display_errors', '0');
 	
 		$strsql = "SELECT * FROM tabela_pesquisas_cidades A,tabela_pesquisas B,tabela_mes C,tabela_salarios D WHERE A.cidade_id = '".$cidade_id[$a]."' AND EXTRACT(YEAR FROM B.pesquisa_data) = '".$pesquisa_ano."' AND EXTRACT(MONTH FROM B.pesquisa_data) = C.mes_id AND A.pesquisa_id = B.pesquisa_id AND B.salario_id = D.salario_id ORDER BY C.mes_id DESC";
 		
-		$res = mysql_query($strsql) or die(mysql_error());
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 		
-		while($row = mysql_fetch_array($res))
+		while($row = mysqli_fetch_array($res))
 		{
 			$mes[] = $row['mes_nome'];
 			$gasto_mensal[$a][] = str_replace(".", ",", isNull($row['gasto_mensal_cesta']));
@@ -108,10 +108,10 @@ ini_set('display_errors', '0');
 	{
 		$strsql = "SELECT * FROM tabela_pesquisa_resultados_produtos A, tabela_pesquisas B,tabela_produtos C WHERE  A.pesquisa_id = B.pesquisa_id AND A.pesquisa_id = '".$pesquisa_id."' AND A.cidade_id = '".$cidade_id[$j]."' AND A.produto_id = C.produto_id AND C.produto_cesta = '1' ORDER BY A.produto_id";
 
-		$res = mysql_query($strsql) or die(mysql_error());
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 		
 		$i=0;
-		while($row = mysql_fetch_array($res))
+		while($row = mysqli_fetch_array($res))
 		{
 			$produto_id[$j][] = $row['produto_id'];
 			$produto[$j][] = $row['produto_nome_visualizacao'];
@@ -138,8 +138,8 @@ ini_set('display_errors', '0');
 		
 		$strsql = "SELECT * FROM tabela_racao_minima A,tabela_delimitador_racao B,tabela_unidade_medidas C WHERE A.delimitador_id = B.delimitador_id AND B.delimitador_em_uso = '1' AND A.produto_id IN ".$prod_buscar." AND A.racao_minima_medida = C.medida_id GROUP BY A.produto_id";
 	
-		$res = mysql_query($strsql) or die(mysql_error());
-		while($row = mysql_fetch_array($res))
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+		while($row = mysqli_fetch_array($res))
 		{
 			$quantidade[] = str_replace(".", ",", $row['racao_minima_quantidade']);
 			$prod_medida[] = $row['medida_simbolo'];
@@ -148,9 +148,9 @@ ini_set('display_errors', '0');
 		$strsql = "SELECT * FROM tabela_pesquisa_resultados_produtos A, tabela_pesquisas B,tabela_produtos C WHERE A.pesquisa_id = B.pesquisa_id AND A.pesquisa_id = '".$pesquisa_mes_anterior['pesquisa_id']."' AND A.cidade_id = '".$cidade_id[$j]."' AND A.produto_id = C.produto_id AND C.produto_cesta = '1' ORDER BY A.produto_id";
 		
 		//die($strsql);
-		$res = mysql_query($strsql) or die(mysql_error());
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 		
-		while($row = mysql_fetch_array($res))
+		while($row = mysqli_fetch_array($res))
 		{
 			$gasto_mensal_anterior[$j][] = str_replace(".", ",", isNull($row['produto_preco_total']));
 			$preco_medio_anterior[$j][] = str_replace(".", ",", isNull($row['produto_preco_medio']));
@@ -159,9 +159,9 @@ ini_set('display_errors', '0');
 		
 		$strsql = "SELECT * FROM tabela_pesquisas A NATURAL JOIN tabela_pesquisas_cidades B WHERE A.pesquisa_id = '".$pesquisa_id."' AND B.cidade_id = '".$cidade_id[$j]."'";
 		//die($strsql);
-		$res = mysql_query($strsql) or die(mysql_error());
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 		
-		while($row = mysql_fetch_array($res))
+		while($row = mysqli_fetch_array($res))
 		{
 			$preco_mensal_total[$j] = str_replace(".", ",", $row['gasto_mensal_cesta']);
 			$tot_var_mensal[$j] = str_replace(".", ",", isNull($row['variacao_mensal']));
@@ -171,24 +171,24 @@ ini_set('display_errors', '0');
 		}
 
 		$sql = "SELECT pesquisa_id FROM tabela_pesquisas WHERE YEAR(pesquisa_data) = $pesquisa_ano AND MONTH(pesquisa_data) = 1 ORDER BY pesquisa_data";
-		$res = mysql_query($sql) or die(mysql_error());
-		$row = mysql_fetch_array($res);
+		$res = mysqli_query($conn, $sql) or die(mysqli_error($conn));
+		$row = mysqli_fetch_array($res);
 		$pesquisaIdJaneiro = $row['pesquisa_id'];
 
 		$sql = "SELECT a.pesquisa_id,gasto_mensal_cesta,pesquisa_data from tabela_pesquisas_cidades a, tabela_pesquisas b where a.pesquisa_id=b.pesquisa_id AND ((a.pesquisa_id=".$pesquisa_id." OR a.pesquisa_id= ".$pesquisaIdJaneiro.") AND cidade_id=".$cidade_id[$j].")";
-		$res = mysql_query($sql) or die(mysql_error());
+		$res = mysqli_query($conn, $sql) or die(mysqli_error($conn));
 
 		
-		while($row = mysql_fetch_array($res)){
+		while($row = mysqli_fetch_array($res)){
 			$preco_total_cesta[$j][]= $row['gasto_mensal_cesta'];
 		}
 	
 		$strsql = "SELECT * FROM tabela_pesquisa_resultados_produtos A, tabela_pesquisas B,tabela_produtos C WHERE  A.pesquisa_id = B.pesquisa_id AND A.pesquisa_id = '".$pesquisa_id."' AND A.cidade_id = '".$cidade_id[$j]."' AND A.produto_id = C.produto_id AND C.produto_cesta = '1' ORDER BY A.produto_id";
 
-		$res = mysql_query($strsql) or die(mysql_error());
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 		
 		if ($pesquisa_mes == 12) {
-			while($row = mysql_fetch_array($res))
+			while($row = mysqli_fetch_array($res))
 			{
 				$precoMedioDezembro[$j][] = floatval($row['produto_preco_medio']);
 			}
@@ -196,9 +196,9 @@ ini_set('display_errors', '0');
 		
 			$strsql = "SELECT * FROM tabela_pesquisa_resultados_produtos A, tabela_pesquisas B,tabela_produtos C WHERE  A.pesquisa_id = B.pesquisa_id AND A.pesquisa_id = '".$pesquisaIdJaneiro."' AND A.cidade_id = '".$cidade_id[$j]."' AND A.produto_id = C.produto_id AND C.produto_cesta = '1' ORDER BY A.produto_id";
 
-			$res = mysql_query($strsql) or die(mysql_error());
+			$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 			
-			while($row = mysql_fetch_array($res))
+			while($row = mysqli_fetch_array($res))
 			{
 				$preco_medio_janeiro[$j][] = floatval($row['produto_preco_medio']);
 			}
@@ -218,21 +218,21 @@ ini_set('display_errors', '0');
 /************************************************************************************************************************/
 
 	$strsql = "SELECT * FROM tabela_pesquisas A,tabela_salarios B WHERE A.salario_id = B.salario_id AND A.pesquisa_id = '".$pesquisa_id."'";
-	$res = mysql_query($strsql) or die(mysql_error());
-	$row = mysql_fetch_array($res);
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+	$row = mysqli_fetch_array($res);
 	$salario_simbolo = $row['salario_simbolo'];
 	$salario_liquido = $row['salario_valor_liquido'];
 	$salario_bruto = $row['salario_valor_bruto'];
 	
 	$strsql = "SELECT * FROM tabela_pesquisas A,tabela_delimitador_racao B WHERE A.pesquisa_id = '".$pesquisa_id."' AND A.delimitador_id = B.delimitador_id";
 	
-	$res = mysql_query($strsql) or die(mysql_error());
-	$row = mysql_fetch_array($res);
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+	$row = mysqli_fetch_array($res);
 	$delimitador = $row['delimitador_descricao'];
 
 
-	$legenda_tabelas = utf8_encode("Cesta Básica de acordo com o Decreto-Lei nº 399 de 30 de abril de 1938, que instituiu as Comissões do Salário Mínimo.<br>Fonte: Projeto de extensão Acompanhamento do Custo da Cesta Básica - ACCB/UESC.");
-	//Variação Mensal Cesta Básica Preço Médio
+	$legenda_tabelas = utf8_encode("Cesta Bï¿½sica de acordo com o Decreto-Lei nï¿½ 399 de 30 de abril de 1938, que instituiu as Comissï¿½es do Salï¿½rio Mï¿½nimo.<br>Fonte: Projeto de extensï¿½o Acompanhamento do Custo da Cesta Bï¿½sica - ACCB/UESC.");
+	//Variaï¿½ï¿½o Mensal Cesta Bï¿½sica Preï¿½o Mï¿½dio
 	
 	//////////////
 	//Font formats
@@ -270,7 +270,7 @@ ini_set('display_errors', '0');
 	
 	$sect = $rtf->addSection();
 	
-	$sect->writeText(utf8_encode('Cesta Básica<br>'), new PHPRtfLite_Font(22, 'Bookman Old Style'), new PHPRtfLite_ParFormat('center'));
+	$sect->writeText(utf8_encode('Cesta Bï¿½sica<br>'), new PHPRtfLite_Font(22, 'Bookman Old Style'), new PHPRtfLite_ParFormat('center'));
 	
 	$sect->writeText(utf8_encode('Boletim '.$mes_atual.' - '.$pesquisa_ano.'<br><br>'), new PHPRtfLite_Font(22, 'Bookman Old Style'), new PHPRtfLite_ParFormat('center'));
 	
@@ -281,7 +281,7 @@ ini_set('display_errors', '0');
 	$colWidth = ($sect->getLayoutWidth() - 5) / $countCols; 
 	
 	
-	$legend = utf8_encode('Tabela 1 - Custo da Cesta Básica (em '.$salario_simbolo.') nas cidades de ');
+	$legend = utf8_encode('Tabela 1 - Custo da Cesta Bï¿½sica (em '.$salario_simbolo.') nas cidades de ');
 	
 	for($i=0;$i<$tam;$i++)
 		if($i!=$tam-2)
@@ -301,7 +301,7 @@ ini_set('display_errors', '0');
 	$table = $sect->addTable();
 	$table->addRows(1,0);
 	$table->addColumn($colWidth-0.82);
-	$table->writeToCell(1,1, utf8_encode('Mês'), $font1_bold,new PHPRtfLite_ParFormat('center'));
+	$table->writeToCell(1,1, utf8_encode('Mï¿½s'), $font1_bold,new PHPRtfLite_ParFormat('center'));
 	
         
 	for($i=1;$i<=$tam;$i++)
@@ -331,7 +331,7 @@ ini_set('display_errors', '0');
 				$table->addColumn($colWidth-0.05);
 				$table->writeToCell($j,2*$i, 'Gasto Mensal '.$salario_simbolo, $font1_bold,$parFC); 
 				$table->addColumn($colWidth-0.05);
-				$table->writeToCell($j,2*$i+1, utf8_encode('Variação Mensal %'), $font1_bold,$parFC);
+				$table->writeToCell($j,2*$i+1, utf8_encode('Variaï¿½ï¿½o Mensal %'), $font1_bold,$parFC);
 			}
 		}
 		else
@@ -383,7 +383,7 @@ ini_set('display_errors', '0');
 	
 		$sect->writeText('<br>', new PHPRtfLite_Font(32, 'Bookman Old Style'), new PHPRtfLite_ParFormat('center'));
 		
-		$legend = utf8_encode('Tabela '.(2+($a*2)).' - Preço Médio, Gasto Mensal e tempo de trabalho necessário, Cesta Básica, ').$cidade_nome[$a].', Bahia.';	
+		$legend = utf8_encode('Tabela '.(2+($a*2)).' - Preï¿½o Mï¿½dio, Gasto Mensal e tempo de trabalho necessï¿½rio, Cesta Bï¿½sica, ').$cidade_nome[$a].', Bahia.';	
 		$sect->writeText($legend, $font_titulo_tb, new PHPRtfLite_ParFormat('justify'));
 		
 		$table = $sect->addTable();
@@ -391,13 +391,13 @@ ini_set('display_errors', '0');
 		$table->addColumn($colWidth+0.1);
 		$table->writeToCell(1,1, 'Produtos',$font1_bold,new PHPRtfLite_ParFormat('center'));
 		$table->addColumn(($colWidth-0.3)*2);
-		$table->writeToCell(1,2, utf8_encode('Preço Médio ('.$salario_simbolo.')'),$font1_bold,new PHPRtfLite_ParFormat('center'));
+		$table->writeToCell(1,2, utf8_encode('Preï¿½o Mï¿½dio ('.$salario_simbolo.')'),$font1_bold,new PHPRtfLite_ParFormat('center'));
 		$table->addColumn($colWidth-1.7);
 		$table->writeToCell(1,3, 'Qtde.', $font1_bold,new PHPRtfLite_ParFormat('center'));
 		$table->addColumn($colWidth-0.7);
 		$table->writeToCell(1,4, 'Gasto Mensal '.$mes_atual.' ('.$salario_simbolo.')', $font1_bold,new PHPRtfLite_ParFormat('center'));
 		$table->addColumn($colWidth-0.24);
-		$table->writeToCell(1,5, utf8_encode('Tempo de Trabalho Necessário'), $font1_bold,new PHPRtfLite_ParFormat('center'));
+		$table->writeToCell(1,5, utf8_encode('Tempo de Trabalho Necessï¿½rio'), $font1_bold,new PHPRtfLite_ParFormat('center'));
 		
 		$table-> setBordersForCellRange(new PHPRtfLite_Border_Format(1, '#111111'), 1, 1, 1,5,false,true,false,false);
 		//$table-> setBordersForCellRange(new PHPRtfLite_Border_Format(1, '#111111'), 1, 2, 1,6,false,true,false,false);
@@ -475,7 +475,7 @@ ini_set('display_errors', '0');
 
 		$sect->writeText('<br>', new PHPRtfLite_Font(32, 'Bookman Old Style'), new PHPRtfLite_ParFormat('center'));
 		
-		$legend = utf8_encode('Tabela '.(3+($a*2)).' - Variações mensal, semestral e anual, Cesta Básica, ').$cidade_nome[$a].', Bahia.';	
+		$legend = utf8_encode('Tabela '.(3+($a*2)).' - Variaï¿½ï¿½es mensal, semestral e anual, Cesta Bï¿½sica, ').$cidade_nome[$a].', Bahia.';	
 		$sect->writeText($legend, $font_titulo_tb, new PHPRtfLite_ParFormat('left'));
 		
 		$table1 = $sect->addTable();
@@ -485,15 +485,15 @@ ini_set('display_errors', '0');
 		$table1->addColumn($colWidth-1.81);
 		$table1->writeToCell(1,2, 'Qtde.', $font1_bold,new PHPRtfLite_ParFormat('center'));
 		$table1->addColumn($colWidth);
-		$table1->writeToCell(1,3, utf8_encode('Variação Mensal* %'),$font1_bold,new PHPRtfLite_ParFormat('center'));
+		$table1->writeToCell(1,3, utf8_encode('Variaï¿½ï¿½o Mensal* %'),$font1_bold,new PHPRtfLite_ParFormat('center'));
 		$table1->addColumn($colWidth);
-		$table1->writeToCell(1,4, utf8_encode('Variação Semestral** %'), $font1_bold,new PHPRtfLite_ParFormat('center'));
+		$table1->writeToCell(1,4, utf8_encode('Variaï¿½ï¿½o Semestral** %'), $font1_bold,new PHPRtfLite_ParFormat('center'));
 		$table1->addColumn($colWidth);
-		$table1->writeToCell(1,5, utf8_encode('Variação Anual*** %'), $font1_bold,new PHPRtfLite_ParFormat('center'));
+		$table1->writeToCell(1,5, utf8_encode('Variaï¿½ï¿½o Anual*** %'), $font1_bold,new PHPRtfLite_ParFormat('center'));
 		
 		if ($pesquisa_mes == 12) {
 			$table1->addColumn($colWidth);
-			$table1->writeToCell(1,6, utf8_encode('Variação do Ano**** %'), $font1_bold,new PHPRtfLite_ParFormat('center'));
+			$table1->writeToCell(1,6, utf8_encode('Variaï¿½ï¿½o do Ano**** %'), $font1_bold,new PHPRtfLite_ParFormat('center'));
 			$table-> setBordersForCellRange(new PHPRtfLite_Border_Format(1, '#111111'), 1, 1, 1,6,false,true,false,false);
 		}
 		else{

@@ -6,13 +6,13 @@
 	
 	$strsql = "SELECT * FROM tabela_bairros WHERE cidade_id = '".$cidade_id."'";
 	
-	$bairros = mysql_query($strsql) or die(mysql_error());
+	$bairros = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 					
-	if ($bairros && mysql_num_rows($bairros)>0)	
+	if ($bairros && mysqli_num_rows($bairros)>0)	
 	{
 		$json = new Services_JSON();
 		
-		while($row = mysql_fetch_array($bairros))
+		while($row = mysqli_fetch_array($bairros))
 		{
 			array_push($bairros_info,$row['bairro_id']);
 			array_push($bairros_info,$row['bairro_nome']);

@@ -18,10 +18,10 @@ require("cabecalho.php");
 					<?php
 						
 					$strsql = "SELECT * FROM tabela_produtos A,tabela_produtos_medidas B,tabela_unidade_medidas C WHERE (B.produto_id,B.medida_id) <> ALL (SELECT produto_id,medida_id FROM tabela_precos C WHERE C.coleta_id = '".$coleta_id."') AND (A.produto_id = B.produto_id AND B.medida_id = C.medida_id) ORDER BY B.produto_id";
-					$produtos = mysql_query($strsql) or die(mysql_error());
+					$produtos = mysqli_query($conn,$strsql) or die(mysqli_error($conn));
 					
-					if ($produtos && mysql_num_rows($produtos)>0)	
-						while($row = mysql_fetch_array($produtos))
+					if ($produtos && mysqli_num_rows($produtos)>0)	
+						while($row = mysqli_fetch_array($produtos))
 								{
 					?>
 						

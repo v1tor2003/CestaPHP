@@ -7,8 +7,8 @@
 
 	if ($action=='edit'){	  
 	  	$strsql = "SELECT * FROM tabela_unidade_medidas WHERE medida_id = '".$medida_id."'";
-		$res = mysql_query($strsql) or die(mysql_error());
-		$res = mysql_fetch_array($res);
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+		$res = mysqli_fetch_array($res);
 		$medida_id = $res['medida_id'];
 		$medida_descricao = $res['medida_descricao'];
 		$medida_simbolo = $res['medida_simbolo'];
@@ -18,9 +18,9 @@
 	if ($action=='save'){	  
 	  
 	  $strsql = "SELECT * FROM tabela_unidade_medidas WHERE medida_simbolo= '".$medida_simbolo."' AND medida_id <> '".$medida_id."'";
-	  $res = mysql_query($strsql) or die(mysql_error()); 		
+	  $res = mysqli_query($conn, $strsql) or die(mysqli_error($conn)); 		
 		
-		if ($res && mysql_num_rows($res)>0)
+		if ($res && mysqli_num_rows($res)>0)
 		  $herr = "Existe outra medida com o mesmo símbolo.";
 		else{
 		  if ($medida_id!='')//Vamos a atualizar
@@ -28,7 +28,7 @@
 		  else//Vamos a insertar
 		    $strsql = "INSERT INTO tabela_unidade_medidas (medida_descricao,medida_simbolo) VALUES ('".$medida_descricao."','".$medida_simbolo."')";
 			
-			mysql_query($strsql) or die(mysql_error());	
+			mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 			
 			$medida_id = '';
 			$medida_descricao = '';
@@ -39,7 +39,7 @@
 	
 	if ($action=='del'){
 	  $strsql = "DELETE FROM tabela_unidade_medidas WHERE medida_id = '".$medida_id."'";
-		mysql_query($strsql) or die(mysql_error());	
+		mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 		header("Location:".$_SERVER['PHP_SELF']);
 		die();
 	}
@@ -66,9 +66,9 @@ require("cabecalho.php");
 			<!-- Conteúdo referente a esta página -->
 					<?php 
 						  	$strsql = "SELECT * FROM tabela_unidade_medidas";
-							$medidas = mysql_query($strsql) or die(mysql_error());
+							$medidas = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 							
-					if ($medidas && mysql_num_rows($medidas)>0){	
+					if ($medidas && mysqli_num_rows($medidas)>0){	
 					?>
 					<table cellspacing="0" id="listTable" summary="Tabela de Cidades" style="width:563px;">
 					<colgroup>
@@ -87,7 +87,7 @@ require("cabecalho.php");
 					</thead>
 						 <?php
 						 	
-							while ($row = mysql_fetch_array($medidas)){
+							while ($row = mysqli_fetch_array($medidas)){
 								if($l_cor == '') $l_cor = "par"; else $l_cor = "";
 						  ?>
 							   <tr class="<?php echo ($l_cor);?>">

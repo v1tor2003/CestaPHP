@@ -1,16 +1,16 @@
 <?php
 include_once("./sendEmailSenha.php");
-include_once("mysql.lib");
+include_once("./libs/mysql.lib");
  $usermail = trim($_POST['usermail']);
 if($usermail!=''){
 
-	 $sql = sprintf("SELECT * FROM `tabela_usuarios` WHERE usuario_email='%s'",  mysql_real_escape_string($usermail));
+	 $sql = sprintf("SELECT * FROM `tabela_usuarios` WHERE usuario_email='%s'",  mysqli_real_escape_string($conn, $usermail));
 	 
-	 $sql_query = mysql_query($sql);
+	 $sql_query = mysqli_query($conn, $sql);
 	 
-	if($sql_query && mysql_num_rows($sql_query) == 1)
+	if($sql_query && mysqli_num_rows($sql_query) == 1)
 	{
-	   $tabel = mysql_fetch_array($sql_query);
+	   $tabel = mysqli_fetch_array($sql_query);
 	   
 	   $usermail  = $tabel['usuario_email'];
 	   $username  = $tabel['usuario_nome'];

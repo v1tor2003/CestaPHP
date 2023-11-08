@@ -13,8 +13,8 @@ if ($_REQUEST['haction']) {
     $herr = '';
     if ($action == 'edit') {
         $strsql = "SELECT * FROM tabela_estabelecimentos_secundarios WHERE estabelecimento_sec_id = '" . $estabelecimento_sec_id . "'";
-        $res = mysql_query($strsql) or die(mysql_error());
-        $res = mysql_fetch_array($res);
+        $res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+        $res = mysqli_fetch_array($res);
         $estabelecimento_sec_nome = $res['estabelecimento_sec_nome'];
         /* $estabelecimento_sec_endereco = $res['estabelecimento_sec_endereco'];
           $estabelecimento_sec_contato = $res['estabelecimento_sec_contato'];
@@ -27,8 +27,8 @@ if ($_REQUEST['haction']) {
     if ($action == 'save') {
         $strsql = "SELECT * FROM tabela_estabelecimentos_secundarios WHERE (estabelecimento_sec_nome = '" . $estabelecimento_sec_nome . "') AND (estabelecimento_sec_id <> '" . $estabelecimento_sec_id . "')";
         //die($strsql);
-        $res = mysql_query($strsql) or die(mysql_error());
-        if ($res && mysql_num_rows($res) > 0)
+        $res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+        if ($res && mysqli_num_rows($res) > 0)
             $herr = "Existe outro estabelecimento secundario com o nome: " . $estabelecimento_sec_nome . "";
         else {
             if ($estabelecimento_sec_id != '')//Vamos a atualizar
@@ -37,7 +37,7 @@ if ($_REQUEST['haction']) {
                 //$data = date('Y-m-d');
                 $strsql = "INSERT INTO tabela_estabelecimentos_secundarios (estabelecimento_sec_nome) VALUES ('" . $estabelecimento_sec_nome . "')";
             }
-            mysql_query($strsql) or die(mysql_error());
+            mysqli_query($conn, $strsql) or die(mysqli_error($conn));
             $estabelecimento_sec_id = '';
             $estabelecimento_sec_nome = '';
             /* $estabelecimento_sec_endereco = '';
@@ -53,7 +53,7 @@ if ($_REQUEST['haction']) {
     }//do if save
     if ($action == 'del') {
         $strsql = "DELETE FROM tabela_estabelecimentos_secundarios WHERE estabelecimento_sec_id = '" . $estabelecimento_sec_id . "'";
-        mysql_query($strsql) or die(mysql_error());
+        mysqli_query($conn, $strsql) or die(mysqli_error($conn));
         header("Location: cadastro_estabelecimentos_secundarios.php");
     }
 }

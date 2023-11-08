@@ -1,4 +1,6 @@
-<?php require("cabecalho.php"); ?>
+<?php 
+$include_head = array ();
+require("cabecalho.php"); ?>
 <body>
  
 		
@@ -33,7 +35,7 @@
 			
 			<div class="clearer"><span></span></div>
 
-			<div class="rodape">Copyright &copy;2009 - <?php echo(date(Y)); ?>&nbsp;
+			<div class="rodape">Copyright &copy;2009 - <?php echo(date('Y')); ?>&nbsp;
     Departamento de Ci&ecirc;ncias Econ&ocirc;micas da UESC - DCEC. Todos os direitos reservados. </div>
 
 		</div>

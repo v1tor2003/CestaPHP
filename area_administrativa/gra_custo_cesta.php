@@ -7,11 +7,11 @@
 	
 	$strsql = "SELECT MAX(gasto_mensal_cesta) AS max,MIN(gasto_mensal_cesta) AS min,mes_nome,gasto_mensal_cesta,mes_id FROM tabela_pesquisas_cidades A,tabela_pesquisas B,tabela_mes C,tabela_salarios D WHERE A.cidade_id = '".$cidade."' AND EXTRACT(YEAR FROM B.pesquisa_data) = '".$pesquisa_ano."' AND EXTRACT(MONTH FROM B.pesquisa_data) = C.mes_id AND A.pesquisa_id = B.pesquisa_id AND B.salario_id = D.salario_id GROUP BY C.mes_id ORDER BY C.mes_id";
 	
-	$res = mysql_query($strsql) or die(mysql_error());
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 	
-	$qtde = mysql_num_rows($res);
+	$qtde = mysqli_num_rows($res);
 
-	while($row = mysql_fetch_array($res))
+	while($row = mysqli_fetch_array($res))
 	{
 	    
 		$mes [] = $row['mes_nome'];

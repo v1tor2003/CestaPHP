@@ -40,8 +40,8 @@
 	
 	  $records_per_page = 10;		
 	  $start_rec = ($_REQUEST['hp']!='') ? $_REQUEST['hp'] : 0;  
-	  $pesquisas = mysql_query($strsql) or die(mysql_error());
-	  $total_rec = mysql_num_rows($pesquisas);
+	  $pesquisas = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+	  $total_rec = mysqli_num_rows($pesquisas);
 		if ($start_rec>=$total_rec) $start_rec -= $records_per_page;
 		if ($start_rec<0) $start_rec=0;	
 	  $last_rec = ($start_rec + $records_per_page > $total_rec) ? $total_rec : $start_rec + $records_per_page;  
@@ -53,9 +53,9 @@
 
       $strsql = $strsql." LIMIT ".$start_rec.",".$records_per_page; 
 							
-	  $pesquisas = mysql_query($strsql) or die(mysql_error());
+	  $pesquisas = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 							
-	  if ($pesquisas && mysql_num_rows($pesquisas)>0){	
+	  if ($pesquisas && mysqli_num_rows($pesquisas)>0){	
 					?>
 					<table cellspacing="0" id="listTable" summary="Tabela de Pesquisas" style="width:580px;">
 					<colgroup>
@@ -74,7 +74,7 @@
 					</thead>
 						 <?php
 						 	
-							while ($row = mysql_fetch_array($pesquisas))
+							while ($row = mysqli_fetch_array($pesquisas))
 							{
 							
 								if($l_cor == '') 

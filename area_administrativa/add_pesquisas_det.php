@@ -8,8 +8,8 @@
 
 	if ($action=='edit'){	  
 	  	$strsql = "SELECT pesquisa_id,EXTRACT(MONTH FROM pesquisa_data) AS mes_id,EXTRACT(YEAR FROM pesquisa_data) AS pesquisa_ano FROM tabela_pesquisas WHERE pesquisa_id = '".$pesquisa_id."'";
-		$res = mysql_query($strsql) or die(mysql_error());
-		$res = mysql_fetch_array($res);
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+		$res = mysqli_fetch_array($res);
 		$pesquisa_id = $res['pesquisa_id'];
 		$pesquisa_mes = $res['mes_id'];
 		$pesquisa_ano = $res['pesquisa_ano'];
@@ -19,9 +19,9 @@
 	  
 		$strsql = "SELECT * FROM tabela_pesquisas WHERE (pesquisa_data = '".$pesquisa_ano."-".$pesquisa_mes."-00') AND pesquisa_id <> '".$pesquisa_id."'";
 
-	  $res = mysql_query($strsql) or die(mysql_error()); 	
+	  $res = mysqli_query($conn, $strsql) or die(mysqli_error($conn)); 	
 		
-		if ($res && mysql_num_rows($res)>0)
+		if ($res && mysqli_num_rows($res)>0)
 		  $herr = "Existe outra pesquisa para o mesmo mes e ano.";
 		else{
 		  
@@ -31,7 +31,7 @@
 		    $strsql = "INSERT INTO tabela_pesquisas (pesquisa_data,pesquisa_detalhada) VALUES ('".$pesquisa_ano."-".$pesquisa_mes."-00','0')";
 			
 			
-			mysql_query($strsql) or die(mysql_error());	
+			mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 			
 			$pesquisa_id = '';
 			$pesquisa_mes = '';
@@ -44,7 +44,7 @@
 	
 	if ($action=='del'){
 	  	$strsql = "DELETE FROM tabela_pesquisas WHERE pesquisa_id = '".$pesquisa_id."'";
-		mysql_query($strsql) or die(mysql_error());	
+		mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 		header("Location: cadastro_pesquisas_antigas.php");
 	}
 
@@ -96,10 +96,10 @@ require("cabecalho.php");
 						<?php
 							
 							$strsql = "SELECT * FROM tabela_mes";
-							$mes = mysql_query($strsql) or die(mysql_error());
+							$mes = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 					
-							if ($mes && mysql_num_rows($mes)>0)	
-								while($row = mysql_fetch_array($mes))
+							if ($mes && mysqli_num_rows($mes)>0)	
+								while($row = mysqli_fetch_array($mes))
 								{
 						?>
 						
@@ -121,7 +121,7 @@ require("cabecalho.php");
 					
 						<?php
 						
-							$ano = date(Y);
+							$ano = date('Y');
 							while($ano > 1998)
 							{
 						?>

@@ -79,9 +79,9 @@ require("cabecalho.php");
 			<!-- Conteúdo referente a esta página -->
 					<?php 
 						  	$strsql = "SELECT * FROM tabela_delimitador_racao";
-							$delimitador = mysql_query($strsql) or die(mysql_error());
+							$delimitador = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 							
-					if ($delimitador && mysql_num_rows($delimitador)>0){	
+					if ($delimitador && mysqli_num_rows($delimitador)>0){	
 					?>
 					<h1 id="Mcaption" style="text-align:left">Cadastro da Ra&ccedil;&atilde;o M&iacute;nima</h1>
 					<table cellspacing="0" id="listTable" summary="Tabela de Cidades" style="width:563px;">
@@ -101,7 +101,7 @@ require("cabecalho.php");
 					</thead>
 						 <?php
 						 	
-							while ($row = mysql_fetch_array($delimitador)){
+							while ($row = mysqli_fetch_array($delimitador)){
 								if($l_cor == '') $l_cor = "par"; else $l_cor = "";
 						  ?>
 							   <tr class="<?php echo ($l_cor);?>">

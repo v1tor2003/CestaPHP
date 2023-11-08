@@ -28,10 +28,10 @@
 	for( $i = 0 ; $i<$qt_prod ; $i++)
 	{
 		$strsql = "SELECT PRP.".$tipo_dado.",EXTRACT(MONTH FROM P.pesquisa_data) AS mes,EXTRACT(YEAR FROM P.pesquisa_data) AS ano FROM tabela_pesquisa_resultados_produtos PRP NATURAL JOIN tabela_pesquisas P WHERE PRP.produto_id = '".$prod[$i]."' AND PRP.cidade_id = '".$cidade."' AND P.pesquisa_data BETWEEN '".$dti."/00' AND '".$dtf."/00' ORDER BY P.pesquisa_data";
-		$res = mysql_query($strsql) or die(mysql_error());
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 		
 		$j = 0;
-		while($row = mysql_fetch_array($res))
+		while($row = mysqli_fetch_array($res))
 		{
 			$vetor_info[$i][$j] = $row[$tipo_dado];
 			$vetor_periodo[$j++] = $row['mes']."/".$row['ano'];
@@ -50,22 +50,22 @@
 	$str_aux .= $prod[$i].")";
 	
 	$strsql = "SELECT P.produto_nome_visualizacao FROM tabela_produtos P WHERE P.produto_id IN ".$str_aux." ORDER BY P.produto_id";
-	$res = mysql_query($strsql) or die(mysql_error());
-	while($row = mysql_fetch_array($res))
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+	while($row = mysqli_fetch_array($res))
 	{
 		$prod_nome[] = $row['produto_nome_visualizacao'];
 	}
 	
 	$strsql = "SELECT C.cidade_nome FROM tabela_cidades C WHERE C.cidade_id = '".$cidade."'";
-	$res = mysql_query($strsql) or die(mysql_error());
-	$row = mysql_fetch_array($res);
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+	$row = mysqli_fetch_array($res);
 	
 	$cidade_nome = $row['cidade_nome'];
 	
 	$strsql = "SELECT * FROM tabela_salarios  WHERE salario_em_uso = '1'";
 	
-	$res = mysql_query($strsql) or die(mysql_error());
-	$row = mysql_fetch_array($res);
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+	$row = mysqli_fetch_array($res);
 	$salario_simbolo = $row['salario_simbolo'];
 
 $include_head[] = <<<EOS

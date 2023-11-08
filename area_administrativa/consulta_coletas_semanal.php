@@ -60,9 +60,9 @@
 								<option value="">&nbsp;</option>
 								<?php
                                 	$strsql = "SELECT * FROM tabela_cidades";
-                                	$cidades = mysql_query($strsql) or die(mysql_error());
-                                	if ($cidades && mysql_num_rows($cidades) > 0)
-                                    	while ($row = mysql_fetch_array($cidades)) {
+                                	$cidades = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+                                	if ($cidades && mysqli_num_rows($cidades) > 0)
+                                    	while ($row = mysqli_fetch_array($cidades)) {
 								?>
 											<option value="<?php echo($row['cidade_id']); ?>" <?php if ($cidade_id == $row['cidade_id']) {?>selected="selected" <?php } ?>  > <?php echo ($row['cidade_nome']); ?></option>
 								<?php
@@ -76,9 +76,9 @@
 							<?php 
 								if (isset($cidade_id)){
 									$strsql = "SELECT * FROM tabela_bairros WHERE cidade_id = '" . $cidade_id . "'";
-                                	$bairros = mysql_query($strsql) or die(mysql_error());
-                                	if ($bairros && mysql_num_rows($bairros) > 0)
-                                    	while ($row = mysql_fetch_array($bairros)) {
+                                	$bairros = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+                                	if ($bairros && mysqli_num_rows($bairros) > 0)
+                                    	while ($row = mysqli_fetch_array($bairros)) {
                             ?>
                                         	<option value="<?php echo($row['bairro_id']); ?>" <?php if ($bairro_id == $row['bairro_id']) { ?>selected="selected" <?php } ?>  > <?php echo ($row['bairro_nome']); ?></option>
 
@@ -119,8 +119,8 @@
 								$strsql .= "AND (C.bairro_id = $bairro_id)"; 
 						}	
 			//echo "<br>$strsql<br>";
-			$coletas = mysql_query($strsql) or die(mysql_error());
-			$nColetas =  mysql_num_rows($coletas);
+			$coletas = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+			$nColetas =  mysqli_num_rows($coletas);
 			//echo "<br>nColetas = $nColetas<br>";
 			if ($coletas && $nColetas > 0)
 				{
@@ -155,7 +155,7 @@
 						</thead>
 						<?php
 						   for ($i=0; $i < $nColetas; $i++) { 
-								$row_col = mysql_fetch_array($coletas);								
+								$row_col = mysqli_fetch_array($coletas);								
 								$strsql =  "SELECT 	A.produto_id, 
 													A.produto_nome_visualizacao, 
 													B.medida_simbolo,
@@ -171,10 +171,10 @@
 												(coleta_id = ".$row_col['coleta_id'].")
 											ORDER BY A.produto_id"; 
 								//echo("<tr><td colspan=10>$strsql</td></tr>");			  
-								$produtos = mysql_query($strsql) or die(mysql_error());
-								$nProdutos =  mysql_num_rows($produtos);
+								$produtos = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+								$nProdutos =  mysqli_num_rows($produtos);
 								if ($produtos && $nProdutos > 0){
-									while ($row_prod = mysql_fetch_array($produtos)){	
+									while ($row_prod = mysqli_fetch_array($produtos)){	
 										if($l_cor == '') $l_cor = "par"; else $l_cor = "";							
 							?>
 									<tr class="<?php echo ($l_cor);?>">

@@ -8,10 +8,10 @@
    //Fetch all factory records
    $strsql = "SELECT * FROM tabela_pesquisa_resultados_produtos A, tabela_pesquisas B,tabela_produtos C,tabela_cidades D WHERE  A.pesquisa_id = B.pesquisa_id AND A.pesquisa_id = '".$pesquisa_id."' AND A.cidade_id = '".$cidade."' AND C.produto_cesta = '1' AND A.produto_id = C.produto_id AND A.cidade_id = D.cidade_id ORDER BY A.produto_id";
    
-   $res = mysql_query($strsql) or die(mysql_error());
-   $qtde = mysql_num_rows($res);
+   $res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+   $qtde = mysqli_num_rows($res);
    
-   while($row = mysql_fetch_array($res))
+   while($row = mysqli_fetch_array($res))
 	{
 		 $produto []  = $row['produto_nome_visualizacao'];
 		 $preco [] = $row['produto_preco_total'];

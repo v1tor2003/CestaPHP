@@ -1,4 +1,5 @@
 <?php
+$include_head = array ();
 require("cabecalho.php");
 ?>
 <body>
@@ -76,11 +77,11 @@ require("cabecalho.php");
 			</td></tr>
 <?php
 		$strsql = "SELECT * FROM tabela_salarios WHERE salario_em_uso = '1'";
-		$info_salario = mysql_query($strsql) or die(mysql_error());
+		$info_salario = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 		
-		if ($info_salario && mysql_num_rows($info_salario)>0)	
+		if ($info_salario && mysqli_num_rows($info_salario)>0)	
 		{
-			$row = mysql_fetch_array($info_salario);
+			$row = mysqli_fetch_array($info_salario);
 								
 			$salario_valor_bruto = $row['salario_valor_bruto'];
 			$salario_valor_liquido = $row['salario_valor_liquido'];

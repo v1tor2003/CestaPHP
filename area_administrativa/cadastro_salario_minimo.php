@@ -12,8 +12,8 @@
 	
 	if ($action=='edit'){	  
 	  	$strsql = "SELECT * FROM tabela_salarios WHERE salario_id = '".$salario_id."'";
-		$res = mysql_query($strsql) or die(mysql_error());
-		$res = mysql_fetch_array($res);
+		$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
+		$res = mysqli_fetch_array($res);
 		$salario_id= $res['salario_id'];
 		$salario_nome = $res['salario_nome'];
 		$salario_simbolo = $res['salario_simbolo'];
@@ -26,9 +26,9 @@
 	if ($action=='save'){	  
 	  
 	  $strsql = "SELECT * FROM tabela_salarios WHERE ((salario_valor_bruto = '".$salario_valor_bruto."' AND salario_valor_liquido = '".$salario_valor_liquido."')) AND (salario_id <> '".$salario_id."')";
-	  $res = mysql_query($strsql) or die(mysql_error()); 		
+	  $res = mysqli_query($conn, $strsql) or die(mysqli_error($conn)); 		
 		
-		if ($res && mysql_num_rows($res)>0)
+		if ($res && mysqli_num_rows($res)>0)
 		  	$herr = "Existe outro salario com a mesmo valor bruto e líquido!";
 		else{	
 		
@@ -37,10 +37,10 @@
 				$strsql = "SELECT * FROM tabela_salarios WHERE (salario_em_uso= '1' AND salario_id <> '".$salario_id."') ";
 				
 				//die($strsql);
-				$res = mysql_query($strsql) or die(mysql_error()); 
+				$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn)); 
 				
 				
-				if ($res && mysql_num_rows($res)>0)
+				if ($res && mysqli_num_rows($res)>0)
 				{
 				  $herr = "Existe outro salário em uso!";
 				  $flag = false;
@@ -57,7 +57,7 @@
 			
 			//die($strsql);
 			
-			mysql_query($strsql) or die(mysql_error());	
+			mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 			
 			
 			$salario_id = '';
@@ -74,7 +74,7 @@
 	
 	if ($action=='del'){
 	  $strsql = "DELETE FROM tabela_salarios WHERE salario_id= '".$salario_id."'";
-		mysql_query($strsql) or die(mysql_error());	
+		mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 		header("Location:".$_SERVER['PHP_SELF']);
 		die();
 	}
@@ -103,9 +103,9 @@ require("cabecalho.php");
 			<!-- Conteúdo referente a esta página -->
 					<?php 
 						  	$strsql = "SELECT * FROM tabela_salarios";
-							$salarios = mysql_query($strsql) or die(mysql_error());
+							$salarios = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 							
-					if ($salarios && mysql_num_rows($salarios)>0){	
+					if ($salarios && mysqli_num_rows($salarios)>0){	
 					?>
 					<h1 id="Mcaption" style="text-align:left">Cadastro de Sal&aacute;rios</h1>
 					<table cellspacing="0" id="listTable" summary="Tabela de Delimitadores" style="width:543px;">
@@ -127,7 +127,7 @@ require("cabecalho.php");
 					</thead>
 						 <?php
 						 	
-							while ($row = mysql_fetch_array($salarios)){
+							while ($row = mysqli_fetch_array($salarios)){
 							
 								if($row['salario_em_uso']==1)
 								{

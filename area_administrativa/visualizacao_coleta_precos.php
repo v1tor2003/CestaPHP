@@ -26,29 +26,29 @@
 			<?php
 			
 			$strsql = "SELECT B.mes_nome,EXTRACT(YEAR FROM A.pesquisa_data) AS pesquisa_ano FROM tabela_pesquisas A, tabela_mes B WHERE EXTRACT(MONTH FROM A.pesquisa_data) = B.mes_id AND A.pesquisa_id = '".$pesquisa_id."'";
-			$pesquisas = mysql_query($strsql) or die(mysql_error());
+			$pesquisas = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 							
-			if ($pesquisas && mysql_num_rows($pesquisas)>0){
-				$row = mysql_fetch_array($pesquisas)	
+			if ($pesquisas && mysqli_num_rows($pesquisas)>0){
+				$row = mysqli_fetch_array($pesquisas)	
 			?>
 			<h1 id="Mcaption" style="text-align:left">Pesquisa: <?php echo ($row['mes_nome']."/".$row['pesquisa_ano']); ?><a href="cadastro_coletas.php?coleta_id=<?php echo($coleta_id);?>&pesquisa_id=<?php echo($pesquisa_id);?>"><img style=" float:right; border:none; margin-right:10px;" src="images/seta_azul.png" ></a></h1>
 			<?php
 			}
 			
 			$strsql = "SELECT B.mes_nome,EXTRACT(YEAR FROM A.pesquisa_data) AS pesquisa_ano FROM tabela_pesquisas A, tabela_mes B WHERE EXTRACT(MONTH FROM A.pesquisa_data) = B.mes_id AND A.pesquisa_id = '".$pesquisa_id."'";
-			$pesquisas = mysql_query($strsql) or die(mysql_error());
+			$pesquisas = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 							
-			if ($pesquisas && mysql_num_rows($pesquisas)>0)
+			if ($pesquisas && mysqli_num_rows($pesquisas)>0)
 			{
-				$row = mysql_fetch_array($pesquisas);
+				$row = mysqli_fetch_array($pesquisas);
 		
 					
 				$strsql = "SELECT * FROM tabela_coletas A, tabela_estabelecimentos B,tabela_bairros C,tabela_cidades D  WHERE (A.estabelecimento_id = B.estabelecimento_id) AND coleta_id = '".$coleta_id."' AND C.bairro_id = B.bairro_id AND C.cidade_id = D.cidade_id";	
-				$coletas = mysql_query($strsql) or die(mysql_error());
+				$coletas = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 							
-				if ($coletas && mysql_num_rows($coletas)>0)
+				if ($coletas && mysqli_num_rows($coletas)>0)
 				{
-					$row = mysql_fetch_array($coletas);		
+					$row = mysqli_fetch_array($coletas);		
 					$estabelecimento_nome = $row['estabelecimento_nome'];
 					$total_coleta = $row['coleta_preco_cesta'];
 					$data = formata_data($row['coleta_data'],1);

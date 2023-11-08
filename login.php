@@ -33,7 +33,7 @@
 	</fieldset>
 	<span> Ir para </span><a id="restrito" href="index.php"> &Aacute;rea P&uacute;blica</a>
 		<img src="area_publica/images/cadeadoaberto.png" alt="&Aacute;rea p&uacute;blica" width="20" height="20" />
-	<div class="rodape">Copyright &copy;2009 - <?php echo(date(Y)); ?>&nbsp;
+	<div class="rodape">Copyright &copy;2009 - <?php echo(date('Y')); ?>&nbsp;
     Departamento de Ci&ecirc;ncias Econ&ocirc;micas da UESC - DCEC. Todos os direitos reservados. </div>
   </div>
  </body>

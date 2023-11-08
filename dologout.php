@@ -1,6 +1,6 @@
 <?php
 	
-	require("libs/mysql.lib");
+	require("./libs/mysql.lib");
 	
 	session_start();
 	
@@ -8,7 +8,7 @@
 	
 	$strsql = "DELETE FROM tabela_sessao WHERE sessao_id = '$_sid'";
 	
-	if (!mysql_query($strsql)) die(mysql_error());
+	if (!mysqli_query($conn, $strsql)) die(mysqli_error($conn));
 		session_destroy();
   
   	header("Location: index.php");
