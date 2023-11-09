@@ -1,4 +1,5 @@
 <?php
+	error_reporting(E_ERROR | E_PARSE);
 	function validateDate($date, $format = 'Y-m-d'){
 		if (!isset($date) || is_null($date) ||strlen($date)<8)
 			return false;

@@ -1,5 +1,5 @@
 <?php
-
+  error_reporting(E_ERROR | E_PARSE);
 	$ano_array = array();
 	$codigo= array();
 	$action = $_REQUEST['haction'];
@@ -199,7 +199,7 @@ require("cabecalho.php");
 								
 						for($i=0;$i<$qtd_crono;$i++)
 						{
-						
+						  if(!isset($l_cor)) $l_cor ='';
 							if($l_cor == '') $l_cor = "par"; else $l_cor = "";
 					?>
 						<tr class="<?php echo ($l_cor);?>">

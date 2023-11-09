@@ -1,6 +1,6 @@
 <?php
-
-  	$usuario_id = addslashes(htmlspecialchars($_REQUEST['hid']));
+	error_reporting(E_ERROR | E_PARSE);
+  $usuario_id = addslashes(htmlspecialchars($_REQUEST['hid']));
 	$usuario_nome = mysqli_escape_string($conn, addslashes(htmlspecialchars($_REQUEST['usuario_nome'])));
 	$usuario_email = mysqli_escape_string($conn, addslashes(htmlspecialchars($_REQUEST['usuario_email'])));
 	$usuario_senha = addslashes(htmlspecialchars($_REQUEST['usuario_senha']));

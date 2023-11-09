@@ -1,6 +1,6 @@
 <?php
 
-	require_once('Charts/FusionCharts.php');
+	require_once '../libs/Charts/FusionCharts.php';
 	
 	$prod = preg_split("/\//",$_REQUEST['hprod']);
 	$qt_prod = count($prod);

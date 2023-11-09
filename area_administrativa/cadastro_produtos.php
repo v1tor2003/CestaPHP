@@ -1,6 +1,6 @@
 <?php 
 	
-	mysqlii_set_charset($conn,'utf8');
+	mysqli_set_charset($conn,'utf8');
 
 	$action = $_REQUEST['haction'];
 	$produto_id = $_REQUEST['hid'];

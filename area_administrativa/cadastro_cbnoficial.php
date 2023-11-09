@@ -1,5 +1,5 @@
 <?php
-  	
+  error_reporting(E_ERROR | E_PARSE);
 	$delimitador_id = $_REQUEST['hid'];
 	$delimitador_descricao = $_REQUEST['delimitador_descricao'];
 	$delimitador_data = formata_data($_REQUEST['delimitador_data'],2);
@@ -25,7 +25,7 @@
 	{	  
 	  
 		$strsql = "SELECT * FROM tabela_delimitador_racao WHERE (delimitador_descricao= '".$delimitador_descricao."' AND delimitador_id <> '".$delimitador_id."') ";
-	  	$res = mysqli_query($conn, $conn, $strsql) or die(mysqli_error($conn)); 		
+	  	$res = mysqli_query($conn,  $strsql) or die(mysqli_error($conn)); 		
 		
 		if ($res && mysqli_num_rows($res)>0)
 			$herr = "Existe outro delimitador com a mesma descri��o.";
@@ -100,7 +100,7 @@ require("cabecalho.php");
 				<?php
 				 
 				$strsql = "SELECT * FROM tabela_delimitador_racao WHERE delimitador_oficial = 0";
-				$delimitador = mysqli_query($conn, $conn, $strsql) or die(mysqli_error($conn));
+				$delimitador = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 							
 				if ($delimitador && mysqli_num_rows($delimitador)>0)
 				{	

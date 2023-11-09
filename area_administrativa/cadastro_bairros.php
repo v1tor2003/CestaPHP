@@ -1,5 +1,6 @@
 <?php
-  	$bairro_id = $_REQUEST['hid'];
+  error_reporting(E_ERROR | E_PARSE);
+  $bairro_id = $_REQUEST['hid'];
 	$bairro_nome = $_REQUEST['bairro_nome'];
 	$cidade_id = $_REQUEST['cidade_id'];
 	$action = $_REQUEST['haction'];

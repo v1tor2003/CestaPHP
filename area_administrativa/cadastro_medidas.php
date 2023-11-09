@@ -1,5 +1,6 @@
 <?php
-  	$medida_id = $_REQUEST['hid'];
+	error_reporting(E_ERROR | E_PARSE);
+  $medida_id = $_REQUEST['hid'];
 	$medida_descricao = $_REQUEST['medida_descricao'];
 	$medida_simbolo = $_REQUEST['medida_simbolo'];
 	$action = $_REQUEST['haction'];

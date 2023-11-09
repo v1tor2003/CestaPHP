@@ -1,4 +1,5 @@
 <?php 
+error_reporting(E_ERROR | E_PARSE);
 	$action = $_REQUEST['haction'];
 	
 	if($action == 'filtrar')

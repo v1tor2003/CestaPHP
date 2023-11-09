@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ERROR | E_PARSE);
 if ($_REQUEST['haction']) {
     $estabelecimento_sec_id = $_REQUEST['hid'];
     $estabelecimento_sec_nome = $_REQUEST['estabelecimento_sec_nome'];

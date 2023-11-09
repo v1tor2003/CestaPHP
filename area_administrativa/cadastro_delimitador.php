@@ -1,5 +1,5 @@
 <?php
-  	
+  error_reporting(E_ERROR | E_PARSE);
 	$delimitador_id = $_REQUEST['hid'];
 	$delimitador_descricao = $_REQUEST['delimitador_descricao'];
 	$delimitador_data = formata_data($_REQUEST['delimitador_data'],2);

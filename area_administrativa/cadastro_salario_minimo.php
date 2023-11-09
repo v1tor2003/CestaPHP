@@ -1,5 +1,5 @@
 <?php
-  	
+  	error_reporting(E_ERROR | E_PARSE);
 	$salario_id = $_REQUEST['hid'];
 	$salario_nome = $_REQUEST['salario_nome'];
 	$salario_simbolo = $_REQUEST['salario_simbolo'];

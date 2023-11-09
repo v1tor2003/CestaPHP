@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(E_ERROR | E_PARSE);
 	$prod = preg_split("/\//",$_REQUEST['hprod']);
 	$qt_prod = count($prod);
 	$cidade = $_REQUEST['hc'];

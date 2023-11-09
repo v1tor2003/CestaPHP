@@ -1,5 +1,5 @@
 <?php
-
+	error_reporting(E_ERROR | E_PARSE);
   	$pesquisa_id = $_REQUEST['hid'];
 	$pesquisa_mes = $_REQUEST['mes'];
 	$pesquisa_ano = $_REQUEST['ano'];

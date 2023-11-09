@@ -1,5 +1,7 @@
 <?php
-include_once("mysql.lib");
+
+//include_once("mysql.lib");
+	error_reporting(E_ERROR | E_PARSE);
 	$action = $_REQUEST['haction'];
 	$mes = $_REQUEST['mes'];
 	$ano = $_REQUEST['ano'];

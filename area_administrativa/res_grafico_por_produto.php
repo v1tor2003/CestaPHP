@@ -1,6 +1,6 @@
 <?php
 
-	require_once('Charts/FusionCharts.php');
+	require_once '../libs/Charts/FusionCharts.php';
 	
 	$cities = preg_split("/\//",$_REQUEST['hcit']);
 	$qt_cit = count($cities);

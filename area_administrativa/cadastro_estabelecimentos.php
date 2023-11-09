@@ -55,6 +55,7 @@ require("cabecalho.php");
 				
 				while ($row = mysqli_fetch_array($estabelecimentos))
 				{
+					if(!isset($l_cor)) $l_cor = '';
 					if($l_cor == '') $l_cor = "par"; else $l_cor = "";
 			 ?>
 			 

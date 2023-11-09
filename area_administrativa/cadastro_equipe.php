@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL&~E_NOTICE);
+error_reporting(E_ERROR | E_PARSE);
 $haction = $_POST['haction'];
 if($haction){
     //echo 'Em desenvolvimento...' ; exit;

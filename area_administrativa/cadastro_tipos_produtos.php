@@ -1,5 +1,6 @@
 <?php
-  	$tipo_id = $_REQUEST['hid'];
+	error_reporting(E_ERROR | E_PARSE);
+  $tipo_id = $_REQUEST['hid'];
 	$tipo_nome = $_REQUEST['tipo_nome'];
 	$action = $_REQUEST['haction'];
 	$herr = '';

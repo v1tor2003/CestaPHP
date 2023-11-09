@@ -13,6 +13,7 @@
 	<script type="text/javascript" language="javascript" src="../javascript/prototype.js"></script>
         <script type="text/javascript" language="javascript" src="../javascript/dhtmlgoodies_calendar.js"></script>
         <?php
+        $include_head = array();
         if (is_array($include_head)) {
             foreach ($include_head as $_ => $vlr)
                 echo $vlr . "\n";

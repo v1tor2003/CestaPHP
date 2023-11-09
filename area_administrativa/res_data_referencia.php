@@ -1,5 +1,5 @@
 <?php
-
+	error_reporting(E_ERROR | E_PARSE);
 	$cits = preg_split("/\//",$_REQUEST['hcit']);
 	$cit_nome = array();
 	$qt_cit = count($cits);

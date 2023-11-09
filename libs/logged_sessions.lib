@@ -18,7 +18,7 @@
   if($bd_sessao && mysqli_num_rows($bd_sessao)>0){
     $strsql = "UPDATE tabela_sessao SET sessao_tempo = '".$CurrentTime."'";
     mysqli_query($conn, $strsql);
-    $bd_sessao = mysql_fetch_array($bd_sessao);
+    $bd_sessao = mysqli_fetch_array($bd_sessao);
     $_user = $bd_sessao['sessao_usuario'];  
 	header("location: $PathRedirect");
   }
