@@ -1,4 +1,5 @@
 <?php 
+	error_reporting(E_ERROR | E_PARSE);
 	$action = $_REQUEST['haction'];
 	
 	if($action == 'filtrar')
@@ -83,7 +84,7 @@
 						 	
 							while ($row = mysqli_fetch_array($pesquisas))
 							{
-							
+								if(!isset($l_cor)) $l_cor = '';
 								if($l_cor == '') 
 									$l_cor = "par";
 								else 

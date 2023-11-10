@@ -1,5 +1,5 @@
 <?php
-
+	error_reporting(E_ERROR | E_PARSE);
 	require_once '../libs/Charts/FusionCharts.php';
 	
 	$prod = preg_split("/\//",$_REQUEST['hprod']);

@@ -1,5 +1,5 @@
 <?php
-	require("JSON.php");
+	require '../libs/JSON.php';
 	
 	$cidade_id = $_REQUEST['hid'];
 	$bairros_info = array();

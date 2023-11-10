@@ -65,6 +65,7 @@ require("cabecalho.php");
 						 <?php
 						 	
 							while ($row = mysqli_fetch_array($coletas)){
+								if(!isset($l_cor)) $l_cor = '';
 								if($l_cor == '') $l_cor = "par"; else $l_cor = "";
 								
 								$id_editar = $row['coleta_id']."edit";

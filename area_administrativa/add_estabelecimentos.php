@@ -1,5 +1,6 @@
 <?php
 error_reporting(E_ERROR | E_PARSE);
+
 if ($_REQUEST['haction']) {
     $estabelecimento_id = $_REQUEST['hid'];
     $estabelecimento_nome = $_REQUEST['estabelecimento_nome'];
@@ -9,7 +10,7 @@ if ($_REQUEST['haction']) {
     $estabelecimento_referencial = $_REQUEST['estabelecimento_referencial'];
     $estabelecimento_ativo = (int) $_REQUEST['estabelecimento_ativo'];
     $estabelecimentos_secundarios = $_REQUEST['est_secundario'];
-    $cidade_id = $_REQUEST['cidade_id'];
+    $cidade_id = isset($_REQUEST['cidade_id']) ? $cidade_id : '';
     $bairro_id = $_REQUEST['bairro_id'];
     $action = $_REQUEST['haction'];
     $herr = '';
@@ -132,10 +133,11 @@ require("cabecalho.php");
             <!-- Contedo referente a esta pgina -->
 
             <fieldset>
+                    <!-- Verifica se estabecimento id exits -> action == edit se nao adicionar -->
+
                 <legend><?php if ($estabelecimento_id) { ?>Editar<?php } else { ?>Adicionar<?php } ?> Estabelecimento </legend>
-
+                <!-- Form para editar -->
                 <form name="form_cadastro" method="post" action="<?php echo($_SERVER['PHP_SELF']); ?>" style="width:600px;">
-
                     <?php if ($estabelecimento_id) { ?>
                         <p>
                             <label for="codigo">C&oacute;digo:</label> 

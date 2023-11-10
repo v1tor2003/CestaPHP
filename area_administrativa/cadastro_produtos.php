@@ -1,5 +1,5 @@
 <?php 
-	
+	error_reporting(E_ERROR | E_PARSE);
 	mysqli_set_charset($conn,'utf8');
 
 	$action = $_REQUEST['haction'];
@@ -319,48 +319,46 @@ require("cabecalho.php");
 						$med = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 					
 						$i = 0;
-						if ($med && mysqli_num_rows($med)>0){	
-			?>
-				<table class="tabela_produtos" cellpadding="0" cellspacing="0">
-				<caption style="margin-right:270px;">Medidas Pesquisadas</caption>
-				<?				
-						while($row = mysqli_fetch_array($med))
-						{
-							
-							$checked = '';
-							$value = '';
-							$disabled = '';
-							$class = '';
-							
-							$indice = busca_chave($row['medida_id'],$medidas);
-							
-							if($indice != -1)
-							{
-								$checked = 'checked="checked"';
-								$value = $medidas_pesquisada[$indice];
-								$class = 'class="active"';
-							}
-							else
-							{
-								$disabled = 'disabled="disabled"';
-								$class = 'class="inactive"';
-							}
-							
-							if($i%3==0){?>  </tr><tr> <?php }?>
-			
-							<td style="padding-top:20px;">
-					<label><?php echo($row['medida_simbolo']);?></label><input type="checkbox" onClick="edita_medida('<?php echo($i);?>')" name="medidas_produto[]" id="medidas_produto" value="<?php echo($row['medida_id']); ?>" <?php echo($checked); ?> />&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" size="8" name="medida_pesquisada[]" maxlength="5" onkeypress="mascara(this,soNumeros2)" id="<?php echo("medida_pesquisada".$i); ?>" <?php echo($disabled." ".$class);?> value="<?php echo($value); ?>" /><input type="hidden" id="<?php echo("medida_descricao".$i); ?>" value="<?php echo($row['medida_descricao']); ?>" /></td>
-					<?php
-						$i++;
-						}	 	
-					?>	
-					</tr>
-					</table>
-					<?php }else{ ?>
-					<label>Sem medidas cadastradas. </label>
-					<?php } ?>
-					
-					<hr />
+						if ($med && mysqli_num_rows($med) > 0) {
+						?>
+							<table class="tabela_produtos" cellpadding="0" cellspacing="0">
+									<caption style="margin-right:270px;">Medidas Pesquisadas</caption>
+									<?php
+									while ($row = mysqli_fetch_array($med)) {
+											$checked = '';
+											$value = '';
+											$disabled = '';
+											$class = '';
+
+											$indice = busca_chave($row['medida_id'], $medidas);
+
+											if ($indice != -1) {
+													$checked = 'checked="checked"';
+													$value = $medidas_pesquisada[$indice];
+													$class = 'class="active"';
+											} else {
+													$disabled = 'disabled="disabled"';
+													$class = 'class="inactive"';
+											}
+
+											if ($i % 3 == 0) { ?> </tr><tr> <?php } ?>
+
+											<td style="padding-top:20px;">
+													<label>
+															<?php echo ($row['medida_simbolo']); ?></label>
+													<input type="checkbox" onClick="edita_medida('<?php echo ($i); ?>')" name="medidas_produto[]" id="medidas_produto" value="<?php echo ($row['medida_id']); ?>" <?php echo ($checked); ?> />&nbsp;&nbsp;&nbsp;&nbsp;
+													<input type="text" size="8" name="medida_pesquisada[]" maxlength="5" onkeypress="mascara(this,soNumeros2)" id="<?php echo ("medida_pesquisada" . $i); ?>" <?php echo ($disabled . " " . $class); ?> value="<?php echo ($value); ?>" /><input type="hidden" id="<?php echo ("medida_descricao" . $i); ?>" value="<?php echo ($row['medida_descricao']); ?>" />
+											</td>
+											<?php
+											$i++;
+									}
+									?>
+							</tr> <!-- Close the last row -->
+							</table>
+				<?php } else { ?>
+						<label>Sem medidas cadastradas. </label>
+				<?php } ?>
+			<hr />
 			</p>
 			<p><label for="cesta">Produto Cesta:</label>
 			<input type="checkbox" name="produto_cesta" value="1" <?php if ($produto_cesta == 1){ ?> checked="checked" <?php } ?> style="vertical-align:bottom;" />

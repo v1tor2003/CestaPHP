@@ -4,7 +4,6 @@
  */
 @include_once 'classes/classes_path.php';
 
-
 function formata_data($data,$tipo)
 {
 

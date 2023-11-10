@@ -1,4 +1,5 @@
 <?php 
+	error_reporting(E_ERROR | E_PARSE);
 	$pesquisa_id = $_REQUEST['pesquisa_id'];
 	$cidade_id =  $_REQUEST['hid'];
 	$action = $_REQUEST['haction'];
