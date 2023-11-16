@@ -43,7 +43,7 @@
 		
 	}
 	
-	$qt = count($vetor_periodo);
+	$qt = (is_array($vetor_periodo) || is_countable($vetor_periodo)) ? count($vetor_periodo) : 0;
 	
 	/*
 	$str_aux = "(";

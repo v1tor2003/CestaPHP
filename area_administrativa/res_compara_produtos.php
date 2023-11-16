@@ -39,7 +39,7 @@ error_reporting(E_ERROR | E_PARSE);
 		
 	}
 	
-	$qt = count($vetor_periodo);
+	$qt = (is_array($vetor_periodo) || is_countable($vetor_periodo)) ? count($vetor_periodo) : 0;
 	
 	$str_aux = "(";
 	for( $i = 0 ; $i<$qt_prod-1; $i++)

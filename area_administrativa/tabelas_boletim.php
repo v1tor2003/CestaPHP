@@ -34,7 +34,7 @@
 		
 	}
 	
-	$tam = count($mes);
+	$tam = (is_array($mes) || is_countable($mes)) ? count($mes) : 0;
 	
 /**********************************************************************************************************
 *
@@ -72,6 +72,12 @@
 			$prod_buscar =  $prod_buscar.$produto_id[$i].","; 
 		else
 			$prod_buscar = $prod_buscar.$produto_id[$i].")";
+	}
+
+	$message_no_prod = 'Sem produtos cadastrados para essa cidade';	
+	if($prod_buscar === "("){
+		echo "<script>alert('$message_no_prod');</script>";
+		echo "<script>window.close();</script>";
 	}
 
 	$strsql = "SELECT * FROM tabela_racao_minima A,tabela_delimitador_racao B,tabela_unidade_medidas C WHERE A.delimitador_id = B.delimitador_id AND B.delimitador_em_uso = '1' AND A.produto_id IN ".$prod_buscar." AND A.racao_minima_medida = C.medida_id GROUP BY A.produto_id";
