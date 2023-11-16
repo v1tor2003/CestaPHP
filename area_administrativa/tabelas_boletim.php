@@ -73,7 +73,7 @@
 		else
 			$prod_buscar = $prod_buscar.$produto_id[$i].")";
 	}
-	
+
 	$strsql = "SELECT * FROM tabela_racao_minima A,tabela_delimitador_racao B,tabela_unidade_medidas C WHERE A.delimitador_id = B.delimitador_id AND B.delimitador_em_uso = '1' AND A.produto_id IN ".$prod_buscar." AND A.racao_minima_medida = C.medida_id GROUP BY A.produto_id";
 
 	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));

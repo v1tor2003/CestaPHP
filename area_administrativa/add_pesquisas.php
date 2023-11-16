@@ -1,5 +1,4 @@
 <?php
-	error_reporting(E_ERROR | E_PARSE);
   $pesquisa_id = $_REQUEST['hid'];
 	$pesquisa_mes = $_REQUEST['mes'];
 	$pesquisa_ano = $_REQUEST['ano'];
@@ -16,25 +15,45 @@
 	}
 	
 	if ($action=='save'){	  
-	  
-		$strsql = "SELECT * FROM tabela_pesquisas WHERE (pesquisa_data = '".$pesquisa_ano."-".$pesquisa_mes."-00') AND pesquisa_id <> '".$pesquisa_id."'";
+		$strsql = "SELECT * FROM tabela_pesquisas WHERE (pesquisa_data like '".$pesquisa_ano."-".$pesquisa_mes."-%') AND pesquisa_id <> '".$pesquisa_id."'";
 
 	  $res = mysqli_query($conn, $strsql) or die(mysqli_error($conn)); 	
 		
 		if ($res && mysqli_num_rows($res)>0)
-		  $herr = "Existe outra pesquisa para o mesmo m�s e ano.";
+		  $herr = "Existe outra pesquisa para o mesmo mês e ano.";
 		else{
-		  
+			/*
+			  Getting the salario thats being used
+			  $strsql = "SELECT salario_id from tabela_salarios where salario_em_uso = '1'";
+				$res = mysqli_query($conn, $strsql) or die (mysqli_error($conn));
+				$res = mysqli_fetch_array($res);
+				$salario_id = $res['salario_id'];
+
+				
+				// $salario_id is gonna be used in the creation query as tabela_pesquisas.salario_id
+      */
 		  if ($pesquisa_id!='')
-		    $strsql = "UPDATE tabela_pesquisas SET pesquisa_data = '".$pesquisa_ano."-".$pesquisa_mes."-00' WHERE pesquisa_id = '".$pesquisa_id."'";  		
+		    $strsql = "UPDATE tabela_pesquisas SET pesquisa_data = '".$pesquisa_ano."-".$pesquisa_mes."-01' WHERE pesquisa_id = '".$pesquisa_id."'";  		
 		  else
-		    $strsql = "INSERT INTO tabela_pesquisas (pesquisa_data,pesquisa_detalhada) VALUES ('".$pesquisa_ano."-".$pesquisa_mes."-00','1')";
+		    $strsql = "INSERT INTO tabela_pesquisas (pesquisa_fechada,pesquisa_data,pesquisa_detalhada) VALUES ('0','".$pesquisa_ano."-".$pesquisa_mes."-01','1')";
 			
 			
 			//die($strsql);
 			
 			mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
-			
+  		/*
+				if (!$res) {
+					die('Query failed: ' . mysqli_error($conn));
+				}
+				
+				// Check for warnings
+				$result_warnings = mysqli_query($conn, "SHOW WARNINGS");
+				while ($row = mysqli_fetch_assoc($result_warnings)) {
+						// Process and display the warnings
+						echo "Warning: {$row['Level']} - {$row['Message']}\n";
+				}
+				die();
+			*/
 			$pesquisa_id = '';
 			$pesquisa_mes = '';
 			$pesquisa_ano = '';

@@ -1,5 +1,4 @@
 <?php 
-	error_reporting(E_ERROR | E_PARSE);
 	$pesquisa_id = $_REQUEST['pesquisa_id'];
 	$coleta_id =  $_REQUEST['hid'];
 	$estabelecimento_id = $_REQUEST['estabelecimento_id'];

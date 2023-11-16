@@ -112,9 +112,9 @@ class Table {
 		} else {	    	
 			$this->rows[] = $height;    
 		}
-		
-		for ($i = 1; $i <= count($this->columns); $i ++ ) {		  
-		  	$this->cells[count($this->rows)][$i] = new Cell($this, count($this->rows), $i);
+
+		for ($i = 1; $i <= Util::safeCounter($this->columns); $i ++ ) {		  
+		  	$this->cells[Util::safeCounter($this->rows)][$i] = new Cell($this, Util::safeCounter($this->rows), $i);
 		}
 	}
 	
@@ -149,8 +149,8 @@ class Table {
 	function addColumn($width) {	  
 		$this->columns[] = $width;
 		
-		for ($i = 1; $i <= count($this->rows); $i ++ ) {		  
-		  	$this->cells[$i][count($this->columns)] = new Cell($this, $i, count($this->columns));
+		for ($i = 1; $i <= Util::safeCounter($this->rows); $i ++ ) {		  
+		  	$this->cells[$i][Util::safeCounter($this->columns)] = new Cell($this, $i, Util::safeCounter($this->columns));
 		}
 	}
 	
@@ -451,17 +451,17 @@ class Table {
 	
 	/** @access private */
 	function getRowsCount() {	  
-	  	return count($this->rows);
+	  	return Util::safeCounter($this->rows);
 	}
 	
 	/** @access private */
 	function getColumnsCount() {	  
-	  	return count($this->columns);
+	  	return Util::safeCounter($this->columns);
 	}
 		
 	/** @access private */
 	function checkIfCellExists($row, $column) {	  	  	
-	  	if ($row < 1 || $row > count($this->rows) || $column < 1 || $column > count($this->columns)) {				
+	  	if ($row < 1 || $row > Util::safeCounter($this->rows) || $column < 1 || $column > Util::safeCounter($this->columns)) {				
 		    return false;
 		}		
 		

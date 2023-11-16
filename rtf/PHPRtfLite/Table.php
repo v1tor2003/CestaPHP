@@ -768,7 +768,7 @@ class PHPRtfLite_Table
      */
     public function getRowsCount()
     {
-        return count($this->_rows);
+        return Util::safeCounter($this->_rows);
     }
 
 
@@ -790,7 +790,7 @@ class PHPRtfLite_Table
      */
     public function getColumnsCount()
     {
-        return count($this->_columns);
+        return Util::safeCounter($this->_columns);
     }
 
 

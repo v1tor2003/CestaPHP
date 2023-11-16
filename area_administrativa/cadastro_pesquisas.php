@@ -7,7 +7,7 @@ require("cabecalho.php");
  
 		
 		<div class="caixa_principal">
-lo
+
 			<?php require("topo.php"); ?>
 			
 			<div class="menu_superior">

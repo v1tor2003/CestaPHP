@@ -17,18 +17,18 @@
 	
 	if ($action=='save'){	  
 	  
-		$strsql = "SELECT * FROM tabela_pesquisas WHERE (pesquisa_data = '".$pesquisa_ano."-".$pesquisa_mes."-00') AND pesquisa_id <> '".$pesquisa_id."'";
+		$strsql = "SELECT * FROM tabela_pesquisas WHERE (pesquisa_data like '".$pesquisa_ano."-".$pesquisa_mes."-%') AND pesquisa_id <> '".$pesquisa_id."'";
 
 	  $res = mysqli_query($conn, $strsql) or die(mysqli_error($conn)); 	
 		
 		if ($res && mysqli_num_rows($res)>0)
 		  $herr = "Existe outra pesquisa para o mesmo mes e ano.";
 		else{
-		  
+		 
 		  if ($pesquisa_id!='')
-		    $strsql = "UPDATE tabela_pesquisas SET pesquisa_data = '".$pesquisa_ano."-".$pesquisa_mes."-00' WHERE pesquisa_id = '".$pesquisa_id."'";  		
+		    $strsql = "UPDATE tabela_pesquisas SET pesquisa_data = '".$pesquisa_ano."-".$pesquisa_mes."-01' WHERE pesquisa_id = '".$pesquisa_id."'";  		
 		  else
-		    $strsql = "INSERT INTO tabela_pesquisas (pesquisa_data,pesquisa_detalhada) VALUES ('".$pesquisa_ano."-".$pesquisa_mes."-00','0')";
+		    $strsql = "INSERT INTO tabela_pesquisas (pesquisa_fechada,pesquisa_data,pesquisa_detalhada) VALUES ('0','".$pesquisa_ano."-".$pesquisa_mes."-01','0')";
 			
 			
 			mysqli_query($conn, $strsql) or die(mysqli_error($conn));	

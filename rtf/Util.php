@@ -44,7 +44,7 @@ class Util {
 	 * @access public
 	 * @static	 
 	 */	
-	function utf8Unicode($str) {
+	static function utf8Unicode($str) {
 	  	return Util::unicodeToEntitiesPreservingAscii(Util::utf8ToUnicode($str));
 	}
 	
@@ -109,6 +109,10 @@ class Util {
 		    }
 	    }     
 	    return $entities;    
+	}
+
+	static function safeCounter($collection){
+		return (is_array($collection) || is_countable($collection)) ? count($collection) : 0;
 	}
 }
 ?>

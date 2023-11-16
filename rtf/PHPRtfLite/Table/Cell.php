@@ -681,7 +681,7 @@ class PHPRtfLite_Table_Cell extends PHPRtfLite_Container
 
         if ($this->_table->isNestedTable()) {
             $containerElements = $this->getElements();
-            $numOfContainerElements = count($containerElements);
+            $numOfContainerElements = Util::safeCounter($containerElements);
 
             // if last container element is not a nested table, close cell
             if (!($containerElements[$numOfContainerElements - 1] instanceof PHPRtfLite_Table_Nested)) {

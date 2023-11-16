@@ -3,6 +3,9 @@
  * Arquivo com defines com a localização de cada classe
  */
 @include_once 'classes/classes_path.php';
+require 'mysql.lib';
+error_reporting(E_ERROR | E_PARSE);
+
 
 function formata_data($data,$tipo)
 {
@@ -91,12 +94,13 @@ function formata_ano_anterior($mes,$ano)
 
 function retorna_variacao($mes,$ano,$cidade,$gasto_mensal_produtos,$prod_oficial)
 {
+	global $conn;
 	$i = 0;
 	$variacao = array();
 	
 	$strsql = "SELECT A.produto_preco_total FROM tabela_pesquisa_resultados_produtos A NATURAL JOIN tabela_produtos P,tabela_pesquisas B WHERE EXTRACT(MONTH FROM B.pesquisa_data) = '".$mes."' AND EXTRACT(YEAR FROM B.pesquisa_data) = '".$ano."' AND A.cidade_id = '".$cidade."' AND  A.pesquisa_id = B.pesquisa_id AND P.produto_cesta = '".$prod_oficial."' ORDER BY A.produto_id";
 							
-	$res = mysqli_query($conn, $strsql) or die(mysql_error());
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 						
 	while ($row = mysqli_fetch_array($res))
 	{
@@ -115,10 +119,11 @@ function retorna_variacao($mes,$ano,$cidade,$gasto_mensal_produtos,$prod_oficial
 
 function retorna_pesquisa($mes,$ano)
 {
+	global $conn;
 	$pesquisa = array();
 	$strsql = "SELECT A.pesquisa_id,B.mes_id, EXTRACT(YEAR FROM A.pesquisa_data) AS ano,B.mes_nome FROM tabela_pesquisas A,tabela_mes B WHERE EXTRACT(MONTH FROM A.pesquisa_data) = '".$mes."' AND EXTRACT(YEAR FROM A.pesquisa_data) = '".$ano."' AND B.mes_id = EXTRACT(MONTH FROM A.pesquisa_data)";
 	
-	$res = mysqli_query($conn, $strsql) or die(mysql_error());
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 	$row = mysqli_fetch_array($res);
 	$pesquisa = array('pesquisa_id' =>$row['pesquisa_id'],'mes' => $row['mes_nome'],'ano' => $row['ano'],'salario'=>$row['salario_id'],'mes_id' =>$row['mes_id']);
 	
@@ -136,11 +141,13 @@ function converte_horas($horas)
 
 function atualiza_coletas($coleta,$oficial)
 {
+	global $conn;
+	
 	$total_coleta = 0;
 	
 	$strsql = "SELECT R.produto_id,R.medida_id,R.racao_minima_transformador,R.racao_minima_quantidade,P.precos_id,AVG(AUX_P.preco_produto) AS media FROM tabela_produtos PRO NATURAL JOIN tabela_racao_minima R NATURAL JOIN tabela_delimitador_racao D, tabela_precos P NATURAL JOIN tabela_auxiliar_precos AUX_P WHERE (D.delimitador_oficial = '".$oficial."' AND D.delimitador_em_uso = '1') AND (R.produto_id,R.medida_id,P.precos_id) IN (SELECT produto_id,medida_id,precos_id FROM tabela_precos WHERE coleta_id = '".$coleta."') AND PRO.produto_cesta = '".$oficial."' GROUP BY P.precos_id ORDER BY PRO.produto_id";
 	
-	$res = mysqli_query($conn, $strsql) or die(mysql_error());
+	$res = mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 	
 	if($res && mysqli_num_rows($res)>0)
 	{
@@ -155,7 +162,7 @@ function atualiza_coletas($coleta,$oficial)
 				
 			$strsql = "UPDATE tabela_precos SET precos_media_observado = '".$media_obs."',precos_media = '".$media."',precos_total = '".$total."' WHERE coleta_id = '".$coleta."' AND precos_id = '".$row['precos_id']."'";
 			
-			mysql_query($strsql) or die(mysql_error());
+			mysqli_query($conn, $strsql) or die(mysqli_error($conn));
 		}
 	}
 	
@@ -165,11 +172,12 @@ function atualiza_coletas($coleta,$oficial)
 
 function retorna_variacao_cidades($data_mes,$data_ano,$cidade,$gasto_mensal_cesta)
 {
-	
+		global $conn;
+
 		$str = "SELECT A.pesquisa_id,A.cidade_id,A.gasto_mensal_cesta FROM tabela_pesquisas_cidades A,tabela_pesquisas B WHERE EXTRACT(MONTH FROM B.pesquisa_data) = '".$data_mes."' AND EXTRACT(YEAR FROM B.pesquisa_data) = '".$data_ano."' AND A.pesquisa_id = B.pesquisa_id AND A.cidade_id = '".$cidade."'";
 		
-		$res_v = mysql_query($str) or die(mysql_error());
-		$row_v = mysql_fetch_array($res_v);
+		$res_v = mysqli_query($conn,$str) or die(mysqli_error($conn));
+		$row_v = mysqli_fetch_array($res_v);
 		
 		if($row_v['gasto_mensal_cesta'] != NULL && $row_v['gasto_mensal_cesta']>0)
 			$variacao = round_valor((($gasto_mensal_cesta/$row_v['gasto_mensal_cesta'])-1)*100,2);
@@ -247,7 +255,10 @@ function formata_numero($num,$decimal=2,$casas=2,$decimal_separador=','){
 if (!function_exists('mysql_set_charset')) {
   function mysql_set_charset($charset,$dbh=null)
   {
-    return mysql_query("set names $charset",$dbh);
+		if($dbh === null){
+			global $dbh;
+		}
+    return mysqli_query($dbh, $charset);
   }
 }
 ?>

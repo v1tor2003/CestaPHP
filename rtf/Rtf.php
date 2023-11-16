@@ -153,7 +153,7 @@ class Rtf {
 	function &addSection() {	    
 	    $section = new Section($this);
 	
-		if (count($this->sections) == 0) {		  
+		if (Util::safeCounter($this->sections) == 0) {		  
 		  	$section->first = true;
 		}
 	
@@ -394,7 +394,7 @@ class Rtf {
 	function addFont($font) {  
 	  	if (!empty($font)) {		  		  	
 		  	if (empty($this->fonts[$font])) {			    
-				$count = count($this->fonts);
+				$count = Util::safeCounter($this->fonts);
 				$this->fonts[$font] = '\f'.$count;
 			}
 		}		
@@ -408,7 +408,7 @@ class Rtf {
 	function addColor($color) {
 		if (!empty($color)) {		  	
 			if (empty($this->colors[$color])) {	
-				$count = count($this->colors);
+				$count = Util::safeCounter($this->colors);
 				$this->colors[$color] = ($count + 1);				
 			}					  	
 		}
@@ -536,7 +536,7 @@ class Rtf {
 		$part .= !empty($this->titlepg) ? '\titlepg ' : '';			
 		
 		//headers and footers if there are no sections
-		if (count($this->sections) == 0) {
+		if (Util::safeCounter($this->sections) == 0) {
 		  	foreach ($this->headers as $value) {		  
 			  	$part .= $value->getContent();
 			}

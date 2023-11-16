@@ -1,9 +1,9 @@
 <?php
-ini_set('display_errors', '0'); 
+//ini_set('display_errors', '0'); 
 /*
  * 	P�gina escrita em ISO-8859-1 ou Latin1 em compatibilidade com o padr�o do PHP 5.3
  */
-    require_once 'PHPRtfLite.php';
+    require_once '../rtf/PHPRtfLite.php';
     // register PHPRtfLite class loader
 	PHPRtfLite::registerAutoloader();
 	$pesquisa_id = $_REQUEST['hid'];
@@ -95,7 +95,7 @@ ini_set('display_errors', '0');
 	
 	}
 	
-	$qt_mes = count($mes);
+	$qt_mes = Util::safeCounter($mes);
 	
 
 /**********************************************************************************************************

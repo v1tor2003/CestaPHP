@@ -1,6 +1,6 @@
 <?php
 
-	require_once('Charts/FusionCharts.php');
+	require_once('../libs/Charts/FusionCharts.php');
 		 
 	$pesquisa_ano = $_REQUEST['ano']; 
 	$cidade = $_REQUEST['cit'];

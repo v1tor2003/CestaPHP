@@ -1164,7 +1164,7 @@ class PHPRtfLite
         $part = '{\info'."\r\n";
 
         foreach ($this->_properties as $key => $value) {
-            $value = PHPRtfLite_Utf8::getUnicodeEntities($value);
+            $value = PHPRtfLite_Utf8::getUnicodeEntities($value, $this->_charset);
             $part .= '{\\' . $key . ' ' . $value . '}'."\r\n";
         }
 
@@ -1298,7 +1298,7 @@ class PHPRtfLite
         $this->_stream->write($this->getNoteDocHead()->getContent());
 
         //headers and footers if there are no sections
-        if (count($this->_sections) == 0) {
+        if (Util::safeCounter($this->_sections) == 0) {
             foreach ($this->_headers as $header) {
                 $header->render();
             }

@@ -5,9 +5,10 @@
   $db_pass = "";
   $db_name = "cesta_db";
   //CONEXAO AO SERVIDOR MySQL
+  global $conn;
   $conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
-  if (!$conn) die(mysql_error());
-  if (!mysqli_select_db($conn, $db_name)) die(mysql_error());
+  if (!$conn) die('Error connection to db.');
+  if (!mysqli_select_db($conn, $db_name)) die(mysqli_error($conn));
   mysqli_set_charset($conn,'utf8');
   ini_set('default_charset','UTF-8');
 ?>
