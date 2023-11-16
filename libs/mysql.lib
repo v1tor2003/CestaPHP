@@ -1,9 +1,9 @@
 <?php
   //DADOS PARA CONECTAR AO SERVIDOR MySQL
   $db_host = "localhost";
-  $db_user = "root";
-  $db_pass = "";
-  $db_name = "cesta_db";
+  $db_user = "cesta_basica";
+  $db_pass = "Flokmayd";
+  $db_name = "cesta_basica";
   //CONEXAO AO SERVIDOR MySQL
   global $conn;
   $conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
