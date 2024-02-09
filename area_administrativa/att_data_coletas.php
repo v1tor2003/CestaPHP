@@ -26,7 +26,7 @@
 	else
 	{
 	
-	$strsql = "SELECT * FROM tabela_coletas NATURAL JOIN tabela_estabelecimentos NATURAL JOIN tabela_bairros WHERE pesquisa_id = '".$pesquisa_id."' AND coleta_data = '0000-00-00'";
+	$strsql = "SELECT * FROM tabela_coletas NATURAL JOIN tabela_estabelecimentos NATURAL JOIN tabela_bairros WHERE pesquisa_id = '".$pesquisa_id."' AND coleta_data = '1900-01-01'";
 	
 	$res = mysqli_query($conn,$strsql) or die(mysqli_error($conn));
 					

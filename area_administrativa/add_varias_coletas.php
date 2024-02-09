@@ -11,7 +11,10 @@
 	  
 		for($i=0;$i<count($estabelecimento_id) ; $i++)
 		{
-	    $strsql = "INSERT INTO tabela_coletas (estabelecimento_id,pesquisa_id,coleta_data) VALUES ('".$estabelecimento_id[$i]."','".$pesquisa_id."','')";
+			if (empty($coleta_data))
+				$coleta_data ='1900-01-01';
+	    	$strsql = "INSERT INTO tabela_coletas (estabelecimento_id,pesquisa_id,coleta_data) VALUES ('".$estabelecimento_id[$i]."','".$pesquisa_id."','$coleta_data')";
+			
 			mysqli_query($conn, $strsql) or die(mysqli_error($conn));	
 		}
 		
