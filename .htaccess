@@ -11,7 +11,7 @@ RewriteRule (login|admin|acesso|area_restrita|area\srestrita)$ login.php
 #     AllowOverride AuthConfig
      #AllowOverride All
 
-#     Autenticação de Usuário
+#     Autenticaï¿½ï¿½o de Usuï¿½rio
 #     AuthName "Acesso ao Cesta"
 #     AuthType Basic
 #     AuthUserFile /etc/apache2/passwd/cesta
@@ -47,4 +47,6 @@ RewriteRule (login|admin|acesso|area_restrita|area\srestrita)$ login.php
 
 AddType application/x-httpd-php .php
 php_value auto_prepend_file globals.inc
-php_value include_path ".:/var/www/html/cesta/libs:/var/www/html/cesta/rtf"
+php_value include_path ".:/mnt/d/htdocs/cestaSis/libs:/mnt/d/htdocs/cestaSis/rtf"
+php_flag display_startup_errors on
+php_flag display_errors on

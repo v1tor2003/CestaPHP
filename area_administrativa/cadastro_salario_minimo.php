@@ -5,7 +5,7 @@
 	$salario_simbolo = $_REQUEST['salario_simbolo'];
 	$salario_valor_bruto = $_REQUEST['salario_valor_bruto'];
 	$salario_valor_liquido = $_REQUEST['salario_valor_liquido'];
-	$salario_em_uso = $_REQUEST['salario_em_uso'];
+	$salario_em_uso = ($_REQUEST['salario_em_uso']!='') ? $_REQUEST['salario_em_uso'] : 0;
 	$action = $_REQUEST['haction'];
 	$flag = true;
 	$herr = '';
